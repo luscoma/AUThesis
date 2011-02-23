@@ -1,0 +1,756 @@
+%%% This is an example file for the Auburn University style options
+%%%       aums.sty (Masters Thesis)
+%%%       auphd.sty (Ph.D. Dissertation)
+%%%       auhonors.sty (Honors Scholar)
+
+%%%To use it, please edit the necessary options, title, author, date, year, keywords, advisor, professor, etc. 
+
+\documentclass[12pt]{report}
+\usepackage{aums}       % For Master's papers
+\usepackage{ulem}       % underlining on style-page; see \normalem below
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{graphicx}
+\usepackage{array}
+%%%%%Format rules: Normal margins are 1 in. If you need to print with 1.5in margins, uncomment the line below
+%\oddsidemargin0.5in \textwidth6in
+
+%% If you do not need a List of Abbreviations, then comment out the lines below and the \printnomenclature line.
+%%for List of Abbreviations information:  (see http://www.mackichan.com/TECHTALK/509.htm  )
+\usepackage[intoc]{nomencl}
+\renewcommand{\nomname}{List of Abbreviations}   	       
+\makenomenclature 
+%% don't forget to run:   makeindex ausample.nlo -s nomencl.ist -o ausample.nls
+%% Also, if 
+
+
+
+
+% May want theorems numbered by chapter
+\newtheorem{theorem}{Theorem}[chapter]
+
+% Put the title, author, and date in. 
+\title{Evaluating the Digital Fault Coverage for a Mixed-Signal Built-In Self Test}
+\author{Michael Alexander Lusco} 
+\date{May 10, 2011} %date of graduation
+\copyrightyear{2011} %copyright year
+
+\keywords{Built-In Self Test, Mixed-Signal, Testing}
+
+% Put the Thesis Adviser here. 
+\adviser{Charles Stroud}
+
+
+% Put the committee here (including the adviser), one \professor for each. 
+% The advisor must be first, and the dean of the graduate school must be last.
+\professor{Charles Stroud, Chair, Professor of Electrical and Computer Engineering}
+
+\professor{Foster Dai, Co-Chair, Professor of Electrical and Computer Engineering}
+
+\professor{Vashani Agrawal, Professor of Eletrical and Computer Engineering}
+
+\professor{Victor Nelson, Professor of Eletrical and Computer Engineering}
+
+\begin{document}
+
+\begin{romanpages}      % roman-numbered pages 
+
+\TitlePage 
+
+\begin{abstract}
+This thesis focuses on a digital Built-in Self-Test (BIST)\nomenclature{BIST}{Built-in Self-Test} approach to perform specification-oriented testing of the analog portion of a mixed-signal system.  The BIST utilizes a Direct Digital Synthesizer (DDS)\nomenclature{DDS}{Direct Digital Synthesizer} based test pattern generator (TPG)\nomenclature{TPG}{Test Pattern Generator} and a multiplier-accumulate (MAC)\nomenclature{MAC}{Multiplier-Accumulator} based output response analyzer (ORA)\nomenclature{ORA}{Output Response Analyzer} to stimulate and analyze the analog devices under test.  This approach uses the digital-to-analog convertor (DAC)\nomenclature{DAC}{Digital-to-Analog Convertor} and the analog-to-digital convertor (ADC)\nomenclature{ADC}{Analog-to-Digital Convertor}, which typically already exist in a mixed signal circuits, to connect the digital BIST circuitry to the analog device(s) under test (DUT)\nomenclature{DUT}{Device Under Test}.
+
+Previous work has improved and analyzed the capabilities and effectiveness of using this BIST approach to test analog circuitry; however, little work has been done to determine the fault coverage of the digital BIST cicuitry iteself.  Traditionally additional test circuitry such as scan chains would be added to the BIST circuitry to provide adequate fault coverage of digital circuitry.  WHile ensuring that the digital circuitry is throughly tested and functioning properly, this scan chain circuitry incures a potentially high area overhead and performance penalty.  This thesis focues on using the existing BIST circuitry to test itself by utilizing a dedicated gitial loopback path.  A set of test procedures is proposed and analyzed which can be used to determine a set of functional tests which provide a high effective fault coverage of the digital porition of the BIST.  TO determine the effectiveness of these procedures, the mixed-signal BIST circuit is simulated and single stuck-at gate-level fault coverage results are determined and presented.  Finally several improvements to the dedicated loopback path are proposed and simulated to analyze possible ways to improve the fault coverage of the BIST with minimal area and performance impact.
+\end{abstract}
+
+\begin{acknowledgments}
+Put text of the acknowledgments here.
+\end{acknowledgments}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\printnomenclature[0.5in] %used for the List of Abbreviations
+\end{romanpages}        % All done with roman-numbered pages
+
+
+\normalem       % Make italics the default for \em
+
+
+\chapter{Introduction}  % Use \\ for long titles 
+
+The testing of embedded systems is a large field with many different approaches and techniques.  Some techniques work most effectively for digital systems and others for analog systems.  One approach is a hybrid and is used to test a mixed-signal system -- a system with both digital and analog circuitry\cite{needed}.  Mixed systems typically require the use of multiple testing techniques for both the digital and analog areas to be fully tested.  In this chapter a short introduction to testing and relevant testing techniques for digital, analog, and mixed-signal systems is given so that the reader can develop a foundation for understanding the mixed-signal testing approach studied in this thesis. 
+
+\section{Why Test Circuits}
+\label{sct:whytest}
+According to Stroud\cite{stroud} there are three phases of a product where testing is of critical importance: the design phase, manufacturing phase, and the system operation phase.  While it is important at all of these three stages, each phase of the product's life cycle uses testing to achieve different goals.  During the design phase of the product life cycle, the goal is to focus on finding and eliminating design errors.  During manufacturing the goal changes and is focused on eliminating manufacturer defects, and finally the operation phase is focused on ensuring error-free operation.  All of these different testing goals work to improve the device by reducing costs, improving relability, etc.  
+
+However, as chips become ever more complex it becomes more challenging and more expensive to test them\cite{itrs}.
+
+As complexity increases, the traditional methods of testing these devices struggle to maintain an acceptable level of fault coverage (a concept which is explained more thoroughly in the next section).  In \cite{zorian} Zorian suggests the two main issues caused by increased complexity of chips as it relates to testing:
+
+\begin{quote}
+``Progressively greater integrated circuit (IC)\nomenclature{IC}{Integrated Circuit} complexity raises several new problems and exacerbates others.  One is the bandwidth gap between a chip's internal performance and the output capability of its package pins.  Another is the increasing use of mixed circuitry on a chip.\cite{zorian}''
+\end{quote}
+In addition he also explains the consequences of increased transistor count in ICs:
+\begin{quote}
+``The growth rate in IC transistor count is far higher than the rate for IC pins and steadily reduces the accessibility of transistors from chip pins -- a big problem for IC test.\cite{zorian}''
+\end{quote}
+
+The issues he raises are very important to testing and related to very common testing paradigms, controllability and observability.  To understand how these two issues play a large part in the complications of testing it is first important to understand how testing is performed and modeled on circuits.
+
+\section{The Basics of Testing}
+
+The basics of testing a circuit are similar at all levels of the product phase and are shown in Figure \ref{fig:process}:
+\begin{itemize}
+\item Generate a set of input stimuli or vectors
+\item Apply those vectors to the circuit under test (CUT)\nomenclature{CUT}{Circuit Under Test}
+\item Compare the output of the CUT to the expected output for each input value
+\item Note any discrepancies as indication that there is an error in the device (a fault)
+\end{itemize}
+In reality it is often more difficult to test circuits than this basic process makes it appear.  One way to ease this difficulty is by using design for testability (DFT)\nomenclature{DFT}{Design For Testability} techniques to increase the observability and controllability of a device during the design process\cite{stroud}.  Stroud defines observability and controllability in \cite{stroud} as the following:
+\begin{quote}
+``Controllability is the ease with which we can control a fault site and observability is the ease with which we can observe a fault site.\cite{stroud}''
+\end{quote}
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/testing-process}
+	\end{center}
+	\caption{The Testing process\cite{stroud}}
+	\label{fig:process}
+\end{figure}
+Ultimately these properties determine the complexity involved in testing a fault.  The testability of the circuit or device is directly related to the controllability and observability of the circuit\cite{stroud}.  This also explains Zorian's concern in \cite{zorian}: the increasing amount of internal input-output IO\nomenclature{IO}{Input-Output} in chips directly affects the observability and controllability of the chip.  Without careful design considerations these properties can negatively affect the testability of a device\cite{stroud}.
+
+There are many different methods to physically testing a device.  Each method varies in its requirements and has its own unique set of challenges, costs, and advantages.  One traditional method of testing is using external testing equipment.  Unfortunately according to \cite{zorian} external testing equipment cannot satisfactorily test todays very large IC devices for performance-related defects.  As the speed of IC's continues to increase, testing IC's with external equipment will only become more difficult\cite{zorian}.  In addition Zorian examines the cost of external test equipment as becoming cost prohibitive and echoes the sentiments of the ITRS Roadmap from 1997 which indicates that 
+\begin{quote}
+``tester costs will reach up to \$20 million dollars in 2010 unless IC design incorporates more embedded test[s].\cite{itrs}''
+\end{quote}
+As an alternative to more expensive testing equipment, BIST describes the technique of designing a device to test itself\cite{stroud}.
+
+\section{Built-In Self-Test}
+Stroud defines BIST as a circuit which can test itself and determine whether it is ``good'' or ``faulty.''  In essence this entails designing the circuit to perform all of the steps in Figure \ref{fig:process} on itself.  Stroud continues by discussing a simple BIST architecture detailed in Figure \ref{fig:bist}.  This simple architecture consists of a Test Pattern Generator (TPG)\nomenclature{TPG}{Test Pattern Generator} which generates the input stimuli necessary to test the circuit.  In addition there is an Output Response Analyzer or ORA\nomenclature{ORA}{Output Response Analyzer} which compares the output of the circuit to the expected output for a given input value.  Finally there is some additional circuitry including input isolation circuitry used to isolate the CUT during testing as well as circuitry which controls the test during execution (Test Controller).
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/bist-architecture}
+	\end{center}
+	\caption{Simple BIST Architecture\cite{stroud}}
+	\label{fig:bist}
+\end{figure}
+
+BIST has many advantages and disadvantages when compared to other techniques.  \cite{stroud} quantifies these advantages and disadvantages in Table \ref{tbl:advantages}.  In addition \cite{ungar} performs a detailed economic analysis of including BIST in circuitry. \cite{ungar} concludes that:
+\begin{quote}
+``As the product develops from the IC to system level and its complexity increases, so does the complexity of successfully identifying a failure's root cause.  So it makes economic sense for system owners and perhaps system producers to implement BIST.\cite{ungar}''
+\end{quote}
+
+\subsection{Digital Systems and Faults}
+
+The traditional BIST functions very well for digital devices (devices functioning at discrete `1' and `0' logic values).  In a digital system faults (errors in the circuit) are characterized by a fault model.  A common model used for digital circuits is the Gate-Level Stuck-At Fault Model.  According to \cite{stroud}, the stuck-at fault model allows for faults at the input or output of a digital logic gate.  These faults can cause the input or output to be stuck at a logic value `0' or `1' regardless of what value is applied or expected.  
+\begin{table}[b!]
+	\begin{center}
+	\begin{tabular}{|l|l|}
+		\hline
+		\multicolumn{1}{|c|}{{\bf Advantages}} & \multicolumn{1}{|c|}{{\bf Disadvantages}} \\ \hline
+		Vertical testability (wafter to system) & Area overhead \\ \hline
+		High Diagnostic resolution & Performance penalties \\ \hline
+		At-speed testing & Additional design time \& effort \\ \hline
+		Reduced need for external test equipment & Additional risk to project \\ \hline
+		Reduced test development time \& effort & \\ \hline
+		More economical burn-in testing & \\ \hline
+		Reduced manufacturing test time \& cost & \\ \hline
+		Reduced time-to-market & \\ \hline
+	\end{tabular}
+	\end{center}
+	\caption{Advantages and Disadvantages of BIST\cite{stroud}}
+	\label{tbl:advantages}
+\end{table}
+Figure \ref{fig:andtruth} provides a truth table listing the expected output of an AND gate with its `A' input stuck at `1' (the notation used in Figure \ref{fig:andtruth} is the traditional notation used to signify a fault for this model).  The truth table given in Figure \ref{fig:andtruth} demonstrates how a single fault can change the behavior of a gate often having a major impact on the overall behavior of the circuit.  These differences in output caused by faults can be exploited to determine if a circuit is functioning correctly.  Since digital systems always produce the same output for a given input, this makes simulation and detection of faults simpler and easy to implement via a Built-In Self-Test approach similar to Figure \ref{fig:bist}\cite{stroud}.
+
+\begin{figure}
+	\begin{center}
+	\begin{minipage}[l]{.45\textwidth}
+		\includegraphics[scale=.7]{images/and-gate}
+	\end{minipage}
+	\begin{minipage}[r]{.45\textwidth}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			Inputs & Fault Free & Faulty \\
+			(AB) & Output (Z) & Output (Z) \\ \hline
+			0 0 & 0 & 0 \\ \hline
+			0 1 & 0 & 1 \\ \hline
+			1 0 & 0 & 0 \\ \hline
+			1 1 & 1 & 1 \\ \hline
+		\end{tabular}
+	\end{minipage}
+	\end{center}
+	\caption{AND gate stuck at 1\cite{stroud}}
+	\label{fig:andtruth}
+\end{figure}
+
+\subsection{Analog Systems and Faults}
+
+Analog systems function differently than digital systems.  Unlike a digital system which only have two discrete values, analog systems are continuous waveforms with multiple levels and voltages.  In addition to the complexities of analog waveforms, analog components operate within a range of acceptable values, unlike digital components which operate at discrete levels\cite{syschip}.  This difference makes testing analog components for defects (defect-oriented testing) significantly more challenging.  It requires complicated and time consuming simulation's such as Monte Carlo analysis to determine different component values for fault-free analog components\cite{syschip}.  Compounding this issue is the fact that analog components
+\begin{quote}
+``function collectively to perform the overall functionality of a given circuit and, as a result cannot always be treated as a collection of individual components\cite{syschip}.''
+\end{quote}
+A simpler (and to-date preferred) method for testing analog components is via functional-testing. \cite{milor} defines functional-testing as: 
+\begin{quote}
+``Functional tests are those which measure a circuit's dynamic behavior ...\cite{milor}''
+\end{quote}
+Functional testing is achieved by performing a set of tests to determine if a system is operating correct as defined by its specifications.  While it depends on the specifications for each device, an analog designer usually has many more important aspects that affect the output waveforms of his or her circuits than digital designers.  According to \cite{syschip},
+\begin{quote}
+``whereas a digital designer is primarily concerned with logic one and zero, an analog designers cares about the detailed shape of the waveform and its corresponding spectrum.\cite{syschip}''
+\end{quote}
+Figure \ref{fig:analogwave} shows an example of properties that might be of interest to an analog designer versus a digital designer.  Common tests used when performing functional testing may include frequency response, linearity, and signal-to-noise ratio among many others\cite{syschip}.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.4]{images/analog-waveform}
+	\end{center}
+	\caption{Digital and analog representations for a time domain response: (a) digital and (b) analog.\cite{syschip}}
+	\label{fig:analogwave}
+\end{figure}
+
+\subsection{Mixed Signal Testing}
+\label{sct:MixedSignal}
+In a mixed-signal environment both digital and analog systems coexist and interact.  Testing these systems is a challenge as it brings together the specific nuances of both types of environments together.  While there are many different ways to test these systems, \cite{stroud} defines a BIST approach to testing mixed-signal systems shown in Figure \ref{fig:mixedbist1}  This BIST system relies on the existing Digital to Analog Converter (DAC)\nomenclature{DAC}{Digital to Analog Converter} and the existing Analog to Digital Converter (ADC)\nomenclature{ADC}{Analog to Digital Converter} to perform functional tests on the analog circuitry of a mixed-signal system.  One of the key advantages of this architecture is that it is largely digital and thus can be integrated into the digital circuitry already in the system with minimal overhead.  This prevents excess interference with the analog circuitry excluding two loop back multiplexers that facilitate the sending and retrieving of test values to and from the analog sub-system\cite{stroud}.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/mixed-bist-architecture}
+	\end{center}
+	\caption{BIST approach for mixed-signal systems\cite{stroud}}
+	\label{fig:mixedbist1}
+\end{figure}
+In Figure \ref{fig:mixedbist1} there are only two multiplexers in the system, one to switch the inputs of the analog system to the TPG generated values and one to return the analog data back to the ORA for analysis.  Additional multiplexers can be added to facilitate higher fault resolution.  Figure \ref{fig:mixedbist2} shows the addition of a second set of multiplexers allowing the BIST to resolve faults to either the first loop back path or the second\cite{stroud}.  There is no limit to the number of multiplexers that can be added to the system other than the increase in area overhead; however, our specific mixed-signal approach (which will be explained in more detail in Chapter 2) does add in several other loop back paths including a digital only path which facilitates the testing of the BIST itself and a path through the DAC and ADC which allows for the testing of both components as well as additional flexibility during system testing.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/mixed-bist-architecture-two}
+	\end{center}
+	\caption{Multiple Loop Back Mixed Signal BIST\cite{stroud}}
+	\label{fig:mixedbist2}
+\end{figure}
+The digital loop back path (the path connecting the BIST TPG directly to the ORA), is the focus of this thesis.  This thesis looks to discover the practicality of using the BIST to test itself via the digital only path.  It was shown in \cite{stroud-analog} that testing the BIST via the digital loop back path is an essential step to providing a sufficiently high fault coverage of mixed-signal systems.  Figure \ref{fig:analog-faultcvg} demonstrates the fault coverage achieved by \cite{stroud-analog} without using the digital loop back path to test the digital circuitry first.  Due to the inherent acceptable variation in analog circuitry, digital values must be given an acceptable value range similar during testing.  As this range increases, the fault coverage decreases (the double precision ORA can lessen this issue, but it too suffers some decline and also has a negative impact on area).
+\begin{figure}[b!]
+	\begin{center}
+		\includegraphics[scale=.6]{images/analog-fault-coverage}
+	\end{center}
+	\caption{Fault Coverage v. Acceptable Value Range\cite{stroud-analog}}
+	\label{fig:analog-faultcvg}
+\end{figure}
+As a result of \cite{stroud-analog}'s testing, a digital loop back path is used similar to Figure \ref{fig:digital-loopback} to determine the maximum digital fault coverage achievable when using the BIST to test itself.  To determine our fault coverage we use AUSIM, a fault simulator developed by Dr. Charles Stroud, to simulate the faults in our circuit and to determine the fault coverage achievable by our circuit for a given set of test vectors.  
+
+Using our fault simulations, we show that a digital loop back path is necessary to fully test the digital circuitry of the mixed-signal BIST and that by developing the appropriate set of a test vectors, a high fault coverage of the BIST circuitry can be achieved.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.7]{images/digital-loopback}
+	\end{center}
+	\caption{Digital Loop Back Multiplexer\cite{stroud}}
+	\label{fig:digital-loopback}
+\end{figure}
+
+\section{Thesis Statement}
+In the next chapter a more detailed explanation about fault simulation and of our specific mixed-signal testing approach is given.  Building upon this explanation, Chapter III explores the main topic of this thesis: testing the actual mixed-signal testing circuitry to determine the level of fault coverage achievable.  The results of this testing and an examination of the effectiveness of these tests are explained in Chapter IV, before a summary and conclusions are given in Chapter V.
+
+\chapter{Background}
+
+\section{Fault Simulations}
+Before discussing the tests performed on our BIST approach, it is important to have a thorough understanding of how fault simulations are performed.  There are many different simulators and methods of performing fault simulations on a circuit.  For our tests we choose the AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} fault simulator.  Developed by Stroud, this simulator can perform logic simulations, as well as both stuck-at fault simulations and bridging fault simulations (faults which occur between wires) \cite{ausim}.  This section will discuss how to set-up and use this simulator as well as several custom tools used in conjunction with AUSIM to perform our testing.
+
+\subsection{Auburn Simulation Language}
+Before a circuit can be simulated it must be converted to a format that AUSIM can understand.  The Auburn Simulation Language (ASL)\nomenclature{ASL}{Auburn Simulation Language} is the circuit description used by AUSIM\cite{asl}.  ASL is used to provide a textual representation of a circuit at the gate-level to the simulator.  This gate-level net-list is used to describe each connection and gate used in a circuit design and allows the simulator to build a representation of the circuit under test.  ASL begins with a top-level circuit declaration.  This declaration defines the name of the circuit and uses the in and out keywords to define the inputs and outputs to the circuit.  An example circuit is given in Figure \ref{fig:half_adder}.  Figure \ref{fig:half_adder} A is a half-adder which takes in two inputs and outputs a sum and carry bit, the corresponding ASL description is given in Figure \ref{fig:half_adder} B.
+\begin{figure}
+	\begin{center}
+		\begin{minipage}[l]{.45\textwidth}
+			\includegraphics[scale=1]{images/half-adder}	
+		\end{minipage}
+		\begin{minipage}[r]{.45\textwidth}
+			\begin{center}
+				Half-Adder Circuit
+			\end{center}
+			\begin{enumerate}
+				\setlength{\itemsep}{0cm}
+				\item \# Half-Adder ;
+				\item ckt: HF in: A B out: S C ;
+				\item xor: X1 in: A B out: S ;
+				\item and: A1 in: A B out: C ;
+			\end{enumerate}
+		\end{minipage}
+	\end{center}
+	\begin{center}
+		\begin{minipage}[l]{.45\textwidth}
+			(A)
+		\end{minipage}
+		\begin{minipage}[r]{.45\textwidth}
+			(B)
+		\end{minipage}
+	\end{center}
+	\caption{A Half-Adder circuit}
+	\label{fig:half_adder}
+\end{figure}
+As can be seen from the figure the circuit declaration is started by the \textit{ckt} keyword.  Each keyword in ASL is followed by a `:' character.  Following the \textit{ckt} keyword is the name of the circuit in this case ``HF''.  Following that, the primary inputs and outputs are declared using the \textit{in} and \textit{out} keywords.  Each statement in ASL is terminated using a `;' character.  After the circuit statement the gate-level description of the circuit is given.  The format of each gate is similar to the format of the circuit statement:
+\begin{quote}
+	\textbf{GATE}: Name \textbf{IN}: In1 In2... InN \textbf{OUT}: Out1 Out2... OutN ;\cite{asl}
+\end{quote}
+All circuits in ASL follow this simple syntax.  The and, xor, and dff gates are examples of gates which are built into AUSIM.  All of the basic logic gates as well as the D flip-flop and two input multiplexer are provided automatically.  Table \ref{tbl:ASLGates} shows each gate and its inputs and outputs.
+\begin{table}[bht]
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{2}{|c|}{AUSIM Keywords} \\ \hline
+Gate & Example \\ \hline
+AND & AND: a1 in: i1.. iN out: Z \\ \hline
+OR & OR: o1 in: i1.. iN out: Z \\ \hline
+NAND & NAND: na1 in: i1.. iN out: Z \\ \hline
+NOR & NOR: no1 in: i1.. iN out: Z \\ \hline
+NOT & NOT: n1 in: A out: nA \\ \hline
+XOR & XOR: x1: in: i1... iN out: Z \\ \hline
+MUX2 & MUX2: m1 in: i1 i2 s1 out: Z \\ \hline
+DFF & DFF: d1 in: CLK D out: Q \\ \hline
+\end{tabular}
+\end{center}
+\caption{Built-in AUSIM Gates\cite{asl}}
+\label{tbl:ASLGates}
+\end{table}
+
+It is important to understand that custom gates can be implemented and used in a similar syntax.  To do this one must use the \textit{subckt} command.  While an ASL file can only have a single circuit declaration, it can have any number of sub-circuit declarations\cite{asl}.  Each sub-circuit has its own set of top-level inputs and outputs and its own gate-level net-list.  Once defined the name of the sub-circuit can be used as a gate and be instantiated elsewhere in the circuit description.  
+
+\subsection{Converting to ASL}
+In many cases behavioral models are written in a high-level hardware description language such as VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow a behavioral model to be developed of a circuit at a much higher level than ASL's gate-level description.  This means that for large, complex circuits (such as our BIST approach) design in VHDL or Verilog is preferred.  To aid in the simulation of larger circuits a tool was developed to convert a Verilog net-list to an ASL net-list.  This allows a user to write a high-level behavioral description of the circuit, synthesis it down to a Verilog net-list using one of many different CAD tools, then convert it to ASL for fault simulation using the VerilogParser tool.
+
+As a simple example the ISCAS '85 C17 benchmark circuit (Figure \ref{fig:c17_netlist}) was used to demonstrate the conversion process and the differences between a Verilog net-list and an ASL net-list.  In Figure \ref{fig:c17_netlist} A the behavioral model of the C17 circuit has been synthesized into a post-layout net-list in Verilog.  In B the Verilog model has been converted to ASL.
+\begin{figure}[t]
+	\begin{flushleft}
+		\includegraphics[scale=1]{images/c17-verilog-netlist}	
+	\end{flushleft}
+	\begin{flushleft}
+		(A) Verilog Net-list
+	\end{flushleft}
+	\begin{flushleft}
+		\includegraphics[scale=1]{images/c17-asl-netlist}
+	\end{flushleft}
+	\begin{flushleft}
+		(B) ASL Net-list
+	\end{flushleft}
+	\caption{C17 Benchmark Circuit Net-list}
+	\label{fig:c17_netlist}
+\end{figure}
+The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates and circuits.  In \ref{fig:c17_netlist} A, line 7 the instantiation of the AO21 gate is seen.  The gate's inputs and outputs are not designated separately.  In addition the net names are attached to their respective gate IO names.  In contrast, in \ref{fig:c17_netlist} B, line 2\footnote{The AO21 gate is a custom sub-circuit previously declared} the same gate is instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position and not by name.  For the translation to be successful, the inputs and outputs to the gates must be ordered correctly.  Various techniques including lookup tables must be used to build the ASL correctly.
+
+The VerilogParser tool performs the translation to ASL.  It is written in Microsoft .NET C\# 3.5.  The language was chosen due to the author's familiarity with the language as well as the extensive standard library included in .NET which simplified the program considerably\cite{csharp}.  As a quick reference Figure \ref{fig:VerilogParserUse} demonstrates how to use the tool on a Verilog net-list.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.9]{images/verilog-asl-command}
+	\end{center}
+	\caption{Using the Verilog to ASL tool to convert a circuit to ASL}
+	\label{fig:VerilogParserUse}
+\end{figure}
+The tool works by scanning the Verilog file for module definitions and parses the modules into an intermediate representation of the circuit.  It then prompts the user to choose which module should be used as the top-level circuit before outputting the resulting ASL.  Some improvements can be made to the converter such as automatic top-level module detection as well as the ability to convert VHDL net-lists; however, these features were not implemented due to time constraints.  It is important to note that while the ASL generated will always be syntactically correct, the tool does not check for validity of the circuit.  It is assumed any necessary sub-circuits that are used in the net-list have already been created and verified in ASL.  For a more detailed analysis of the Verilog to ASL parser please refer to the Appendix \ref{apdx:VerilogToASL}.  
+
+\subsection{Commanding the Simulator}
+AUSIM can preform many different operations pertaining to the circuit.  For our purposes we will focus on the steps leading upto and including logic and stuck-at fault simulation.  The AUSIM simulator is executed by providing a command file.  This command file is a simple file which is a sequential list of commands to be executed by the simulator.  Each command and its required parameters are given on each new-line.  Before exploring the commands available, it is important to understand how AUSIM locates and uses pertinent files during execution.  Each important file has a unique file extension which designates which type of file it is.  This can include files such as \textit{.asl} for ASL files or \textit{.vec} for Vector files (explained in the next section) among many others.  In the usual case all of these files would be named the same prefix and only differ in their respective file extensions.  This allows the use of the \textit{default} command to specify the filename prefix for AUSIM to use when attempting to locate or creating new files.  AUSIM does provide the ability to override the filename for individual files if needed\cite{ausim}.  Table \ref{tbl:ausim_commands} provides a list of common AUSIM commands and their respective descriptions.  Each command file is provided to AUSIM during execution as a command-line argument.  As a simple example, a command file for a circuit called counter which performed a logic simulation could look like the following:
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{l}
+		default counter \\
+		proc \\
+		audit \\
+		simul8 \\
+		\end{tabular}
+	\end{center}
+	\caption{Example AUSIM command file}
+\end{table}
+This file would tell AUSIM to look for files prefixed with counter (such as counter.asl, counter.vec etc.) and to process the circuit description, audit the circuit for area and performance, and finally perform a logic simulation using the circuit and a vector file.
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|l|}
+		\hline
+		Command & Description \\ \hline
+		default prefix & Uses the prefix and the default suffix for each file \\ \hline
+		proc & Processes an asl file \\ \hline
+		audit & Performs area and performance analysis of circuit \\ \hline
+		simul8 & Performs logic simulation \\ \hline
+		fltgen & Generates a fault list for the circuit \\ \hline
+		pftsim & Performs parallel fault simulation \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Common AUSIM Commands\cite{ausim}}
+	\label{tbl:ausim_commands}
+\end{table}
+The \textit{simul8} command is one of two modes of execution that are important for this thesis.  The \textit{simul8} command stands for ``simulate'' which performs a logic simulation using the circuit (the other mode is fault simulation which will be discussed in Section \ref{sct:ausim-fault}).  Logic simulation applies a given set of inputs to the circuit for a given number of cycles and records the output.  The inputs that are given are vector files and are discussed in the next section.
+
+\subsection{Test Vector Files}
+Once a circuit has been created in the ASL format the simulator needs to be given the appropriate input vectors to properly stimulate the circuit's inputs. These vectors are used for both logic and fault simulation (discussed in Section \ref{sct:ausim-fault}).  Understanding the vector files and how to create them is essential to using AUSIM and properly testing circuits.
+
+Fortunately the vector file format is very simple.  Generally a vector file should end in the \textit{.vec} file extension and have the filename prefix that is set in the AUSIM command file\cite{ausim}.  In the vector file each line should include a test vector.  Each test vector should be a binary sequence corresponding in length to the number of primary inputs in the ASL circuit.  The number of test vectors should be equal to the length of the test the user wants to apply to the circuit.  Each test vector that is applied will correspond to exactly one vector recording the outputs of the circuit after the circuit has settled (output is discussed in the next section).  An example vector file for the previously mentioned half-adder (Figure \ref{fig:half_adder}) is shown in Table \ref{tbl:half_adder_vector}.  This vector file applies four test vectors to the circuit.
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l}
+			\# Vector File ; \\
+			00 \\
+			01 \\
+			10 \\
+			11 \\
+		\end{tabular}
+	\end{center}
+	\caption{Example Vector File For Half-Adder}
+	\label{tbl:half_adder_vector}
+\end{table}
+
+This is great for simple circuits and short tests; however, for larger, complex circuits or long complex tests this can become difficult to use.  AUSIM offers no way to generate large amounts of vectors (there is a random vector tool\cite{ausim} but this is not always appropriate).  To remedy this a tool was created to generate vector files from a simple command language.
+
+\subsection{Generating Test Vectors using Vecgen}
+Vecgen is a program written to generate AUSIM vector files.  It uses a straight forward command language to build a vector file of any length.  It is written in Microsoft's .NET C\#\cite{csharp} language. Vecgen addresses the issue of large circuits by using a concept called frames.  
+
+The first line of a Vecgen file must be the GENERATE command which tells the generator how many frames(vectors) to generate and the number of primary inputs of the circuit.  If all the user provides is the GENERATE command then Vecgen will create a vector file with the specified number of vectors, filled with all `0' characters as wide as the number of primary inputs in the circuit.  This is the idea behind Vecgen, the vector each time is the same as the vector before it unless changed by the user in a frame.  There are a number of commands which are available to manipulate the output using Vecgen (the full list is available in Appendix \ref{apdx:Vecgen}).  An example generation command file, which would create the vector file shown in Table \ref{tbl:half_adder_vector}, is given in Table \ref{tbl:Vecgen_example} showing the Vecgen format:
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l}
+			GENERATE 4 2 \\		
+			\\
+			FRAME 1	\\
+			BIT 0 1	\\
+			\\
+			FRAME 2	\\
+			BIT 0 0	\\
+			BIT 1 1	\\
+			\\
+			FRAME 3	\\
+			BIT 0 1	\\
+		\end{tabular}
+	\end{center}
+	\caption{Command to generate the half-adder vector sequence}
+	\label{tbl:Vecgen_example}
+\end{table}
+In the case of the half-adder example, the generator is much more verbose and would not be preferred; however, for this example one can see how it would help in more complex generation.  In our example FRAME 0 is not modified since the first vector generated is always all logic 0's.  FRAME 1 changes bit 0 to a logic 1 so that the resulting vector is now \textit{01}.  FRAME 2 changes bit 0 back to a logic 0 and changes bit 1 to a logic 1, resulting in \textit{10}.  Finally FRAME 3 updates bit 0 back to a logic 1 to obtain the vector \textit{11}.  Only at the times the output vector is changing does a FRAME need to be declared: if we were to generate ten frames instead of the four specified in the example, then the remaining six vectors would be automatically filled in and be the same \textit{11} vector set by FRAME 3.
+
+This is a very simple example, there are many more commands as shown in Appendix \ref{apdx:Vecgen} that allow for much more powerful generation.  Some commands such as RANGE affect multiple bits at once, others such as SERIALIZE or CLOCK work over multiple frames.  One interesting command is the DECLARE command.  The DECLARE command creates a reusable group of commands which can be called from any frame.  This is especially useful if a certain sequence is required repeatedly during a test.  An example sequence and its output are shown in Table \ref{tbl:countsequence}.  The sequence creates a clock on its MSB, then calls a function which counts up then counts back down.  It then disables the clock and calls the counter function again.
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l|r|r}
+		Commands & 1-15 & 16-24 \\ \hline
+		GENERATE 24 3 & 100 & 001 \\
+		 & 000 & 000 \\
+		\textbf{DECLARE} counter & 101 & 000 \\
+		FRAME 0	& 001 & 001 \\
+		COUNT 0 2 U & 110 & 001 \\
+		FRAME 8 & 010 & 010 \\
+		COUNT 0 2 D & 111 & 010 \\
+		\textbf{ENDDECLARE} & 011 & 011 \\ 
+		 & 100 & 011 \\
+ 		\textbf{FRAME 0} & 000 & \\
+		CLOCK 2 & 111 &  \\
+		CALL counter & 011 & \\
+		\textbf{FRAME 16} & 110 & \\
+		BIT 2 0 & 010 &  \\
+		CALL counter & 101 & \\
+		\end{tabular}
+	\end{center}
+	\caption{Vecgen Example}
+	\label{tbl:countsequence}
+\end{table}
+The generation in Table \ref{tbl:countsequence} is much more powerful than the previous example in Table \ref{tbl:Vecgen_example} and demonstrates some of the power that the Vecgen program provides.  All fault simulation tests for the BIST are designed in the Vecgen markup language for simplicity.
+
+\subsection{Output Files}
+During logic simulation the output of the circuit is recorded into an out file.  Like the vector file format, AUSIM's out file format is very straight forward.  Each out file consists of a header created by AUSIM which labels each column of the file with the corresponding IO name.  Following the header is the output of the logic simulation.  Each output line consists of the test vector which was applied and the resulting output recorded from the circuit.  An example out file for the half-adder example from Figure \ref{fig:half_adder} is shown in Figure \ref{tbl:half_adder_out}.
+\begin{table}
+	\begin{center}
+		\begin{tabular}{lll}
+			\# & \multicolumn{2}{l}{AUSIM (2.7) Simulation Results ;} \\
+			\# & AB & SC ; \\
+			   & 00 & 00 \\
+			   & 01 & 10 \\
+			   & 10 & 10 \\
+			   & 11 & 01 \\
+		\end{tabular}
+	\end{center}
+	\caption{Example Half-Adder Out File}
+	\label{tbl:half_adder_out}
+\end{table}
+As shown in the Figure, the top consists of the previously mentioned header labeling each column with its IO name (if an IO name is more than a single letter it is written vertically with one letter on each line).  Following the header is the four vectors from Table \ref{tbl:half_adder_vector} and the resulting output from logic simulation.  Like the vector file this format works well for small circuits and simple simulations; however, it can be a nightmare when verifying larger circuits.  This is especially true of circuits with a large number of outputs or which use serial communication interfaces such as a Serial Peripheral Interface (SPI)\nomenclature{SPI}{Serial Peripheral Interface}.  For these more complicated interfaces a format which can be visualized greatly eases the difficulty involved in spotting easy to miss mistakes (such as an incorrect or invalid test vector) or invalid output.  For these more complicated circuits (such as our BIST) a tool has been written to convert an AUSIM out file into a Value Change Dump or VCD\nomenclature{VCD}{Value Change Dump}.
+
+\subsection{Value Change Dump Format}
+The Value Change Dump Format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is a standard format and is tailored towards storing digital simulation results in as small as a footprint as possible.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data.
+
+At its heart the VCD file stores simulation data in the same manner that the Vecgen markup defines test vectors.  In contrast to the AUSIM out file format, the VCD format only stores changes in values\cite{verilog}.  While this makes the file less human readable, it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  Table \ref{tbl:half_adder_vcd}\footnote{It is important to note while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector} displays the output file converted into VCD format.  This conversion was performed using the Out2VCD program developed by the author.  The program is very straight forward and uses the following syntax:
+\begin{quote}
+	\textbf{OUT2VCD} [-g groups.txt]\footnote{The groups file is a list of IO prefixes which should be grouped together to form a bit vector.  ie. if the file contained the prefix ``color'' then IO such as color1 color2 and color3 would be combined into color[2:0] in the VCD file} input.out output.vcd
+\end{quote}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l|l}
+			VCD File & Description \\ \hline
+			\textbf{\$date} & The date section defines the day\\
+			Tuesday, December 07, 2010 & which this file was generated \\
+			\textbf{\$end} & \\
+			\textbf{\$version}
+			Generated For ASL2VCD 1.0 & A comment detailing the  \\
+			Alex Lusco & version of the generator for this file \\
+			\textbf{\$end}	\\
+			\textbf{\$comment}	\\
+			VCD File & An additional comment section detailing \\
+			\textbf{\$end} & information about the file \\
+			\textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale for each value frame \\
+			\textbf{\$scope} module logic \textbf{\$end} & The Logic Module \\
+			\textbf{\$var} wire 1 ! A \textbf{\$end} & This section aliases each input with a single ASCII \\
+			\textbf{\$var} wire 1 " B \textbf{\$end} & character for long IO names this shrinks them to a  \\
+			\textbf{\$var} wire 1 \# S \textbf{\$end} & single character allowing for the ability to condense \\
+			\textbf{\$var} wire 1 \$ C \textbf{\$end} & the dump for large simulations greatly \\
+			\textbf{\$upscope} \$end & \\
+			\textbf{\$enddefinitions} \$end & End of header \\
+			\textbf{\$dumpvars} & Sets the initial value for each input \\
+			0!	& Each line IO must be set here \\
+			0"	& \\
+			0\# & \\
+			0\$ & \\
+			\textbf{\$end} & \\
+			\textbf{\#1} & The \#N construct denotes a time step to apply the \\
+			1" & following value changes at In this case 10ns \\
+			1\# & simulation time\\
+			\textbf{\#2} & This time its at 20ns \\ 
+			1! & \\
+			0" & \\
+			\textbf{\#3} & 30ns\\
+			1" & \\
+			0\# & \\
+			1\$ & \\	
+			\textbf{\#4} & 40ns \\		
+		\end{tabular}
+	\end{center}
+	\caption{VCD File for Half-Adder Vectors}
+	\label{tbl:half_adder_vcd}
+\end{table} 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.4]{images/half-adder-vcd}
+	\end{center}
+	\caption{The VCD file visualized in the GTKWave Viewer}
+	\label{fig:half-adder-gtkwave}
+\end{figure}
+In the example in Table \ref{tbl:half_adder_vcd}, the VCD file is much larger than the AUSIM out file format; however, for long simulations with many inputs and outputs the VCD format is much more compact.  Regardless of the file length, the key benefit to conversion to the VCD format is the ability to visualize AUSIM's output in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform.  The displayed waveforms can be panned and zoomed.  This functionality alone makes it much easier to verify the output of a complex simulation.  This tool proved invaluable for verification of test vectors when testing the BIST.
+ 
+\subsection{Fault Simulation}
+\label{sct:ausim-fault}
+Fault Simulations using AUSIM are achieved by adding the ``pftsim'' command to the AUSIM command file.  When performing fault simulations AUSIM reads a list of faults from a \textit{.flt} file which contains nets to be faulted\cite{ausim}.  The time required to complete the fault simulation is a direct function of both how many faults are in the fault list and the time required for a logic simulation.  The ``pftsim'' command performs a parallel fault simulation which means that as many as thirty-two faults can be simulated at once.  This means the lower-bound of fault simulation time is shown in Equation \ref{eq:SimTime}.  This is important and is discussed in more detail in Chapter 3 where simulation time becomes a major issue for the large BIST circuit.
+\begin{equation}
+\frac{NumFaults}{32} \times LogicSimulationTime \approx Fault Simulation Time
+\label{eq:SimTime}
+\end{equation}
+
+When Fault Simulation is run, it faults each fault specified in the fault file and compares the output of the circuit against the previously performed logic simulation.  If at any point there is a discrepancy between the good circuit output (from the logic simulation) and the simulated circuit with the fault that fault is put in the ``detected list''.  If after completing the individual fault's simulation, no discrepancy is found then the fault is placed in the ``undetected list''.  There is also a third possibility which is an artifact of fault simulation.  If a fault causes an uninitialized output (an output that could be either a logic 0 or a logic 1) then it is said to be potentially detected since its detection will ultimately depend on which logic value that output is set too.  The total percentage of faults detected is called the fault coverage and is determined by Equation \ref{eq:FaultCoverage} (assuming there is a 50\% change of detecting potentially detected faults), where \textit{D} is the number of detected faults, \textit{P} is the number of potentially detected faults, and \textit{U} is the number of undetected faults\cite{stroud}.
+\begin{equation}
+\frac{D + (.5 \times P)}{U}
+\label{eq:FaultCoverage}
+\end{equation}
+
+If any of the undetected faults are determined to be undetectable, which is to say that there is no possible test vector or sequence of test vectors which can detect the fault, then it can be removed from the denominator which will increase the fault coverage percent, as shown in Equation \ref{eq:FaultCoverage_Undetectable} (where \textit{X} is the number of undetectable faults).   This proved important for the BIST as there were a number of faults where the undetectability was caused by the lack of a hard-coded logic value in the simulator (for example where Vdd was tied to a gate input by the synthesis tool).
+\begin{equation}
+\frac{D + (.5 \times P)}{U-X}
+\label{eq:FaultCoverage_Undetectable}
+\end{equation}
+A number of scripts were developed to ease the handling of multiple simulations and the combining of multiple simulation outputs; however, discussion of these scripts is reserved for a Chapter 4 where they become important for parsing the BIST simulation Results.
+
+\section{BIST Architecture}
+Our BIST architecture is a mixed-signal BIST approach which uses Selective Spectrum Analysis (SSA)\nomenclature{SSA}{Selective Spectrum Analysis} to test analog circuitry.  A block diagram of the basic architecture can be seen in Figure \ref{fig:bist-ssa}.  This architecture is capable of measuring a number of different analog characteristics including frequency response and third-order interception point (IP3)\nomenclature{IP3}{Third Order Interception Point}\cite{basessa}.  In addition by sweeping through a frequency spectrum both Signal to Noise Ratio (SNR)\nomenclature{SNR}{Signal to Noise Ratio} and Noise Figure\cite{noisefigure} and be measured.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.5]{images/bist-ssa-architecture}
+	\end{center}
+	\caption{General BIST Architecture\cite{testtime}}
+	\label{fig:bist-ssa}
+\end{figure}
+As seen in Figure \ref{fig:bist-ssa} the BIST consists of a Direct Digital Synthesis (DDS)\nomenclature{DDS}{Direct Digital Synthesis} based TPG, Multiplier Accumulator (MAC)\nomenclature{MAC}{Multiplier Accumulator} based ORA, and test controller (not shown).  The TPG consists of three numerically controlled oscillators (NCOs)\nomenclature{NCO}{Numerically Controlled Oscillator} and utilizes the existing DAC in the mixed-signal system to generate the analog waveforms for testing\cite{testtime}.  Each NCO has a phase accumulator which is used to generate the output frequency\cite{basessa}.  By accumulating the phase word based on a given frequency word \textit{f} each NCO will generate a frequency according to Equation \ref{eq:frequencyword}\cite{testtime}.  The generated tones serve two purposes: one is to stimulate the analog CUT, and the second is to provide an in-phase and out-of-phase reference tone for the ORA\cite{testtime}
+\begin{equation}
+	f = \frac{f \times f_{clk}}{2^{n}}
+	\label{eq:frequencyword}
+\end{equation}
+
+The ORA architecture consists of two MACs.  Each MAC receives the output from the CUT as well either the in-phase or out-of-phase signal from an NCO.  Using this method the ORA is able to measure the amplitude and phase response at a given frequency\cite{testtime}.  Each test the BIST performs relies on this method of measurement.  The tests and how they are run will be discussed in the next section.
+
+In addition to the TPG and MAC-based ORA, there are a number of multiplexers in Figure \ref{fig:bist-ssa}.  These multiplexers define different paths for sending and receiving signal to or from the CUT.  As referenced in Section \ref{sct:MixedSignal} these multiplexed loopback paths can be essential to achieving a high fault coverage when testing.  In the architecture shown there are three loopback paths in the system.  The first path is a path which passes a signal out through MUX1, through the DAC, through the analog CUT and returns it back through the ADC and into MUX4.  This is the outermost path which stimulates the Analog CUT for testing.  A second path exists similar to the first; however, instead of the output of the analog CUT, MUX3 instead selects the bypass path around the CUT.  This bypass path be used to calibrate the BIST for any noise introduced by the DAC and ADC pair.  The final path is the digital loopback path.  In this path MUX4 selects the output from MUX3 directly.  This path bypasses all analog circuitry including the ADC and DAC.  As stated in Section \ref{sct:MixedSignal}, this is the path that is most important for our testing of the BIST.  The digital loopback path does not introduce any analog error into the signal so when performing a ``loopback test'' the test will always result in the same accumulated value, no range of acceptable values is required\cite{stroud-analog}.
+
+\subsection{Performing Tests}
+In a single measurement (where a measurement is defined as a single accumulation at a particular frequency) the BIST can measure the magnitude and phase of the CUT output at the measured frequency.  To calculate these values Equation \ref{eq:MagnitudePhase} is applied to the two resulting accumulation values one in-phase and one out-of-phase\cite{jie}.  In the equation DC$_1$ and DC$_2$ are the output of the two in-phase and out-of-phase accumulations.
+\begin{equation}
+  \begin{tabular}{lll}
+	$A(f)$ & $=$ & $\sqrt{DC_1^2+DC_2^2}, \nonumber$ \\
+	  $\Delta\phi(f)$ & $=$ & $-\tan^{-1}\frac{DC_2}{DC_1}.$
+  \end{tabular}
+  \label{eq:MagnitudePhase}
+\end{equation}
+
+To perform more complex tests such as frequency response and IP3 (also called linearity) these measurements are performed repeatedly at different frequencies of interest and the results of each tests are used to calculate the result.  As an example during a linearity measurement the CUT is driven by a two-tone signal which consists of two fundamental tones $f_1$ and $f_2$.  Due to the CUT's nonlinearity, its output will consist of not only $f_1$ and $f_2$ but also the third order inter-modulation points (IM3)\nomenclature{IM3}{Third Order Inter-Modulation Point}\cite{testtime}.  Figure \ref{fig:linearity-spectrum} demonstrates what the input and resulting spectrum will look like\cite{testtime}.  The linearity ($\Delta P$) of the CUT can be determined by the difference in dB between the fundamental frequency (either $f_1$ or $f_2$) and the IM3 tone\cite{basessa}.  To calculate this the BIST must take two measurements at either the two lower frequencies $f_1$ and $2*f_1-f_2$ or the two upper frequencies $f_2$ and $2*f_2-f_1$\cite{testtime}.  The result is the difference in the two measured magnitudes.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.7]{images/linearity-spectrum}
+	\end{center}
+	\caption{Two-tone test for IP3 measurement\cite{testtime}}
+	\label{fig:linearity-spectrum}
+\end{figure}
+The linearity test is just one example of how a measurement is made using this BIST architecture, in the next section more details will be discussed about how calculations are made on-chip and how the test controller is used to control and execute different BIST sequences.  Before discussing the rest of the BIST architecture it is important to understand how the amount of time required for a measurement is determined.  The accumulation is exceptionally important to achieving an accurate measurement due to potential AC calculation errors\cite{jie}.  A large body of work was put into determining both the appropriate length of time to accumulate and a method for determining the length of time efficiently in hardware.  \cite{jie} and \cite{testtime} discuss in detail the complexity of stopping accumulation at the correct moment to reduce the error.  As it is only pertinent to this thesis as it relates to fault simulation time, it will only be briefly discussed here as in relation to test-time.
+
+According to \cite{jie}, there is a potential for calculations errors in an SSA approach.  In an effort to minimize or the errors the BIST approach must either accumulate for a long period of time (referred to as free-run accumulation) or the accumulation time must be stopped at an integer multiple period (IMP)\nomenclature{IMP}{Integer Multiple Period} of the frequency being measured.  As explained in \cite{jie} a good IMP occurs when using a $M_{full}$ width phase accumulator at $2^{M_{eff}}$ accumulation cycles where $M_{eff}$ is calculated in Equation \ref{eq:EffectiveBits}, when m is the bit position of the least significant `1' in a frequency word\cite{jie}.
+\begin{equation}
+	M_{eff} = M_{full} - m
+	\label{eq:EffectiveBits}
+\end{equation}
+As an example, given a four bit wide phase accumulator and the frequency word 1010 (or decimal 10), $M_{eff}$ would be equal to $4 - 1$ or 3.  This makes the number of clock cycles before a good IMP $2^3$ or $8$.  For large phase accumulators the number of clock cycles to accumulate can vary greatly depending on the frequency word chosen.  In our BIST architecture with 16-bit phase accumulators, the difference between the shortest accumulation time of 2 clock cycles and than the longest accumulation time of 65535 clock cycles (which occurs when using any odd frequency word) is much greater.  Another level of complexity occurs when doing a test which requires more than a single tone.  For a multi-tone test the IMP must be the common IMP of all frequency words.  In practice a simple method is used to determine the common IMP and subsequently the maximum number of clock cycles to accumulate.  By logically OR'ing the frequency words together, our BIST approach uses an OR chain to directly determine the number of clock cycles to accumulate.  Figure \ref{fig:or-chain} shows the or-chain which calculates the number of clock cycles.  The figure easily shows that a logic `1' in the LSB or 0th bit of the input produces a `1' on all the output bits (which corresponds to the maximum number of clock cycles for a given phase accumulator size).
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/or-chain}
+	\end{center}
+	\caption{The OR Chain which calculates the number of clock cycles from the logical OR of all frequency words}
+	\label{fig:or-chain}
+\end{figure}
+Using this clock cycle count, the BIST uses a clock cycle counter to determine when to stop accumulation on an IMP and minimize the error.  Once accumulation has completed the calculation step is triggered and the results are handed off the calculation circuit.
+
+\subsection{Calculation Circuitry}
+As discussed previously when the BIST is used to measure a frequency, the result is the in-phase and out-of-phase values measured at the given frequency ($DC_1$ and $DC_2$).  While these values contain the magnitude and phase information about the measured frequency, they are in a format which is not intuitive and requires post-processing to determine the result.  To calculate the magnitude and phase the previously discussed equations from Equation \ref{eq:MagnitudePhase} can be used.  While this provides a simple step to converting the $DC_1$ and $DC_2$ values to a more intuitive format, it requires manual post-processing to be completed.  The circuitry that will be discussed brings the processing of the $DC_1$ and $DC_2$ on-chip allowing the magnitude and phase to be determined and output directly.  In addition, with the help of a sophisticated test controller the BIST is capable of taking more complex measurements (such as IM3 and SNR) and produce the output of those higher-order measurements directly.
+
+\cite{joey} discusses the original implementation of the calculation circuitry for our BIST approach.  Shown in Figure \ref{fig:joeycalc} the original calculation circuit uses a custom CORDIC developed by \cite{joey} to perform the operations from Equation \ref{eq:MagnitudePhase} and determine the magnitude and phase from the $DC_1$ and $DC_2$ values.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/joey-calculation}
+	\end{center}
+	\caption{Calculation Circuit presented in \cite{joey}}
+	\label{fig:joeycalc}
+\end{figure}
+Also in this circuit is some additional circuitry to perform many of the higher level tests available to the BIST such as the previously discussed IM3 or linearity test.  With the help of the test controller the calculation circuit presented by \cite{joey} can be used for IM3, spur search\footnote{A spur search consists of a measurement from a starting frequency to an ending frequency which returns the frequency and magnitude of the most powerful frequency measured in the given range}, signal-to-noise ratio, and noise figure (NF)\nomenclature{NF}{Noise Figure} tests.  To do this multiple frequency measurements must be made by the BIST and stored in the calculation circuit.  The final result from any such test is converted to decibels by the Logarithmic Translation Unit and made available to the system.  The main feature of the calculation circuit is the divider.  The divider performs several different functions depending on the test.  In a IM3 test the divider is used to divide a current magnitude measurement by a previous measurement; likewise, for the SNR measurement it is used to divide the measured signal magnitude by the summation of the noise in the system\cite{joey}.  The divider and accumulators are also used to find the average noise in the system which is used to calculate the SNR.  While this circuit functions correctly and was able to solve the issue of on-chip calculations there are a number of issues which could be improved.
+
+First the area of the calculation circuit was large, particularly the divider took up a large amount of chip area.  Second the calculation circuit could not run at the same speed as the BIST circuitry.  Our goal for our BIST implementation was to achieve a 1GHz operation frequency.  Unfortunately the calculation circuit could not achieve this speed which necessitated two clock domains one for the BIST which could operate at upto 1GHz and one for the calculation circuit which could operate at upto 500 MHz.  This made the interface circuitry between the BIST and the calculation circuit more complex and error prone.  A third issue which occurred was the potential for divide by zero errors.  Specifically when measuring the noise in the system, divide by zero errors could cause errors in the measurement if the magnitude measured by the BIST was small.
+
+To overcome these problems a new calculation circuit was developed.  Drawing upon the basic operation of the existing circuit the new circuit (Figure \ref{fig:newcalc}) removes the divider in favor of performing all operations in the logarithmic domain.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.8]{images/new-calculation}
+	\end{center}
+	\caption{New Calculation Circuit}
+	\label{fig:newcalc}
+\end{figure}
+Like the previous calculation circuit it uses a slightly modified calculation CORDIC based on the design by \cite{joey}.  Unlike the previous circuit, the Logarithmic Translation Unit has been moved to the front of the circuit so that all inputs are converted their log value.  This allows for the removal of the divider circuitry as the division required is performed by the subtraction of the two log values.  Consequently, there is no longer an opportunity to perform division by zero since no division operation is occurring.  The new circuit is also able to operate at the same clock frequency as the BIST, eliminating the need for two clock domains.  Finally due to the removal of the divider and other changes in the BIST, the calculation circuit was able to be shrunk to a much smaller size (approximately a 33\% reduction in area and power).
+
+\subsection{Interfacing with the BIST}
+Finally given an understanding of the calculation circuit, it is important to be familiar with how our BIST approach is controlled and observed (after all Section \ref{sct:whytest} clearly shows that controllability and observability directly influence the testability of a circuit).  Excluding some run flags, the majority of the BIST is controlled via a SPI interface.  When writing to the SPI interface there is a lower and upper 64-bit word that should be written with the data required for the test being run.  Of the total 128 bits written to the SPI, only 88 of them are actually used by the BIST.  Table \ref{tbl:SPIWrite} shows an overview of the SPI word.  In addition the test control word is broken down in Table \ref{tbl:TestControlWord}.
+\begin{table}
+	\begin{minipage}[c]{\textwidth}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			Bits & Name & Description \\ \hline
+			0-14 & Frequency Word 1 & First frequency of interest\footnote{The frequency words are used in different ways depending on the test being run} \\ \hline
+			15-29 & Frequency Word 2 & Second frequency of interest \\ \hline
+			30-44 & Frequency Word 3 & Third frequency of interest \\ \hline
+			45-59 & Frequency Word 4 & Fourth frequency of interest \\ \hline
+			60-69 & Samples & Number of samples to take\footnote{Used for SNR and Spur Search to indicate the number of measurements to take} \\ \hline
+			70-85 & Test Control Word & Determines the test to run and how to run it \\ \hline
+			86 & Run Force & Makes the BIST run the test after it is loaded \\ \hline
+			87 & Disable DDS Disable & Forces the DDS to reset at the start of a test \\ \hline	
+		\end{tabular}	
+	\end{minipage}
+	\caption{SPI Write Command}
+	\label{tbl:SPIWrite}
+\end{table}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|l|p{4.3in}|}
+			\hline
+			Bits & Values & Description \\ \hline
+			0 & Loopback Path & Allows bypassing the DAC-ADC pair to test the BIST only \\ \hline
+			1 & Preset & Allows selection of preset tests* \\ \hline
+			2 & Half-IMP & Causes the BIST to wait only half of an IMP length shortening the test time but sacrificing some accuracy \\ \hline
+			3 & Noise Floor & Used to select the summation of the noise instead of the SNR result during and SNR test \\ \hline
+			4 & Bypass Path & Allows bypassing the CUT to test the DAC-ADC path* \\ \hline		
+			6:5 & Test Mode & Select the test to be run \\ \hline
+			10:7 & Attenuation & Attenuates the DAC output* \\ \hline
+			12:11 & Read & An initial value to be loaded into the register when reading \\ \hline
+			13 & Disable DDS & Disables the DDS producing no output \\ \hline
+			14 & Disable ORA & Disables the ORA, putting it in reset mode* \\ \hline
+			15 & Run Enable & Enables an external run signal* \\ \hline
+			& & *Unused during fault simulation \\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Test Control Word}
+	\label{tbl:TestControlWord}
+\end{table}
+
+To read data out of the BIST the same SPI is used.  To read data, a write must first occur with the read flag set and must include two address bits.  The address bits are decoded by the test controller and correspond to four different 64-bit words which can be read out of the BIST each containing different calculation data related to the test.  The values retrievable are shown in Table \ref{tbl:readvals}.  In the context of fault simulation it is less important to focus on the values read and instead focus on how many values can be read in relation to the observability of the system.  In the Chapter 3 and Chapter 4 this will be discussed in more detail as it relates to the tests run and potential improvements to the fault coverage by increasing controllability and observability.  
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\hline
+			Address & Values \\ \hline
+			00 & $DC_1$ \\ \hline
+			01 & $DC_2$ \\ \hline
+			10 & Magnitude and Phase \\ \hline
+			11 & Spur FW, Log Result, Noise Floor Value \\ \hline			
+		\end{tabular}
+	\end{center}
+	\caption{Read Address Values}
+	\label{tbl:readvals}
+\end{table}
+
+In addition to the SPI IO, there are a few other important outputs used in simulation.  First there is the DDS output which is the generated tone for the test being executed, there is also a 10-bit test result output which is updated to the final log value calculated when the test has completed.  Finally, there is a done flag used to denote that the BIST has finished performing the test requested and that the results have been calculated.  
+
+\subsection{Conclusion}
+While these descriptions of the BIST are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of the next chapters will shift to the actual fault simulations and away from the underlying architecture except where it relates to potential improvements in fault coverage and the coverage that is achieved.  Overall the goal of the techniques and methods discussed next are to show an effective method to testing mixed-signal built-in self-test systems using our BIST approach both as a benchmark and for context.
+
+\chapter{Fault Simulations}
+
+\chapter{Simulation Results}
+
+\chapter{Conclusions and Summary}
+
+% Bibliography
+\begin{thebibliography}{99}
+\bibitem{stroud} Charles Stroud, {\em A Designer's Guide to Built-In Self-Test}, Vishwani D. Agrawal, Ed. Dordrecht: Kluwer Academic Publishers, 2002.
+
+\bibitem{itrs} ITRS 2009 (I am not sure how to cite this I need to ask you about it)
+
+\bibitem{zorian} Yervant Zorian, "Testing the monster chip," {\em Spectrum, IEEE}, vol. 37, no. 7, pp. 54-60, July 1999.
+
+\bibitem{ungar} Louis Ungar and Tony Ambler, "Economics of Built-In Self-Test," {\em Design \& Test of Computers, IEEE}, vol. 18, no. 5, pp. 70-79, Sep-Oct 2001, \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=953274&isnumber=20606}.
+
+\bibitem{syschip} Laung-Terng Wang, Nur Touba, and Charles Stroud, Eds., {\em System On Chip Test Architectures}. Burlington, MA: Elsevier, 2008.
+
+\bibitem{milor} Linda Milor and V Visvanathan, "Detection of Catastrophic Faults in Analog Integrated Circuits," {\em IEEE Transactions on Computered-Aided Design of Integrated Circuits and Systems}, vol. 8, no. 2, pp. 114-130, Feburary 1989.
+
+\bibitem{stroud-analog} Charles Stroud, Piyumani Karunaratna, and Eugene Bardley, "Digital Components for Built-In Self-Test of Analog Circuits," in {\em 10th ASIC Conference and Exhibit}, Portland, 1997, pp. 47,51.
+
+\bibitem{ausim}  Charles E. Stroud, "AUSIM: Auburn University SIMulator - version 2.0", Dept. of Electrical \& 
+Computer Engineering, Auburn University, July 7, 2003
+
+\bibitem{asl} Charles E. Stroud, "ASL: Auburn Simulation Language", Dept. of Electrical \& Computer
+Engineering, Auburn University, July 7, 2003.
+
+\bibitem{verilog} "IEEE Standard Hardware Description Language Based on the Verilog(R) Hardware Description Language," IEEE Std 1364-1995 , vol., no., pp.i, 1996 doi: 10.1109/IEEESTD.1996.81542 URL: \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=803556&isnumber=12005}
+
+\bibitem{testtime} Jie Qin; Stroud, C.; Dai, F.; , "Test time of multiplier/accumulator based output response analyzer in built-in analog functional testing," System Theory, 2009. SSST 2009. 41st Southeastern Symposium on , vol., no., pp.363-367, 15-17 March 2009 doi: 10.1109/SSST.2009.4806795 URL: \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4806795&isnumber=4806773}
+
+\bibitem{noisefigure} Jie Qin; Stroud, C.; Dai, F.; , "Noise Figure Measurement Using Mixed-Signal BIST," Circuits and Systems, 2007. ISCAS 2007. IEEE International Symposium on , vol., no., pp.2180-2183, 27-30 May 2007 doi: 10.1109/ISCAS.2007.378606 URL: \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4253104&isnumber=4252535}
+
+\bibitem{basessa} F. Dai, C. Stroud, and D. Yang, “Automatic Linearity and Frequency Response Tests with Built-in Pattern Generator and Analyzer,”  IEEE Trans. on VLSI Systems., vol. 14, no. 6, pp. 561-572, 2006.
+
+\bibitem{csharp} Microsoft. The C\# Language. Visual C\# Developer Center. [Online] \url{http://msdn.microsoft.com/en-us/vcsharp/aa336809.aspx}.
+
+\bibitem{jie} Jie Qin, Selective Spectrum Analysis (SSA) and Numerically Controlled Oscillator (NCO) in Mixed-Signal Built-In Self-Test, Doctoral Dissertation, Auburn University, 2010.
+
+\bibitem{joey} Joey's Thesis
+
+\label{Bibliography}
+\end{thebibliography}
+
+\appendix
+\addcontentsline{toc}{chapter}{Appendices}
+
+\chapter{Verilog To ASL Parser}
+\label{apdx:VerilogToASL}
+This appendix reviews the Verilog to ASL parser tool in more detail.  The parser is 837 total lines of code, as such only select portions will be reviewed in this appendix.  
+
+TBD, expect ~2-3 pages
+
+\chapter{Vecgen Commands}
+\label{apdx:Vecgen}
+This appendix provides a list of all commands usable by the Vecgen program to create test vector files for AUSIM.
+
+TBD, expect ~3-4 pages
+\end{document}
+
