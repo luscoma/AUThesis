@@ -1,16 +1,12 @@
-# This is from right after testing
-# This should be moved so it is just being held here
+# This is the ideas and thoughts section
+# Hopefully this will keep my ideas straight
+- We should give a few examples of testing analog circuits
+- Same goes for digital
+- If possible a reference for mixed-signal would be good too
+- Analog: we should say that addingin components can affect the response of the analog components so that it ties into our sentence about no interferance in mixed signal
+- Analog: find a source on resonant frequency testing
+- Analog: verify the description of catastrophic faults which I give, its pretty shoddy line 173ish
+- Perhaps tie in that by using the mixed bist to test itself less only a single bist has to be put into a system and verified
 
-However, as chips become ever more complex it becomes more challenging and more expensive to test them\cite{itrs}.
-
-As complexity increases, the traditional methods of testing these devices struggle to maintain an acceptable level of fault coverage (a concept which is explained more thoroughly in the next section).  In \cite{zorian} Zorian suggests the two main issues caused by increased complexity of chips as it relates to testing:
-
-\begin{quote}
-``Progressively greater integrated circuit (IC)\nomenclature{IC}{Integrated Circuit} complexity raises several new problems and exacerbates others.  One is the bandwidth gap between a chip's internal performance and the output capability of its package pins.  Another is the increasing use of mixed circuitry on a chip.\cite{zorian}''
-\end{quote}
-In addition he also explains the consequences of increased transistor count in ICs:
-\begin{quote}
-``The growth rate in IC transistor count is far higher than the rate for IC pins and steadily reduces the accessibility of transistors from chip pins -- a big problem for IC test.\cite{zorian}''
-\end{quote}
-
-The issues he raises are very important to testing and related to very common testing paradigms, controllability and observability.  To understand how these two issues play a large part in the complications of testing it is first important to understand how testing is performed and modeled on circuits.
+# References Needed
+- Need a reference about a simple method of defect-oriented testing and its challenges
