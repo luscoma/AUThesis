@@ -8,5 +8,10 @@
 - Analog: verify the description of catastrophic faults which I give, its pretty shoddy line 173ish
 - Perhaps tie in that by using the mixed bist to test itself less only a single bist has to be put into a system and verified
 
+# TODO
+- Fix the stuff about signatures
+- Change zorians thing
+- add remaining sources
+
 # References Needed
 - Need a reference about a simple method of defect-oriented testing and its challenges
