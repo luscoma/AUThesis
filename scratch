@@ -1,19 +1,2 @@
-# This is the ideas and thoughts section
-# Hopefully this will keep my ideas straight
-- We should give a few examples of testing analog circuits
-- Same goes for digital
-- If possible a reference for mixed-signal would be good too
-- Analog: we should say that addingin components can affect the response of the analog components so that it ties into our sentence about no interferance in mixed signal
-- Analog: find a source on resonant frequency testing
-- Analog: verify the description of catastrophic faults which I give, its pretty shoddy line 173ish
-- Perhaps tie in that by using the mixed bist to test itself less only a single bist has to be put into a system and verified
-
 # TODO
-- Fix the stuff about signatures
-- Change zorians thing
-- add remaining sources
-
-# References Needed
-- Need a reference about a simple method of defect-oriented testing and its challenges
-# Mixed
-- This effectively doubles the amount of design, testing, and simulation that is necessary and will require additional test equipment and verification specific to the methods used for each system\cite{needed}.
+- Work with figure 1.4 and see if it can be cleaned up some
