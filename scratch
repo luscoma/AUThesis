@@ -15,3 +15,5 @@
 
 # References Needed
 - Need a reference about a simple method of defect-oriented testing and its challenges
+# Mixed
+- This effectively doubles the amount of design, testing, and simulation that is necessary and will require additional test equipment and verification specific to the methods used for each system\cite{needed}.
