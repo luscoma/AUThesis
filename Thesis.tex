@@ -227,12 +227,74 @@ shows a comparison of the maximum achievable digital fault coverage versus the a
 Though this technique still requires the separate testing of the analog and digital circuitry, it is an improvement over the previously discussed method since the same BIST circuitry can be used to test both the digital and analog circuitry\cite{stroud}.  This limits the amount of work that must be duplicated to the determination of which tests to be run and the expected values.  Furthermore the basic procedure for testing the analog and digital circuits is the same (the only differences being which loopback path is selected and the actual test being performed) which will limit the differences between test sessions.
 
 \section{Summary}
-In the previous chapter a highlevel look at both digital and analog systems has been given as well as the challenges of testing these systems for faults.  The concept of BIST has been presented along with its advantages and a simple BIST architecture.  In addition the challenges of testing mixed-signal systems has been discussed and a basic mixed-signal BIST model has been given along with the challanges of testing the BIST without a digital loopback path.  In the next chapter a more detailed explanation of fault simulation and of our specific mixed-signal testing approach is given.  This approach builds upon the simple architecture discussed in the previous section and addresses the challenges discussed in Section \ref{sct:AnalogFaults}.  Building upon this explanation, Chapter III explores the main topic of this thesis: testing the actual mixed-signal testing circuitry to determine the level of fault coverage achievable.  The results of this testing, an examination of the effectiveness of these tests, and potential areas for improvement are explained in Chapter IV, before a summary and conclusions are given in Chapter V.
+In the previous chapter a highlevel look at both digital and analog systems has been given as well as the challenges of testing these systems for faults.  The concept of BIST has been presented along with its advantages and a simple BIST architecture.  In addition the challenges of testing mixed-signal systems has been discussed and a basic mixed-signal BIST model has been given along with the challanges of testing the BIST without a digital loopback path.  In the next chapter a more detailed explanation of fault simulation and of the specific mixed-signal BIST approach studied in this thesis is given.  This approach builds upon the simple architecture discussed in the previous section and addresses the challenges discussed in Section \ref{sct:AnalogFaults}.  Building upon this explanation, Chapter III explores the main topic of this thesis: testing the actual mixed-signal testing circuitry to determine the level of fault coverage achievable.  The results of this testing, an examination of the effectiveness of these tests, and potential areas for improvement are explained in Chapter IV, before a summary and conclusions are given in Chapter V.
 
 \chapter{Background}
 
+Before discussing the testing of the studied mixed-signal BIST approach, it is important to have a more thorough understanding of fault simulations and how they are performed.  Specifically the different types of fault simulations will be discussed including uncollapsed and collapsed as the bridging fault model which models faults between nets.  Following this discussion a more detailed outline of the simulation and design process will be given.  In the following section the fault simulator AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} is detailed which was used to evaluate the mixed-signal BIST approach in Chater 3.  This chapter concludes with a detailed discussion of the mixed-signal BIST architecture and its capabilities.
+
 \section{Fault Simulations}
-Before discussing the tests performed on our BIST approach, it is important to have a thorough understanding of how fault simulations are performed.  There are many different simulators and methods of performing fault simulations on a circuit.  For our tests we choose the AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} fault simulator.  Developed by Stroud, this simulator can perform logic simulations, as well as both stuck-at fault simulations and bridging fault simulations (faults which occur between wires) \cite{ausim}.  This section will discuss how to set-up and use this simulator as well as several custom tools used in conjunction with AUSIM to perform our testing.
+
+\subsection{Collapsed vs Uncollapsed Fault Simulation}
+% This should discuss collapsed vs uncollapsed as it relates to the stuck-at fault model
+% An image showing some faults and the collapsed version (similar to Dr. Strouds image from BIST would be good)
+% Can greatly improves simulation time, disadvantages? FC related I guess?
+% give an example of the difference: use the BIST... why not
+
+\subsection{The Bridging Fault Model}
+% Discuss multiple models
+% Discuss in detailed dominant model
+% Discuss collapsed vs uncollapsed
+% Can be difficult to simulate due to large number of faults sites (N^2-N)/2
+
+\subsection{Design Process}
+% Discuss behavioral -> place and route -> post-layout
+% Advantages of simulating post-layout
+% Transition into discussion on converting post-layout netlist (A tool was written for this purpose and is discussed in Chapter 3)
+
+% This isn't supper important in the grand scheme of things, I mean yes I used it to imperically verify that the tests were setup properly, but really it doesn't matter
+% So I may mention it later, if I do I can come back and fill in this section
+%\subsection{VCD File}
+% Discuss a VCD file since it relates to simulation
+% Simplifies the storage and viewing of simulations results
+% A single paragraph should do
+
+\section{AUSIM Fault Simulation}
+% Some discussion on the general use of the simulation
+% Capabilities
+
+\subsection{ASL Netlist Format}
+% Format used by AUSIM for simulations
+% Discussion of the specifics
+
+\subsection{Simulation Process}
+% Cover flt, out, and vec file formats
+% Cover basic workflow, logic -> fault
+
+\section{BIST Architecture}
+% Introduce the bist, its SSA BIST based on a DDS
+% some other introductory characteristics
+
+\subsection{Selective Spectrum Analysis}
+% Discuss DDS based frequency generation
+% Discuss frequency words and how they relate to the clock speed and frequency generation
+
+\subsection{ORA Multiplier-Accumulators}
+% Discuss ORA design
+% DC1 and DC2 MAC
+% Discuss in-phase and out-of-phase accumulations
+% Probably will need to briefly mention cordic
+
+\subsection{On-Chip Calculation Circuit}
+% Discuss importance of on-chip and how it differs from ORA
+% Discuss LOG circuit and how all calculations are performed in log 
+% Discuss how calculations are performed for each test and which tests are available
+%% Linearity, Frequency Response, Spur Search, SNR, NF
+
+\subsection{Interfacing with BIST}
+% Communication mechanism for BIST
+% High-level overview of the SPI
+% Challenges of testing BIST through SPI?
 
 \subsection{Auburn Simulation Language}
 Before a circuit can be simulated it must be converted to a format that AUSIM can understand.  The Auburn Simulation Language (ASL)\nomenclature{ASL}{Auburn Simulation Language} is the circuit description used by AUSIM\cite{asl}.  ASL is used to provide a textual representation of a circuit at the gate-level to the simulator.  This gate-level net-list is used to describe each connection and gate used in a circuit design and allows the simulator to build a representation of the circuit under test.  ASL begins with a top-level circuit declaration.  This declaration defines the name of the circuit and uses the in and out keywords to define the inputs and outputs to the circuit.  An example circuit is given in Figure \ref{fig:half_adder}.  Figure \ref{fig:half_adder} A is a half-adder which takes in two inputs and outputs a sum and carry bit, the corresponding ASL description is given in Figure \ref{fig:half_adder} B.
@@ -292,41 +354,9 @@ DFF & DFF: d1 in: CLK D out: Q \\ \hline
 
 It is important to understand that custom gates can be implemented and used in a similar syntax.  To do this one must use the \textit{subckt} command.  While an ASL file can only have a single circuit declaration, it can have any number of sub-circuit declarations\cite{asl}.  Each sub-circuit has its own set of top-level inputs and outputs and its own gate-level net-list.  Once defined the name of the sub-circuit can be used as a gate and be instantiated elsewhere in the circuit description.  
 
-\subsection{Converting to ASL}
-In many cases behavioral models are written in a high-level hardware description language such as VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow a behavioral model to be developed of a circuit at a much higher level than ASL's gate-level description.  This means that for large, complex circuits (such as our BIST approach) design in VHDL or Verilog is preferred.  To aid in the simulation of larger circuits a tool was developed to convert a Verilog net-list to an ASL net-list.  This allows a user to write a high-level behavioral description of the circuit, synthesis it down to a Verilog net-list using one of many different CAD tools, then convert it to ASL for fault simulation using the VerilogParser tool.
-
-As a simple example the ISCAS '85 C17 benchmark circuit (Figure \ref{fig:c17_netlist}) was used to demonstrate the conversion process and the differences between a Verilog net-list and an ASL net-list.  In Figure \ref{fig:c17_netlist} A the behavioral model of the C17 circuit has been synthesized into a post-layout net-list in Verilog.  In B the Verilog model has been converted to ASL.
-\begin{figure}[t]
-	\begin{flushleft}
-		\includegraphics[scale=1]{images/c17-verilog-netlist}	
-	\end{flushleft}
-	\begin{flushleft}
-		(A) Verilog Net-list
-	\end{flushleft}
-	\begin{flushleft}
-		\includegraphics[scale=1]{images/c17-asl-netlist}
-	\end{flushleft}
-	\begin{flushleft}
-		(B) ASL Net-list
-	\end{flushleft}
-	\caption{C17 Benchmark Circuit Net-list}
-	\label{fig:c17_netlist}
-\end{figure}
-The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates and circuits.  In \ref{fig:c17_netlist} A, line 7 the instantiation of the AO21 gate is seen.  The gate's inputs and outputs are not designated separately.  In addition the net names are attached to their respective gate IO names.  In contrast, in \ref{fig:c17_netlist} B, line 2\footnote{The AO21 gate is a custom sub-circuit previously declared} the same gate is instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position and not by name.  For the translation to be successful, the inputs and outputs to the gates must be ordered correctly.  Various techniques including lookup tables must be used to build the ASL correctly.
-
-The VerilogParser tool performs the translation to ASL.  It is written in Microsoft .NET C\# 3.5.  The language was chosen due to the author's familiarity with the language as well as the extensive standard library included in .NET which simplified the program considerably\cite{csharp}.  As a quick reference Figure \ref{fig:VerilogParserUse} demonstrates how to use the tool on a Verilog net-list.
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=.9]{images/verilog-asl-command}
-	\end{center}
-	\caption{Using the Verilog to ASL tool to convert a circuit to ASL}
-	\label{fig:VerilogParserUse}
-\end{figure}
-The tool works by scanning the Verilog file for module definitions and parses the modules into an intermediate representation of the circuit.  It then prompts the user to choose which module should be used as the top-level circuit before outputting the resulting ASL.  Some improvements can be made to the converter such as automatic top-level module detection as well as the ability to convert VHDL net-lists; however, these features were not implemented due to time constraints.  It is important to note that while the ASL generated will always be syntactically correct, the tool does not check for validity of the circuit.  It is assumed any necessary sub-circuits that are used in the net-list have already been created and verified in ASL.  For a more detailed analysis of the Verilog to ASL parser please refer to the Appendix \ref{apdx:VerilogToASL}.  
-
 \subsection{Commanding the Simulator}
 AUSIM can preform many different operations pertaining to the circuit.  For our purposes we will focus on the steps leading upto and including logic and stuck-at fault simulation.  The AUSIM simulator is executed by providing a command file.  This command file is a simple file which is a sequential list of commands to be executed by the simulator.  Each command and its required parameters are given on each new-line.  Before exploring the commands available, it is important to understand how AUSIM locates and uses pertinent files during execution.  Each important file has a unique file extension which designates which type of file it is.  This can include files such as \textit{.asl} for ASL files or \textit{.vec} for Vector files (explained in the next section) among many others.  In the usual case all of these files would be named the same prefix and only differ in their respective file extensions.  This allows the use of the \textit{default} command to specify the filename prefix for AUSIM to use when attempting to locate or creating new files.  AUSIM does provide the ability to override the filename for individual files if needed\cite{ausim}.  Table \ref{tbl:ausim_commands} provides a list of common AUSIM commands and their respective descriptions.  Each command file is provided to AUSIM during execution as a command-line argument.  As a simple example, a command file for a circuit called counter which performed a logic simulation could look like the following:
-\begin{table}[h]
+\begin{table}
 	\caption{Example AUSIM command file}
 	\begin{center}
 		\begin{tabular}{l}
@@ -375,58 +405,6 @@ Fortunately the vector file format is very simple.  Generally a vector file shou
 \end{table}
 
 This is great for simple circuits and short tests; however, for larger, complex circuits or long complex tests this can become difficult to use.  AUSIM offers no way to generate large amounts of vectors (there is a random vector tool\cite{ausim} but this is not always appropriate).  To remedy this a tool was created to generate vector files from a simple command language.
-
-\subsection{Generating Test Vectors using Vecgen}
-Vecgen is a program written to generate AUSIM vector files.  It uses a straight forward command language to build a vector file of any length.  It is written in Microsoft's .NET C\#\cite{csharp} language. Vecgen addresses the issue of large circuits by using a concept called frames.  
-
-The first line of a Vecgen file must be the GENERATE command which tells the generator how many frames(vectors) to generate and the number of primary inputs of the circuit.  If all the user provides is the GENERATE command then Vecgen will create a vector file with the specified number of vectors, filled with all `0' characters as wide as the number of primary inputs in the circuit.  This is the idea behind Vecgen, the vector each time is the same as the vector before it unless changed by the user in a frame.  There are a number of commands which are available to manipulate the output using Vecgen (the full list is available in Appendix \ref{apdx:Vecgen}).  An example generation command file, which would create the vector file shown in Table \ref{tbl:half_adder_vector}, is given in Table \ref{tbl:Vecgen_example} showing the Vecgen format:
-\begin{table}
-	\label{tbl:Vecgen_example}
-	\begin{center}
-		\begin{tabular}{l}
-			GENERATE 4 2 \\		
-			\\
-			FRAME 1	\\
-			BIT 0 1	\\
-			\\
-			FRAME 2	\\
-			BIT 0 0	\\
-			BIT 1 1	\\
-			\\
-			FRAME 3	\\
-			BIT 0 1	\\
-		\end{tabular}
-	\end{center}
-	\caption{Command to generate the half-adder vector sequence}
-\end{table}
-In the case of the half-adder example, the generator is much more verbose and would not be preferred; however, for this example one can see how it would help in more complex generation.  In our example FRAME 0 is not modified since the first vector generated is always all logic 0's.  FRAME 1 changes bit 0 to a logic 1 so that the resulting vector is now \textit{01}.  FRAME 2 changes bit 0 back to a logic 0 and changes bit 1 to a logic 1, resulting in \textit{10}.  Finally FRAME 3 updates bit 0 back to a logic 1 to obtain the vector \textit{11}.  Only at the times the output vector is changing does a FRAME need to be declared: if we were to generate ten frames instead of the four specified in the example, then the remaining six vectors would be automatically filled in and be the same \textit{11} vector set by FRAME 3.
-
-This is a very simple example, there are many more commands as shown in Appendix \ref{apdx:Vecgen} that allow for much more powerful generation.  Some commands such as RANGE affect multiple bits at once, others such as SERIALIZE or CLOCK work over multiple frames.  One interesting command is the DECLARE command.  The DECLARE command creates a reusable group of commands which can be called from any frame.  This is especially useful if a certain sequence is required repeatedly during a test.  An example sequence and its output are shown in Table \ref{tbl:countsequence}.  The sequence creates a clock on its MSB, then calls a function which counts up then counts back down.  It then disables the clock and calls the counter function again.
-\begin{table}
-	\caption{Vecgen Example}
-	\begin{center}
-		\begin{tabular}{l|r|r}
-		Commands & 1-15 & 16-24 \\ \hline
-		GENERATE 24 3 & 100 & 001 \\
-		 & 000 & 000 \\
-		\textbf{DECLARE} counter & 101 & 000 \\
-		FRAME 0	& 001 & 001 \\
-		COUNT 0 2 U & 110 & 001 \\
-		FRAME 8 & 010 & 010 \\
-		COUNT 0 2 D & 111 & 010 \\
-		\textbf{ENDDECLARE} & 011 & 011 \\ 
-		 & 100 & 011 \\
- 		\textbf{FRAME 0} & 000 & \\
-		CLOCK 2 & 111 &  \\
-		CALL counter & 011 & \\
-		\textbf{FRAME 16} & 110 & \\
-		BIT 2 0 & 010 &  \\
-		CALL counter & 101 & \\
-		\end{tabular}
-	\end{center}
-	\label{tbl:countsequence}
-\end{table}
-The generation in Table \ref{tbl:countsequence} is much more powerful than the previous example in Table \ref{tbl:Vecgen_example} and demonstrates some of the power that the Vecgen program provides.  All fault simulation tests for the BIST are designed in the Vecgen markup language for simplicity.
 
 \subsection{Output Files}
 During logic simulation the output of the circuit is recorded into an out file.  Like the vector file format, AUSIM's out file format is very straight forward.  Each out file consists of a header created by AUSIM which labels each column of the file with the corresponding IO name.  Following the header is the output of the logic simulation.  Each output line consists of the test vector which was applied and the resulting output recorded from the circuit.  An example out file for the half-adder example from Figure \ref{fig:half_adder} is shown in Figure \ref{tbl:half_adder_out}.
@@ -671,6 +649,90 @@ In addition to the SPI IO, there are a few other important outputs used in simul
 While these descriptions of the BIST are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of the next chapters will shift to the actual fault simulations and away from the underlying architecture except where it relates to potential improvements in fault coverage and the coverage that is achieved.  Overall the goal of the techniques and methods discussed next are to show an effective method to testing mixed-signal built-in self-test systems using our BIST approach both as a benchmark and for context.
 
 \chapter{Fault Simulations}
+
+\subsection{Converting to ASL}
+In many cases behavioral models are written in a high-level hardware description language such as VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow a behavioral model to be developed of a circuit at a much higher level than ASL's gate-level description.  This means that for large, complex circuits (such as our BIST approach) design in VHDL or Verilog is preferred.  To aid in the simulation of larger circuits a tool was developed to convert a Verilog net-list to an ASL net-list.  This allows a user to write a high-level behavioral description of the circuit, synthesis it down to a Verilog net-list using one of many different CAD tools, then convert it to ASL for fault simulation using the VerilogParser tool.
+
+As a simple example the ISCAS '85 C17 benchmark circuit (Figure \ref{fig:c17_netlist}) was used to demonstrate the conversion process and the differences between a Verilog net-list and an ASL net-list.  In Figure \ref{fig:c17_netlist} A the behavioral model of the C17 circuit has been synthesized into a post-layout net-list in Verilog.  In B the Verilog model has been converted to ASL.
+\begin{figure}[t]
+	\begin{flushleft}
+		\includegraphics[scale=1]{images/c17-verilog-netlist}	
+	\end{flushleft}
+	\begin{flushleft}
+		(A) Verilog Net-list
+	\end{flushleft}
+	\begin{flushleft}
+		\includegraphics[scale=1]{images/c17-asl-netlist}
+	\end{flushleft}
+	\begin{flushleft}
+		(B) ASL Net-list
+	\end{flushleft}
+	\caption{C17 Benchmark Circuit Net-list}
+	\label{fig:c17_netlist}
+\end{figure}
+The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates and circuits.  In \ref{fig:c17_netlist} A, line 7 the instantiation of the AO21 gate is seen.  The gate's inputs and outputs are not designated separately.  In addition the net names are attached to their respective gate IO names.  In contrast, in \ref{fig:c17_netlist} B, line 2\footnote{The AO21 gate is a custom sub-circuit previously declared} the same gate is instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position and not by name.  For the translation to be successful, the inputs and outputs to the gates must be ordered correctly.  Various techniques including lookup tables must be used to build the ASL correctly.
+
+The VerilogParser tool performs the translation to ASL.  It is written in Microsoft .NET C\# 3.5.  The language was chosen due to the author's familiarity with the language as well as the extensive standard library included in .NET which simplified the program considerably\cite{csharp}.  As a quick reference Figure \ref{fig:VerilogParserUse} demonstrates how to use the tool on a Verilog net-list.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.9]{images/verilog-asl-command}
+	\end{center}
+	\caption{Using the Verilog to ASL tool to convert a circuit to ASL}
+	\label{fig:VerilogParserUse}
+\end{figure}
+The tool works by scanning the Verilog file for module definitions and parses the modules into an intermediate representation of the circuit.  It then prompts the user to choose which module should be used as the top-level circuit before outputting the resulting ASL.  Some improvements can be made to the converter such as automatic top-level module detection as well as the ability to convert VHDL net-lists; however, these features were not implemented due to time constraints.  It is important to note that while the ASL generated will always be syntactically correct, the tool does not check for validity of the circuit.  It is assumed any necessary sub-circuits that are used in the net-list have already been created and verified in ASL.  For a more detailed analysis of the Verilog to ASL parser please refer to the Appendix \ref{apdx:VerilogToASL}.  
+
+\subsection{Generating Test Vectors using Vecgen}
+Vecgen is a program written to generate AUSIM vector files.  It uses a straight forward command language to build a vector file of any length.  It is written in Microsoft's .NET C\#\cite{csharp} language. Vecgen addresses the issue of large circuits by using a concept called frames.  
+
+The first line of a Vecgen file must be the GENERATE command which tells the generator how many frames(vectors) to generate and the number of primary inputs of the circuit.  If all the user provides is the GENERATE command then Vecgen will create a vector file with the specified number of vectors, filled with all `0' characters as wide as the number of primary inputs in the circuit.  This is the idea behind Vecgen, the vector each time is the same as the vector before it unless changed by the user in a frame.  There are a number of commands which are available to manipulate the output using Vecgen (the full list is available in Appendix \ref{apdx:Vecgen}).  An example generation command file, which would create the vector file shown in Table \ref{tbl:half_adder_vector}, is given in Table \ref{tbl:Vecgen_example} showing the Vecgen format:
+\begin{table}
+	\label{tbl:Vecgen_example}
+	\begin{center}
+		\begin{tabular}{l}
+			GENERATE 4 2 \\		
+			\\
+			FRAME 1	\\
+			BIT 0 1	\\
+			\\
+			FRAME 2	\\
+			BIT 0 0	\\
+			BIT 1 1	\\
+			\\
+			FRAME 3	\\
+			BIT 0 1	\\
+		\end{tabular}
+	\end{center}
+	\caption{Command to generate the half-adder vector sequence}
+\end{table}
+In the case of the half-adder example, the generator is much more verbose and would not be preferred; however, for this example one can see how it would help in more complex generation.  In our example FRAME 0 is not modified since the first vector generated is always all logic 0's.  FRAME 1 changes bit 0 to a logic 1 so that the resulting vector is now \textit{01}.  FRAME 2 changes bit 0 back to a logic 0 and changes bit 1 to a logic 1, resulting in \textit{10}.  Finally FRAME 3 updates bit 0 back to a logic 1 to obtain the vector \textit{11}.  Only at the times the output vector is changing does a FRAME need to be declared: if we were to generate ten frames instead of the four specified in the example, then the remaining six vectors would be automatically filled in and be the same \textit{11} vector set by FRAME 3.
+
+This is a very simple example, there are many more commands as shown in Appendix \ref{apdx:Vecgen} that allow for much more powerful generation.  Some commands such as RANGE affect multiple bits at once, others such as SERIALIZE or CLOCK work over multiple frames.  One interesting command is the DECLARE command.  The DECLARE command creates a reusable group of commands which can be called from any frame.  This is especially useful if a certain sequence is required repeatedly during a test.  An example sequence and its output are shown in Table \ref{tbl:countsequence}.  The sequence creates a clock on its MSB, then calls a function which counts up then counts back down.  It then disables the clock and calls the counter function again.
+\begin{table}
+	\caption{Vecgen Example}
+	\begin{center}
+		\begin{tabular}{l|r|r}
+		Commands & 1-15 & 16-24 \\ \hline
+		GENERATE 24 3 & 100 & 001 \\
+		 & 000 & 000 \\
+		\textbf{DECLARE} counter & 101 & 000 \\
+		FRAME 0	& 001 & 001 \\
+		COUNT 0 2 U & 110 & 001 \\
+		FRAME 8 & 010 & 010 \\
+		COUNT 0 2 D & 111 & 010 \\
+		\textbf{ENDDECLARE} & 011 & 011 \\ 
+		 & 100 & 011 \\
+ 		\textbf{FRAME 0} & 000 & \\
+		CLOCK 2 & 111 &  \\
+		CALL counter & 011 & \\
+		\textbf{FRAME 16} & 110 & \\
+		BIT 2 0 & 010 &  \\
+		CALL counter & 101 & \\
+		\end{tabular}
+	\end{center}
+	\label{tbl:countsequence}
+\end{table}
+The generation in Table \ref{tbl:countsequence} is much more powerful than the previous example in Table \ref{tbl:Vecgen_example} and demonstrates some of the power that the Vecgen program provides.  All fault simulation tests for the BIST are designed in the Vecgen markup language for simplicity.
 
 \chapter{Simulation Results}
 
