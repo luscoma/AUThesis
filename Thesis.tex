@@ -277,60 +277,88 @@ As discussed in the previous paragraph, there are different models to define the
 % I'm thinking the figure should have net a be 0011 and net b be 0101
 In the second row when net A is a `0' and net B should be a `1', B' is instead a `0' since it is dominated by net A.  Likewise in the third row when net A is a `1', net B should be a `0' but instead is a `1' due to the influence from net A.
 
-Bridging faults are important to address during the design of a circuit.  Unfortunately they can be computationally expensive and difficult to test.  Due to time constraints bridging faults were not addressed in this thesis though it is a target of future work.
+Bridging faults are important to address during the design of a circuit.  Unfortunately they can be computationally expensive and difficult to test.  Due to time constraints bridging faults were not simulated in this thesis though it is a target of future work.
 
 \subsection{Design Process}
 \label{sct:designprocess}
 % Discuss behavioral -> place and route -> post-layout
 % Advantages of simulating post-layout
 % Transition into discussion on converting post-layout netlist (A tool was written for this purpose and is discussed in Chapter 3)
+The design of a digital circuit typically starts with a behavioral description of a circuit.  This is typically done in a high-level design language such as Verilog or VHDL and usually will not include any implementation details of the circuit.  This code is then fed into a synsthesis computer-aided design (CAD)\nomenclature{CAD}{Computer-Aided Design} tool which will interpret the behavioral description, combine it with information such as the implementation technology, timing information, and/or area constraints, and ultimately produce a gate-level netlist of the circuit.  Following this step a place-and-route tool takes each gate and its interconnections and decides where on the silicon chip (or in the FPGA or other programmable device) to place the gate so that any timing and area constraints can be achieved.  Once completed the design is said to be ``post-layout'' indicating it is ready for fabrication.
 
-% This isn't supper important in the grand scheme of things, I mean yes I used it to imperically verify that the tests were setup properly, but really it doesn't matter
-% So I may mention it later, if I do I can come back and fill in this section
-%\subsection{VCD File}
+Logic simulation is important during each step of the design process, so that the circuit behavior can be verified.  During the behavioral modelling phase, simulation is performed to ensure the description of the circuit is correct and that no design errors have been made.  Simulation is also performed after synthesis has taken place.  These simulations are done to verify that the circuit still functions correctly after it has been implemented at the gate-level to investigate any potentially timing problems with the circuit.  Following post-synthesis, post-layout is also performed.  Post-layout represents the final version of the circuit to be fabricated.  Simulation can be performed using the circuit's finaly timing information and can incorporate many different performance characteristics.  Post-layout is the final opportunity to verify a circuit is functioning correctly before fabrication.
+
+In constrast to logic simulation, fault simulation is not typically performed at every step of the design process.  Ideally the post-layout netlist should be used for all fault simulations, since it is the most accurate representation of the circuit.  This is especially true of bridging fault simulations as routing is not finalized until the layout stage with the inclusion of the clock buffer tree (routing which distributes the clock accross the trip with limited clock skew).  In this thesis all fault simulations of the BIST are performed using the post-layout design.  As discussed in the next chapter, this does present a challenge since the post-layout design produced by the CAD tools is a Verilog netlist which is not a format used by the fault simulator.  As such a tool was written to convert a Verilog netlist to the ASL netlist format recognized by our simulator AUSIM (ASL and the fault simulator AUSIM will be discussed in the next section).
+
+\subsection{Value Change Dump File}
 % Discuss a VCD file since it relates to simulation
 % Simplifies the storage and viewing of simulations results
 % A single paragraph should do
+The Value Change Dump or VCD\nomenclature{VCD}{Value Change Dump} format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is an industry standard format and is typically used to store logical simulation results in as small of a footprint as possible\cite{verilog}.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data.
 
-\section{AUSIM Fault Simulation}
+The VCD format compresses simulation results into a smaller footprint by only storing the changes between output vectors instead of every vector\cite{verilog}.  While this can make the output of the file less readable it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  An example of a VCD file is shown in Table \ref{tbl:half_adder_vcd}\footnote{It is important to note while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector}.  On the right in the figure is a text description explaining each section of the VCD file.
+\begin{table}
+	\begin{center}
+		\begin{tabular}{l|l}
+			VCD File & Description \\ \hline
+			\textbf{\$date} & The date section defines the day\\
+			Tuesday, December 07, 2010 & which this file was created \\
+			\textbf{\$end} & \\
+			\textbf{\$version}
+			Generated For ASL2VCD 1.0 & A comment detailing the  \\
+			Alex Lusco & version of the application creating this file \\
+			\textbf{\$end}	\\
+			\textbf{\$comment}	\\
+			VCD File & An additional comment section detailing \\
+			\textbf{\$end} & information about the file \\
+			\textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale used in this file \\
+			\textbf{\$scope} module logic \textbf{\$end} & The simulation scope, particular to the simulation \\
+			\textbf{\$var} wire 1 ! A \textbf{\$end} & This section aliases each input with a single ASCII \\
+			\textbf{\$var} wire 1 " B \textbf{\$end} & character. For long IO names this shrinks them to a  \\
+			\textbf{\$var} wire 1 \# S \textbf{\$end} & single character allowing for the ability to condense \\
+			\textbf{\$var} wire 1 \$ C \textbf{\$end} & the dump for large simulations greatly \\
+			\textbf{\$upscope} \$end & \\
+			\textbf{\$enddefinitions} \$end & End of header \\
+			\textbf{\$dumpvars} & Sets the initial value for each input \\
+			0!	& Each IO must be set to an initial value here \\
+			0"	& The !,",\#, \& \$ characters represent the\\
+			0\# & nets aliased in the \$scope section\\
+			0\$ & \\
+			\textbf{\$end} & \\
+			\textbf{\#1} & The \#N construct denotes a time step to apply the \\
+			1" & following value changes at, in this case at 10ns \\
+			1\# & Only nets whose value changed will appear in the time step\\
+			\textbf{\#2} & These changes occurred at 20ns \\ 
+			1! & \\
+			0" & \\
+			\textbf{\#3} & These changes occurred at 30ns\\
+			1" & \\
+			0\# & \\
+			1\$ & \\	
+			\textbf{\#4} & The end of the simulation, no changes occurred \\		
+		\end{tabular}
+	\end{center}
+	\caption{VCD File for Half-Adder Vectors}
+	\label{tbl:half_adder_vcd}
+\end{table} 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.4]{images/half-adder-vcd}
+	\end{center}
+	\caption{The VCD file visualized in the GTKWave Viewer}
+	\label{fig:half-adder-gtkwave}
+\end{figure}
+For long simulations with many inputs and outputs the VCD format is much more compact due to the compression applied.  The key benefit to conversion to the VCD format is the ability to visualize the output of a logic simulation in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used to visualize the VCD file in \ref{tbl:half_adder_vcd}.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform.  The displayed waveforms can be panned and zoomed.  This functionality alone makes it much easier to verify the output of a complex simulation.  Conversion to the VCD file format and the GTKWave viewer are used in this thesis to simplify the verification of test vectors.
+
+\section{AUSIM Fault Simulator}
 % Some discussion on the general use of the simulation
 % Capabilities
+For the fault simulations performed in this thesis the Auburn University SIMulator or AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} is used.  Developed by Dr. Charles Stroud\cite{ausim}\cite{asl}, AUSIM can perform both logic and fault simulations.  In addition it supports multiple fault models including the gate-level stuck-at and multiple bridging fault models\cite{ausim}.  It supports all of the previously discussed methods of improving simulation time including fault collapsing and parallel fault simulation of both bridging and stuck-at faults\cite{ausim}.  A detailed description of the operation and usage of AUSIM will not be given in this thesis; however, more information can be found in \cite{ausim}\cite{asl}; instead, the focus of this section is an overview of the Auburn Simulation Language or ASL\nomenclature{ASL}{Auburn Simulation Langauge} which is the netlist format used by AUSIM.
 
 \subsection{ASL Netlist Format}
 % Format used by AUSIM for simulations
 % Discussion of the specifics
-
-\subsection{Simulation Process}
-% Cover flt, out, and vec file formats
-% Cover basic workflow, logic -> fault
-
-\section{BIST Architecture}
-% Introduce the bist, its SSA BIST based on a DDS
-% some other introductory characteristics
-
-\subsection{Selective Spectrum Analysis}
-% Discuss DDS based frequency generation
-% Discuss frequency words and how they relate to the clock speed and frequency generation
-
-\subsection{ORA Multiplier-Accumulators}
-% Discuss ORA design
-% DC1 and DC2 MAC
-% Discuss in-phase and out-of-phase accumulations
-% Probably will need to briefly mention cordic
-
-\subsection{On-Chip Calculation Circuit}
-% Discuss importance of on-chip and how it differs from ORA
-% Discuss LOG circuit and how all calculations are performed in log 
-% Discuss how calculations are performed for each test and which tests are available
-%% Linearity, Frequency Response, Spur Search, SNR, NF
-
-\subsection{Interfacing with BIST}
-% Communication mechanism for BIST
-% High-level overview of the SPI
-% Challenges of testing BIST through SPI?
-
-\subsection{Auburn Simulation Language}
-Before a circuit can be simulated it must be converted to a format that AUSIM can understand.  The Auburn Simulation Language (ASL)\nomenclature{ASL}{Auburn Simulation Language} is the circuit description used by AUSIM\cite{asl}.  ASL is used to provide a textual representation of a circuit at the gate-level to the simulator.  This gate-level net-list is used to describe each connection and gate used in a circuit design and allows the simulator to build a representation of the circuit under test.  ASL begins with a top-level circuit declaration.  This declaration defines the name of the circuit and uses the in and out keywords to define the inputs and outputs to the circuit.  An example circuit is given in Figure \ref{fig:half_adder}.  Figure \ref{fig:half_adder} A is a half-adder which takes in two inputs and outputs a sum and carry bit, the corresponding ASL description is given in Figure \ref{fig:half_adder} B.
+Before a circuit can be simulated by AUSIM it must be in a format that AUSIM can understand.  The Auburn Simulation Language (ASL)\nomenclature{ASL}{Auburn Simulation Language} is the circuit description used by AUSIM\cite{asl}.  ASL is used to provide a textual representation of a circuit at the gate-level to the simulator.  This gate-level net-list is used to describe each connection and gate used in a circuit design and allows the simulator to build a representation of the circuit under test.  ASL begins with a top-level circuit declaration.  This declaration defines the name of the circuit and uses the \textit{in} and \textit{out} keywords to define the inputs and outputs to the circuit.  An example circuit is given in Figure \ref{fig:half_adder}.  Figure \ref{fig:half_adder} A is a half-adder which takes in two inputs and outputs a sum and carry bit, the corresponding ASL description is given in Figure \ref{fig:half_adder} B.
 \begin{figure}
 	\begin{center}
 		\begin{minipage}[l]{.45\textwidth}
@@ -360,11 +388,11 @@ Before a circuit can be simulated it must be converted to a format that AUSIM ca
 	\caption{A Half-Adder circuit}
 	\label{fig:half_adder}
 \end{figure}
-As can be seen from the figure the circuit declaration is started by the \textit{ckt} keyword.  Each keyword in ASL is followed by a `:' character.  Following the \textit{ckt} keyword is the name of the circuit in this case ``HF''.  Following that, the primary inputs and outputs are declared using the \textit{in} and \textit{out} keywords.  Each statement in ASL is terminated using a `;' character.  After the circuit statement the gate-level description of the circuit is given.  The format of each gate is similar to the format of the circuit statement:
+As can be seen from the figure the circuit declaration is started by the \textit{ckt} keyword\cite{asl}.  Each keyword in ASL is followed by a `:' character\cite{asl}.  Following the \textit{ckt} keyword is the name of the circuit in this case ``HF''.  Following that, the primary inputs and outputs are declared using the \textit{in} and \textit{out} keywords.  Each statement in ASL is terminated using a `;' character\cite{asl}.  After the circuit statement the gate-level description of the circuit is given.  The format of each gate is similar to the format of the circuit statement:
 \begin{quote}
 	\textbf{GATE}: Name \textbf{IN}: In1 In2... InN \textbf{OUT}: Out1 Out2... OutN ;\cite{asl}
 \end{quote}
-All circuits in ASL follow this simple syntax.  The and, xor, and dff gates are examples of gates which are built into AUSIM.  All of the basic logic gates as well as the D flip-flop and two input multiplexer are provided automatically.  Table \ref{tbl:ASLGates} shows each gate and its inputs and outputs.
+All gate declarations in ASL follow this simple syntax.  All of the elementary logic gates (AND, OR, XOR, etc..) as well as the data flip-flop (DFF)\nomenclature{DFF}{Data Flip-Flop} and two input multiplexer are built-in to AUSIM and available to all circuits\cite{asl}.  Table \ref{tbl:ASLGates} shows each built-in gate and its inputs and outputs.
 \begin{table}[bht]
 \caption{Built-in AUSIM Gates\cite{asl}}
 \begin{center}
@@ -387,135 +415,31 @@ DFF & DFF: d1 in: CLK D out: Q \\ \hline
 
 It is important to understand that custom gates can be implemented and used in a similar syntax.  To do this one must use the \textit{subckt} command.  While an ASL file can only have a single circuit declaration, it can have any number of sub-circuit declarations\cite{asl}.  Each sub-circuit has its own set of top-level inputs and outputs and its own gate-level net-list.  Once defined the name of the sub-circuit can be used as a gate and be instantiated elsewhere in the circuit description.  
 
-\subsection{Commanding the Simulator}
-AUSIM can preform many different operations pertaining to the circuit.  For our purposes we will focus on the steps leading upto and including logic and stuck-at fault simulation.  The AUSIM simulator is executed by providing a command file.  This command file is a simple file which is a sequential list of commands to be executed by the simulator.  Each command and its required parameters are given on each new-line.  Before exploring the commands available, it is important to understand how AUSIM locates and uses pertinent files during execution.  Each important file has a unique file extension which designates which type of file it is.  This can include files such as \textit{.asl} for ASL files or \textit{.vec} for Vector files (explained in the next section) among many others.  In the usual case all of these files would be named the same prefix and only differ in their respective file extensions.  This allows the use of the \textit{default} command to specify the filename prefix for AUSIM to use when attempting to locate or creating new files.  AUSIM does provide the ability to override the filename for individual files if needed\cite{ausim}.  Table \ref{tbl:ausim_commands} provides a list of common AUSIM commands and their respective descriptions.  Each command file is provided to AUSIM during execution as a command-line argument.  As a simple example, a command file for a circuit called counter which performed a logic simulation could look like the following:
-\begin{table}
-	\caption{Example AUSIM command file}
-	\begin{center}
-		\begin{tabular}{l}
-		default counter \\
-		proc \\
-		audit \\
-		simul8 \\
-		\end{tabular}
-	\end{center}
-\end{table}
-This file would tell AUSIM to look for files prefixed with counter (such as counter.asl, counter.vec etc.) and to process the circuit description, audit the circuit for area and performance, and finally perform a logic simulation using the circuit and a vector file.
-\begin{table}
-	\caption{Common AUSIM Commands\cite{ausim}}
-	\begin{center}
-		\begin{tabular}{|l|l|}
-		\hline
-		Command & Description \\ \hline
-		default prefix & Uses the prefix and the default suffix for each file \\ \hline
-		proc & Processes an asl file \\ \hline
-		audit & Performs area and performance analysis of circuit \\ \hline
-		simul8 & Performs logic simulation \\ \hline
-		fltgen & Generates a fault list for the circuit \\ \hline
-		pftsim & Performs parallel fault simulation \\ \hline
-		\end{tabular}
-	\end{center}
-	\label{tbl:ausim_commands}
-\end{table}
-The \textit{simul8} command is one of two modes of execution that are important for this thesis.  The \textit{simul8} command stands for ``simulate'' which performs a logic simulation using the circuit (the other mode is fault simulation which will be discussed in Section \ref{sct:ausim-fault}).  Logic simulation applies a given set of inputs to the circuit for a given number of cycles and records the output.  The inputs that are given are vector files and are discussed in the next section.
+\section{BIST Architecture}
+% Introduce the bist, its SSA BIST based on a DDS
+% some other introductory characteristics
 
-\subsection{Test Vector Files}
-Once a circuit has been created in the ASL format the simulator needs to be given the appropriate input vectors to properly stimulate the circuit's inputs. These vectors are used for both logic and fault simulation (discussed in Section \ref{sct:ausim-fault}).  Understanding the vector files and how to create them is essential to using AUSIM and properly testing circuits.
+\subsection{Selective Spectrum Analysis}
+% Discuss DDS based frequency generation
+% Discuss frequency words and how they relate to the clock speed and frequency generation
 
-Fortunately the vector file format is very simple.  Generally a vector file should end in the \textit{.vec} file extension and have the filename prefix that is set in the AUSIM command file\cite{ausim}.  In the vector file each line should include a test vector.  Each test vector should be a binary sequence corresponding in length to the number of primary inputs in the ASL circuit.  The number of test vectors should be equal to the length of the test the user wants to apply to the circuit.  Each test vector that is applied will correspond to exactly one vector recording the outputs of the circuit after the circuit has settled (output is discussed in the next section).  An example vector file for the previously mentioned half-adder (Figure \ref{fig:half_adder}) is shown in Table \ref{tbl:half_adder_vector}.  This vector file applies four test vectors to the circuit.
-\begin{table}
-	\caption{Example Vector File For Half-Adder}
-	\begin{center}
-		\begin{tabular}{l}
-			\# Vector File ; \\
-			00 \\
-			01 \\
-			10 \\
-			11 \\
-		\end{tabular}
-	\end{center}
-	\label{tbl:half_adder_vector}
-\end{table}
+\subsection{ORA Multiplier-Accumulators}
+% Discuss ORA design
+% DC1 and DC2 MAC
+% Discuss in-phase and out-of-phase accumulations
+% Probably will need to briefly mention cordic
 
-This is great for simple circuits and short tests; however, for larger, complex circuits or long complex tests this can become difficult to use.  AUSIM offers no way to generate large amounts of vectors (there is a random vector tool\cite{ausim} but this is not always appropriate).  To remedy this a tool was created to generate vector files from a simple command language.
+\subsection{On-Chip Calculation Circuit}
+% Discuss importance of on-chip and how it differs from ORA
+% Discuss LOG circuit and how all calculations are performed in log 
+% Discuss how calculations are performed for each test and which tests are available
+%% Linearity, Frequency Response, Spur Search, SNR, NF
 
-\subsection{Output Files}
-During logic simulation the output of the circuit is recorded into an out file.  Like the vector file format, AUSIM's out file format is very straight forward.  Each out file consists of a header created by AUSIM which labels each column of the file with the corresponding IO name.  Following the header is the output of the logic simulation.  Each output line consists of the test vector which was applied and the resulting output recorded from the circuit.  An example out file for the half-adder example from Figure \ref{fig:half_adder} is shown in Figure \ref{tbl:half_adder_out}.
-\begin{table}
-	\caption{Example Half-Adder Out File}
-	\begin{center}
-		\begin{tabular}{lll}
-			\# & \multicolumn{2}{l}{AUSIM (2.7) Simulation Results ;} \\
-			\# & AB & SC ; \\
-			   & 00 & 00 \\
-			   & 01 & 10 \\
-			   & 10 & 10 \\
-			   & 11 & 01 \\
-		\end{tabular}
-	\end{center}
-	\label{tbl:half_adder_out}
-\end{table}
-As shown in the Figure, the top consists of the previously mentioned header labeling each column with its IO name (if an IO name is more than a single letter it is written vertically with one letter on each line).  Following the header is the four vectors from Table \ref{tbl:half_adder_vector} and the resulting output from logic simulation.  Like the vector file this format works well for small circuits and simple simulations; however, it can be a nightmare when verifying larger circuits.  This is especially true of circuits with a large number of outputs or which use serial communication interfaces such as a Serial Peripheral Interface (SPI)\nomenclature{SPI}{Serial Peripheral Interface}.  For these more complicated interfaces a format which can be visualized greatly eases the difficulty involved in spotting easy to miss mistakes (such as an incorrect or invalid test vector) or invalid output.  For these more complicated circuits (such as our BIST) a tool has been written to convert an AUSIM out file into a Value Change Dump or VCD\nomenclature{VCD}{Value Change Dump}.
+\subsection{Interfacing with BIST}
+% Communication mechanism for BIST
+% High-level overview of the SPI
+% Challenges of testing BIST through SPI?
 
-\subsection{Value Change Dump Format}
-The Value Change Dump Format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is a standard format and is tailored towards storing digital simulation results in as small as a footprint as possible.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data.
-
-At its heart the VCD file stores simulation data in the same manner that the Vecgen markup defines test vectors.  In contrast to the AUSIM out file format, the VCD format only stores changes in values\cite{verilog}.  While this makes the file less human readable, it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  Table \ref{tbl:half_adder_vcd}\footnote{It is important to note while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector} displays the output file converted into VCD format.  This conversion was performed using the Out2VCD program developed by the author.  The program is very straight forward and uses the following syntax:
-\begin{quote}
-	\textbf{OUT2VCD} [-g groups.txt]\footnote{The groups file is a list of IO prefixes which should be grouped together to form a bit vector.  ie. if the file contained the prefix ``color'' then IO such as color1 color2 and color3 would be combined into color[2:0] in the VCD file} input.out output.vcd
-\end{quote}
-\begin{table}
-	\begin{center}
-		\begin{tabular}{l|l}
-			VCD File & Description \\ \hline
-			\textbf{\$date} & The date section defines the day\\
-			Tuesday, December 07, 2010 & which this file was generated \\
-			\textbf{\$end} & \\
-			\textbf{\$version}
-			Generated For ASL2VCD 1.0 & A comment detailing the  \\
-			Alex Lusco & version of the generator for this file \\
-			\textbf{\$end}	\\
-			\textbf{\$comment}	\\
-			VCD File & An additional comment section detailing \\
-			\textbf{\$end} & information about the file \\
-			\textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale for each value frame \\
-			\textbf{\$scope} module logic \textbf{\$end} & The Logic Module \\
-			\textbf{\$var} wire 1 ! A \textbf{\$end} & This section aliases each input with a single ASCII \\
-			\textbf{\$var} wire 1 " B \textbf{\$end} & character for long IO names this shrinks them to a  \\
-			\textbf{\$var} wire 1 \# S \textbf{\$end} & single character allowing for the ability to condense \\
-			\textbf{\$var} wire 1 \$ C \textbf{\$end} & the dump for large simulations greatly \\
-			\textbf{\$upscope} \$end & \\
-			\textbf{\$enddefinitions} \$end & End of header \\
-			\textbf{\$dumpvars} & Sets the initial value for each input \\
-			0!	& Each line IO must be set here \\
-			0"	& \\
-			0\# & \\
-			0\$ & \\
-			\textbf{\$end} & \\
-			\textbf{\#1} & The \#N construct denotes a time step to apply the \\
-			1" & following value changes at In this case 10ns \\
-			1\# & simulation time\\
-			\textbf{\#2} & This time its at 20ns \\ 
-			1! & \\
-			0" & \\
-			\textbf{\#3} & 30ns\\
-			1" & \\
-			0\# & \\
-			1\$ & \\	
-			\textbf{\#4} & 40ns \\		
-		\end{tabular}
-	\end{center}
-	\caption{VCD File for Half-Adder Vectors}
-	\label{tbl:half_adder_vcd}
-\end{table} 
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=.4]{images/half-adder-vcd}
-	\end{center}
-	\caption{The VCD file visualized in the GTKWave Viewer}
-	\label{fig:half-adder-gtkwave}
-\end{figure}
-In the example in Table \ref{tbl:half_adder_vcd}, the VCD file is much larger than the AUSIM out file format; however, for long simulations with many inputs and outputs the VCD format is much more compact.  Regardless of the file length, the key benefit to conversion to the VCD format is the ability to visualize AUSIM's output in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform.  The displayed waveforms can be panned and zoomed.  This functionality alone makes it much easier to verify the output of a complex simulation.  This tool proved invaluable for verification of test vectors when testing the BIST.
  
 \subsection{Fault Simulation}
 
