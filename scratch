@@ -1,3 +1,16 @@
+# Sources
+- Source which defines a netlist
+- Something about an atpg
+- Something that discusses parallel fault simulation using an integer data type
+
 # TODO
 - Citations, o dear lord at the citations needed
 - Review grammer int he first half, we will start BIST architecture Sunday hopefully..
+- Consider defining fault coverage early?
+- Expand on potential detection
+- Consder editing the potential fault coefficent setence, its bad
+
+# Fault Simulations
+- The sentence defining a netlist needs to be better, a source should clear this problem up
+- Potential continuation of opening paragraph: Referring back to Section \ref{sct:basictesting}, each test vector input is applied to the inputs of the circuit during simulation and the output recorded\cite{needed-faultsim}.  
+- Research strouds take on transistor model, potentially change setence of the advantage of transistor model
