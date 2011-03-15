@@ -344,9 +344,7 @@ As discussed in the previous paragraph, there are different models to define the
   \caption{Bridging Fault where Net A dominates Net B}
   \label{fig:bridgingfault}
 \end{figure}
-When net B has the same logic value as net A its output is unaffected; however, when the logic value of net B is different than that of net A, net B's logic value will be changed to that of net A\cite{needed-bridging}.  The first two columns of the truth table in Figure \ref{fig:bridgingfault} represent the fault-free behavior of net A and net B and the remaining column B' represents the faulty output of net B when net A domaintes it. 
-% I'm thinking the figure should have net a be 0011 and net b be 0101
-In the second row when net A is a `0' and net B should be a `1', B' is instead a `0' since it is dominated by net A.  Likewise in the third row when net A is a `1', net B should be a `0' but instead is a `1' due to the influence from net A.
+When net B has the same logic value as net A its output is unaffected; however, when the logic value of net B is different than that of net A, net B's logic value will be changed to that of net A\cite{needed-bridging}.  The first two columns of the truth table in Figure \ref{fig:bridgingfault} represent the fault-free behavior of net A and net B and the remaining column B' represents the faulty output of net B when net A domaintes it.  In the second row when net A is a `0' and net B should be a `1', B' is instead a `0' since it is dominated by net A.  Likewise in the third row when net A is a `1', net B should be a `0' but instead is a `1' due to the influence from net A.
 
 Bridging faults are important to address during the design of a circuit.  Unfortunately they can be computationally expensive and difficult to test.  Due to time constraints bridging faults were not simulated in this thesis though it is a target of future work.
 
