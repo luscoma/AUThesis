@@ -274,7 +274,15 @@ Using both fault dropping and parallel fault simulations can greatly decrease th
 % An image showing some faults and the collapsed version (similar to Dr. Strouds image from BIST would be good)
 % Can greatly improves simulation time, disadvantages? FC related I guess?
 % give an example of the difference: use the BIST... why not
-When performing fault simulations certain optimizations can be made to improve the efficency of the simulation.  One such optimization is fault collapsing.  With the single gate-level stuck-at fault model, each gate input and output can be stuck-at logic `0' or logic `1'.  For elementary logic gates this leads to many faults which produce identicial faulty behavior; these faults can be said to be equivalent\cite{stroud}.  During simulation these equivalent faults can be collapsed, requiring only a single fault out of the group of equivalent faults to be simulated\cite{stroud}.  Depending on the circuit this can substantially reduce the number of faults to be simulated while still accurately representing the faults which can occur in the circuit\cite{stroud}.  Figure \ref{fig:faultcollapse} shows an example of fault collapsing.  The NOR gate has 6 uncollapsed faults; however, either input stuck-at `1' is equivalent to the output being stuck-at `0' (since a logic `1' is the controlling input for a NOR gate) which results in 4 collapsed faults.  \cite{stroud} states that the number of collapsed faults for any elementary logic gate with greater than one input is $K+2$ where $K$ is the number of inputs to the gate.  This is certainly apparent with the NOR gate in Figure \ref{fig:faultcollapse}, where $K+2=4$.  Additionally when the output of a gate is connected to exactly one input of another gate, a fault occurring at the output of the source gate is indistinguishable from the same fault occurring at the input of the destination gate\cite{stroud}.  These faults can be collapsed together which leads to a large chain of faults being collapsed such as the example in Figure \ref{fig:collapsechain}\cite{stroud}.  Unfortunately due to the limitation of the single stuck-at fault model which does not allow multiple faults to appear in the circuit simulatenously (as opposed to a multiple fault model which allows this), the fan-out stem in Figure \ref{fig:collapsechain} cannot be collapsed.  Since the output of the invertor fans-out to the input of two different gates, collapsing these faults would make a fault appear to be on both the input of the AND gate and the OR gate.  This would violate the single stuck-at fault model and as such as not allowed\cite{stroud}.
+When performing fault simulations certain optimizations can be made to improve the efficency of the simulation.  One such optimization is fault collapsing.  With the single gate-level stuck-at fault model, each gate input and output can be stuck-at logic `0' or logic `1'.  For elementary logic gates this leads to many faults which produce identicial faulty behavior; these faults can be said to be equivalent\cite{stroud}.  During simulation these equivalent faults can be collapsed, requiring only a single fault out of the group of equivalent faults to be simulated\cite{stroud}.  Depending on the circuit this can substantially reduce the number of faults to be simulated while still accurately representing the faults which can occur in the circuit\cite{stroud}.  Figure \ref{fig:faultcollapse} shows an example of fault collapsing.  The NOR gate has 6 uncollapsed faults; however, either input stuck-at `1' is equivalent to the output being stuck-at `0' (since a logic `1' is the controlling input for a NOR gate) which results in 4 collapsed faults.  These equivallent faults are shown in bold in the figure.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/nor-faultcollapse}
+	\end{center}
+  \caption{NOR Gate with 6 uncollapsed and 4 collapsed faults}
+  \label{fig:faultcollapse}
+\end{figure}
+\cite{stroud} states that the number of collapsed faults for any elementary logic gate with greater than one input is $K+2$ where $K$ is the number of inputs to the gate.  This is certainly apparent with the NOR gate in Figure \ref{fig:faultcollapse}, where $K+2=4$.  Additionally when the output of a gate is connected to exactly one input of another gate, a fault occurring at the output of the source gate is indistinguishable from the same fault occurring at the input of the destination gate\cite{stroud}.  These faults can be collapsed together which leads to a large chain of faults being collapsed such as the example in Figure \ref{fig:collapsechain}\cite{stroud}.  Unfortunately due to the limitation of the single stuck-at fault model which does not allow multiple faults to appear in the circuit simulatenously (as opposed to a multiple fault model which allows this), the fan-out stem in Figure \ref{fig:collapsechain} cannot be collapsed.  Since the output of the invertor fans-out to the input of two different gates, collapsing these faults would make a fault appear to be on both the input of the AND gate and the OR gate.  This would violate the single stuck-at fault model and as such as not allowed\cite{stroud}.
 
 In the single stuck-at fault model the number of uncollapsed faults in a circuit are $2 \times G_i_o$ where $G_i_o$ is the number of gate inputs and outputs in the circuit.  In contrast the number of collapsed faults can be estimated by Equation \ref{equ:collapse-eq} where $P_o$ is the number of primary outputs, $F_o$ is the number of number of fan-out stems, $G_i$ is the number of gate inputs, and $N_i$ is the number of inventors in the circuit\cite{stroud}.
 \begin{equation}
@@ -295,10 +303,48 @@ As an example, the BIST model evaluated in this thesis has a total of 83386 unco
 Though the focus of this thesis is gate-level stuck-at fault simulations, additional models may be of interest for future work; specifically bridging fault simulations are commonly performed to assess the fault coverage of faults which occur between nets.  There are a number of different fault models which describe the behavior of bridging faults, faults where two nets are shorted together due to a manufacturing defect including the Wired OR/AND, Dominant, and Dominant OR/AND fault model\cite{needed-bridging}.  In this section we will focus on the dominant bridging fault model as it is the most commonly used\cite{needed-bridging}.  For many years it was a commonly held belief that a high stuck-at fault coverage provided a high bridging fault coverage\cite{needed-bridging-faultcvg}; however, more recent work has shown that this is not always the case and it is important to perform these simulations separately to ensure that an acceptably high bridging fault coverage is achieved\cite{needed-bridging-newfaultcvg}.  Unfortunately bridging fault simulation can be significantly more time consuming than stuck-at fault coverage due to the large number of fault sites that must be considered.  Equation \ref{equ:bridging-fault-sites}, 
 \begin{equation}
 F_B = 2(N^2-N)/2
+\label{equ:bridging-fault-sites}
 \end{equation}
-where $N$ is the number of nets in the circuit, shows the calculation to determine the number of possible bridging fault sites in a circuit.  Like the previous section, the BIST model can be used to give a sense of scale.  The BIST studied in this thesis has 15221 nets, by applying equation \ref{equ:bridging-fault-sites} the number of bridging fault sites is 115,831,810!  Depending on the bridging fault model used upto 4 faults (DOM AND/OR) are possible at each fault site, so this means that the worst case number of faults to be simulated is almost 500 million!  As discussed in the previous section, bridging faults can also b e collapsed which can substaintly lower the number of faults to be simulated (using the same circuit the number of collapsed faults was approximiately 30K faults when using the dominant model).
+where $N$ is the number of nets in the circuit, shows the calculation to determine the number of possible bridging fault sites in a circuit.  Like the previous section, the BIST model can be used to give a sense of scale.  The BIST studied in this thesis has 15221 nets, by applying equation \ref{equ:bridging-fault-sites} the number of bridging fault sites is 115,831,810!  Depending on the bridging fault model used upto 4 faults (DOM AND/OR) are possible at each fault site, so this means that the worst case number of faults to be simulated is almost 500 million!  As discussed in the previous section, bridging faults can also be collapsed which can substaintly lower the number of faults to be simulated (using the same circuit the number of collapsed faults was approximiately 30K faults when using the dominant model).
 
-As discussed in the previous paragraph, there are different models to define the types of bridging faults which can occur.  Since it is the most common, the dominant bridging fault model will be discussed.  According to the dominant bridging fault model, two different faults can occur at a bridging fault site: net A can dominate net B or net B can dominate net A.  Whichever net is dominated can potentially be affected by the other net's current logic value; this occures due to dominate net having a stronger drive transistor\cite{needed-bridging}.  Figure \ref{fig:bridgingfault} shows an example of a dominant bridging fault where net A dominates net B, along with a truth table containing the fault-free and faulty behavior of the circuit.  When net B has the same logic value as net A its output is unaffected; however, when the logic value of net B is different than that of net A, net B's logic value will be changed to that of net A\cite{needed-bridging}.  The first two columns of the truth table in Figure \ref{fig:bridgingfault} represent the fault-free behavior of net A and net B and the remaining column B' represents the faulty output of net B when net A domaintes it. 
+As discussed in the previous paragraph, there are different models to define the types of bridging faults which can occur.  Since it is the most common, the dominant bridging fault model will be discussed.  According to the dominant bridging fault model, two different faults can occur at a bridging fault site: net A can dominate net B or net B can dominate net A.  Whichever net is dominated can potentially be affected by the other net's current logic value; this occures due to dominate net having a stronger drive transistor\cite{needed-bridging}.  Figure \ref{fig:bridgingfault} shows an example of a dominant bridging fault where net A dominates net B, along with a truth table containing the fault-free and faulty behavior of the circuit.  
+\begin{figure}
+  \begin{center}
+    \begin{minipage}[l]{.55\textwidth}
+      \begin{center}
+        \includegraphics[scale=.8]{images/bridgingfault}	
+      \end{center}
+    \end{minipage}
+    \begin{minipage}[r]{.35\textwidth}
+      \begin{center}
+        \begin{tabular}{|l|l|l|}
+          \hline
+          Net A & Net B & Faulty' \\ 
+          & & Net B' \\ \hline
+          0 & 0 & 0 \\ \hline
+          0 & 1 & 0 \\ \hline
+          1 & 0 & 1 \\ \hline
+          1 & 1 & 1 \\ \hline
+        \end{tabular}
+      \end{center}
+    \end{minipage}
+  \end{center}
+  \begin{center}
+		\begin{minipage}[l]{.55\textwidth}
+      \begin{center}
+        (A)
+      \end{center}
+		\end{minipage}
+		\begin{minipage}[r]{.35\textwidth}
+      \begin{center}
+        (B)
+      \end{center}
+		\end{minipage}
+	\end{center}
+  \caption{Bridging Fault where Net A dominates Net B}
+  \label{fig:bridgingfault}
+\end{figure}
+When net B has the same logic value as net A its output is unaffected; however, when the logic value of net B is different than that of net A, net B's logic value will be changed to that of net A\cite{needed-bridging}.  The first two columns of the truth table in Figure \ref{fig:bridgingfault} represent the fault-free behavior of net A and net B and the remaining column B' represents the faulty output of net B when net A domaintes it. 
 % I'm thinking the figure should have net a be 0011 and net b be 0101
 In the second row when net A is a `0' and net B should be a `1', B' is instead a `0' since it is dominated by net A.  Likewise in the third row when net A is a `1', net B should be a `0' but instead is a `1' due to the influence from net A.
 
