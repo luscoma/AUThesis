@@ -159,7 +159,7 @@ Figure \ref{fig:andtruth} provides a truth table listing the faulty and fault-fr
 		\end{tabular}
 	\end{minipage}
 	\end{center}
-	\caption{AND gate with input A stuck at 1}
+	\caption{AND Gate with Input A Stuck-At `1'}
 	\label{fig:andtruth}
 \end{figure}
 Since digital circuits will always produce the same outputs for a given set of inputs, any difference between the expected and actual output can be exploited to determine if a circuit is functioning correctly\cite{stroud}.  Each clock cycle an input vector is applied and the output is compared with the expected output.  If any output does not match the expected output then the chip is considered faulty and discarded.  Unfortunately the storage required to hold each input and expected output vector can be significant for large or complex chips and while feasible for costly automatic test equipment, it is often impossible due to area considerations when using a BIST approach\cite{faultdiagnosis}.
@@ -172,7 +172,7 @@ Returning to the example in Figure \ref{fig:andtruth}, a simple BIST can be cons
 	\begin{center}
 		\includegraphics[scale=1]{images/and-bist}
 	\end{center}
-	\caption{BIST for an AND Gate}
+	\caption{Simple BIST for an AND Gate}
 	\label{fig:andbist}
 \end{figure}
 
@@ -200,7 +200,7 @@ In a mixed-signal environment both digital and analog systems coexist and intera
 	\begin{center}
 		\includegraphics[scale=1]{images/mixed-bist-architecture}
 	\end{center}
-	\caption{BIST approach for mixed-signal systems\cite{stroud}}
+	\caption{BIST Approach for Mixed-Signal Systems\cite{stroud}}
 	\label{fig:mixedbist1}
 \end{figure}
 
@@ -209,7 +209,7 @@ Figure \ref{fig:mixedbist1} shows a basic version of this mixed-signal BIST appr
 	\begin{center}
 		\includegraphics[scale=1]{images/mixedbist-paths}
 	\end{center}
-	\caption{Mixed-Signal BIST with multiple loopback paths}
+	\caption{Mixed-Signal BIST with Multiple Loopback Paths}
 	\label{fig:mixedbist_paths}
 \end{figure}
 
@@ -279,7 +279,7 @@ When performing fault simulations certain optimizations can be made to improve t
 	\begin{center}
 		\includegraphics[scale=1]{images/nor-faultcollapse}
 	\end{center}
-  \caption{NOR Gate with 6 uncollapsed and 4 collapsed faults}
+  \caption{NOR Gate with 6 Uncollapsed and 4 Collapsed Faults}
   \label{fig:faultcollapse}
 \end{figure}
 \cite{stroud} states that the number of collapsed faults for any elementary logic gate with greater than one input is $K+2$ where $K$ is the number of inputs to the gate.  This is certainly apparent with the NOR gate in Figure \ref{fig:faultcollapse}, where $K+2=4$.  Additionally when the output of a gate is connected to exactly one input of another gate, a fault occurring at the output of the source gate is indistinguishable from the same fault occurring at the input of the connected gate\cite{stroud}.  These faults can be collapsed together which leads to a large chain of faults being collapsed such as the example in Figure \ref{fig:collapsechain}\cite{stroud}.  In the figure groups of equivalent faults are shown with a line drawn between them.  Unfortunately due to the limitation of the single stuck-at fault model, which does not allow multiple faults to appear in the circuit simultaneously (as opposed to a multiple fault model which allows this), the fan-out stem in Figure \ref{fig:collapsechain} cannot be collapsed\cite{defectforcmos}.  Since the output of the inverter fans-out to the input of two different gates, collapsing these faults would make a fault appear to be on both the input of the AND gate and the OR gate simultaneously which violates the single stuck-at fault model and is not allowed\cite{defectforcmos}.  Counting the faults in the figure, there are a total of 22 uncollapsed faults and a total of 12 collapsed faults, a significant reduction.
@@ -287,7 +287,7 @@ When performing fault simulations certain optimizations can be made to improve t
 	\begin{center}
 		\includegraphics[scale=1]{images/faultchain-collapse}
 	\end{center}
-  \caption{Fault collapsing performed on a group of logic gates}
+  \caption{Fault Collapsing Performed on a Group of Logic Gates}
   \label{fig:collapsechain}
 \end{figure}
 
@@ -348,7 +348,7 @@ As discussed in the previous paragraph, there are different models to define the
       \end{center}
 		\end{minipage}
 	\end{center}
-  \caption{Bridging Fault where Net A dominates Net B}
+  \caption{Bridging Fault where Net A Dominates Net B}
   \label{fig:bridgingfault}
 \end{figure}
 When net B has the same logic value as net A its output is unaffected; however, when the logic value of net B is different than that of net A, net B's logic value will be changed to that of net A.  The first two columns of the truth table in Figure \ref{fig:bridgingfault} represent the fault-free behavior of net A and net B and the remaining column B' represents the faulty output of net B when net A dominates it.  In the second row when net A is a `0' and net B should be a `1', B' is instead a `0' since it is dominated by net A.  Likewise in the third row when net A is a `1', net B should be a `0' but instead is a `1' due to the influence from net A.
@@ -422,7 +422,7 @@ In addition to the file size reduction, the key benefit of conversion to the VCD
 	\begin{center}
 		\includegraphics[scale=.4]{images/half-adder-vcd}
 	\end{center}
-	\caption{The VCD file visualized in the GTKWave Viewer}
+	\caption{VCD File Visualized in the GTKWave Viewer}
 	\label{fig:half-adder-gtkwave}
 \end{figure}
 
@@ -462,7 +462,7 @@ Before a circuit can be simulated by AUSIM it must be in a format that AUSIM can
 			(B)
 		\end{minipage}
 	\end{center}
-	\caption{A Half-Adder circuit}
+	\caption{A Half-Adder Circuit}
 	\label{fig:half_adder}
 \end{figure}
 As can be seen from the figure the circuit declaration is started by the \textit{ckt} keyword\cite{asl}.  Each keyword in ASL is followed by a `:' character\cite{asl}.  Following the \textit{ckt} keyword is the name of the circuit in this case ``HF''.  Following that, the primary inputs and outputs are declared using the \textit{in} and \textit{out} keywords.  Each statement in ASL is terminated using a `;' character\cite{asl}.  After the circuit statement the gate-level description of the circuit is given.  The format of each gate is similar to the format of the circuit statement:
@@ -471,7 +471,7 @@ As can be seen from the figure the circuit declaration is started by the \textit
 \end{quote}
 All gate declarations in ASL follow this simple syntax.  All of the elementary logic gates (AND, OR, XOR, etc..) as well as the data flip-flop (DFF)\nomenclature{DFF}{Data Flip-Flop} and two input multiplexer are built-in to AUSIM and available to all circuits\cite{asl}.  Table \ref{tbl:ASLGates} shows each built-in gate and its inputs and outputs.
 \begin{table}[bht]
-\caption{Built-in AUSIM Gates\cite{asl}}
+\caption{Built-In AUSIM Gates\cite{asl}}
 \begin{center}
 \begin{tabular}{|l|l|}
 \hline
