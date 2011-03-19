@@ -234,6 +234,7 @@ In the previous chapter a high-level look at both digital and analog systems has
 Before discussing the fault simulations performed in this thesis, it is important to have a more thorough understanding of fault simulation techniques.  In this chapter, an overview of several fault simulation techniques will be given as well as an overview of the bridging fault model which models faults between nets.  Following this discussion a more detailed outline of the simulation and design process will be given.  Next the fault simulator AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} is detailed which is used to evaluate the fault coverage of the mixed-signal BIST approach studied in Chapter 3.  This chapter concludes with a detailed discussion of the architecture of the mixed-signal BIST and its capabilities.
 
 \section{Fault Simulations}
+\label{sct:faultsim}
 % An introduction to fault simulation is probably appropriate
 Knowledge of the basic concepts of simulation is important to understanding how fault simulations are performed.  The simulation process begin with a netlist.  The netlist represents the circuit design to be simulated and defines the structure of the circuit at the gate level.  This includes both the gates used by the circuit as well as the interconnections between those gates\cite{advancedverilog}.  The generation of a netlist is discussed in more detail in Section \ref{sct:designprocess}.  According to Section \ref{sct:basictesting}, the next step is to generate a set of test vectors to be used to stimulate the circuit during testing.  Test vectors may be generated automatically using an Automatic Test Pattern Generator (ATPG)\nomenclature{ATPG}{Automatic Test Pattern Generator}\cite{advancedverilog} or manually by the designer.  When performing fault simulations, these vectors should ideally exercise as much of the internal circuitry of the design as possible so that a high fault coverage can be achieved (fault coverage is discussed towards the end of this section); consequently, test vectors generated using an ATPG can be advantageous as they typically guarantee a very high fault coverage\cite{advancedverilog}.  If vectors are created manually by the designer then it may be necessary to perform a logic simulation of the circuit to ensure the vectors are valid and to obtain the fault-free output of the circuit (when using an ATPG the fault-free output is generally recorded along with the test vector set).  With both the test vector set generated and fault-free output of the circuit known, fault simulations can begin.  
 
@@ -495,33 +496,8 @@ It is important to understand that custom gates can be implemented and used in a
 \section{BIST Architecture}
 % Introduce the bist, its SSA BIST based on a DDS
 % some other introductory characteristics
+The BIST architecture tested in this thesis is a mixed-signal BIST approach which uses Selective Spectrum Analysis (SSA)\nomenclature{SSA}{Selective Spectrum Analysis} to test analog circuitry.  SSA has many advantages when used for the measurement of analog spectrum.  SSA benefits from being a largely digital approach and integrates well into a BIST environment\cite{jie-journal}.  In addition due to SSA measuring only a single frequency point at a time, the hardware overhead is much lower when compared to a more common approach such as FFT-BIST\cite{stroud-phase}.  This same advantage can affect the test time required to analyze an analog spectrum; however, it can prove very advantageous when only a few frequencies are of interest in the analog spectrum\cite{jie-journal}.  In addition \cite{jie} discusses a number of optimizations in detail which when performed (some of which will be discussed in Section \ref{sct:bist-ora}) can greatly reduce the time required to perform a measurement.
 
-\subsection{Selective Spectrum Analysis}
-% Discuss DDS based frequency generation
-% Discuss frequency words and how they relate to the clock speed and frequency generation
-
-\subsection{ORA Multiplier-Accumulators}
-% Discuss ORA design
-% DC1 and DC2 MAC
-% Discuss in-phase and out-of-phase accumulations
-% Probably will need to briefly mention cordic
-
-\subsection{On-Chip Calculation Circuit}
-% Discuss importance of on-chip and how it differs from ORA
-% Discuss LOG circuit and how all calculations are performed in log 
-% Discuss how calculations are performed for each test and which tests are available
-%% Linearity, Frequency Response, Spur Search, SNR, NF
-
-\subsection{Interfacing with BIST}
-% Communication mechanism for BIST
-% High-level overview of the SPI
-% Challenges of testing BIST through SPI?
-
- 
-\subsection{Fault Simulation}
-
-\section{BIST Architecture}
-Our BIST architecture is a mixed-signal BIST approach which uses Selective Spectrum Analysis (SSA)\nomenclature{SSA}{Selective Spectrum Analysis} to test analog circuitry.  A block diagram of the basic architecture can be seen in Figure \ref{fig:bist-ssa}.  This architecture is capable of measuring a number of different analog characteristics including frequency response and third-order interception point (IP3)\nomenclature{IP3}{Third Order Interception Point}\cite{basessa}.  In addition by sweeping through a frequency spectrum both Signal to Noise Ratio (SNR)\nomenclature{SNR}{Signal to Noise Ratio} and Noise Figure\cite{noisefigure} and be measured.
 \begin{figure}
 	\begin{center}
 		\includegraphics[scale=.5]{images/bist-ssa-architecture}
@@ -529,7 +505,46 @@ Our BIST architecture is a mixed-signal BIST approach which uses Selective Spect
 	\caption{General BIST Architecture\cite{testtime}}
 	\label{fig:bist-ssa}
 \end{figure}
-As seen in Figure \ref{fig:bist-ssa} the BIST consists of a Direct Digital Synthesis (DDS)\nomenclature{DDS}{Direct Digital Synthesis} based TPG, Multiplier Accumulator (MAC)\nomenclature{MAC}{Multiplier Accumulator} based ORA, and test controller (not shown).  The TPG consists of three numerically controlled oscillators (NCOs)\nomenclature{NCO}{Numerically Controlled Oscillator} and utilizes the existing DAC in the mixed-signal system to generate the analog waveforms for testing\cite{testtime}.  Each NCO has a phase accumulator which is used to generate the output frequency\cite{basessa}.  By accumulating the phase word based on a given frequency word \textit{f} each NCO will generate a frequency according to Equation \ref{eq:frequencyword}\cite{testtime}.  The generated tones serve two purposes: one is to stimulate the analog DUT, and the second is to provide an in-phase and out-of-phase reference tone for the ORA\cite{testtime}
+A block diagram of the basic architecture of the studied BIST SSA approach can be seen in Figure \ref{fig:bist-ssa}.  This BIST architecture is capable of measuring a number of different analog characteristics including frequency response and linearity (also known as third-order interception point or IP3\nomenclature{IP3}{Third Order Interception Point})\cite{basessa}.  In addition by sweeping through a frequency spectrum both Signal-to-Noise Ratio (SNR)\nomenclature{SNR}{Signal-to-Noise Ratio} and Noise Figure\cite{noisefigure} and be measured.  The architecture in Figure \ref{fig:bist-ssa} consists of a Direct Digital Synthesis (DDS)\nomenclature{DDS}{Direct Digital Synthesis} based TPG, Multiplier-Accumulator (MAC)\nomenclature{MAC}{Multiplier Accumulator} based ORA, and test controller (not shown).  Also not shown in the figure is the on-chip calculation circuit which will be discussed in detail in Section \ref{sct:onchip}.  The following sections will discuss each of the major BIST components in detail and how each test is performed so that the reader can developer a thorough understanding of the capabilities and uses of this BIST architecture.
+
+\subsection{DDS Based TPG}
+% Discuss DDS based frequency generation
+% Discuss frequency words and how they relate to the clock speed and frequency generation
+DDS is a popular technique for generating analog frequencies on chip.  Compared to other techniques of frequency generation it offers the ability to produce very precisely controlled frequencies which can be rapidly manipulated and changed using digital inputs.  In addition with adequate design considerations, DDS designs can have extreamly fine frequency and phase resolution\cite{qi}.  The BIST TPG is DDS based consisting of three numerically controlled oscillators (NCOs)\nomenclature{NCO}{Numerically Controlled Oscillator} which utilize the existing DAC in the mixed-signal system to generate the analog waveforms for testing\cite{testtime}.  Each NCO utilizes a phase accumulator and sin/cos lookup table (LUT)\nomenclature{LUT}{Lookup Table} to produce a frequency based on a supplied frequency word $f$. The supplied frequency word is accumulated each clock cycle by the phase accumulator.  The value of the phase accumulator is truncated and used as to lookup address to find the the appropriate sin or cos value.  This value is then converted by the DAC into an analog system.  This basic steps for this process are shown in Figure \ref{fig:dds}.  The resulting frequency generated by the NCO is determined by Equation \ref{eq:frequencyword}, where $f_{gen}$ is the generated frequency, $f$ is the supplied frequency word, $f_{clk}$ is the system clock frequency, and $n$ is the number of bits int he frequency word.  The maximum resolution of the DDS is directly related to the number of bits used for the frequency words, $n$.
+\begin{equation}
+	f_{gen} = \frac{f \times f_{clk}}{2^{n}}
+	\label{eq:frequencyword}
+\end{equation}
+
+As shown in Figure \ref{fig:bist-ssa}, there are three NCOs.  The first two NCOs are used to generated frequencies which stimulate the analog DUT.  There are two possible configurations for these two NCOs when testing the analog DUT.  In case one, only a single tone needs to be generated for testing.  This case is used when performing tests such as frequency response (tests will be explained in more detail in Section \ref{sct:onchip}.  When only a single tone is necessary, both NCOs are supplied the same frequency word and produce the same frequency.  This frequency is then selected and passed into the DUT.  In the second case, two tones are generated.  This case is used when performing tests such as a linearity test.  In this case $NCO_1$ is assigned the first frequency word and $NCO_2$ is assigned the second.  The output of these two NCOs is added together so that the two sin waves are super-imposed before being converted by the DAC\cite{jie}.  The third NCO $NCO_3$ is used by the ORA.  $NCO_3$ is slightly different than both $NCO_1$ and $NCO_2$ in that it produces both the sin and cos output for a given frequency word.  These two outputs are used by the ORA to measure the in-phase and out-of-phase components of a frequency of interest (the ORA operation is explained in detail in the next section)\cite{jie}.   These three NCOs allow for up to two separate frequencies to be generated simulatenously as well as any frequency of interest to be measured by the ORA.  When coupled with a test-controller, this architecture is very powerful and as will be discussed shortly can be used to measure several significant analog characteristics.
+
+%Each NCO has a phase accumulator which is used to generate the output frequency\cite{basessa}.  By accumulating the phase word based on a given frequency word \textit{f} each NCO will generate a frequency according to Equation \ref{eq:frequencyword}\cite{testtime}.  The generated tones serve two purposes: one is to stimulate the analog DUT, and the second is to provide an in-phase and out-of-phase reference tone for the ORA\cite{testtime}
+
+\subsection{ORA Multiplier-Accumulators}
+\label{sct:bist-ora}
+% Discuss ORA design
+% DC1 and DC2 MAC
+% Discuss in-phase and out-of-phase accumulations
+% Probably will need to briefly mention cordic
+
+\subsection{On-Chip Calculation Circuit}
+\label{sct:onchip}
+% Discuss importance of on-chip and how it differs from ORA
+% Heavily reference original calculation circuit
+% Discuss LOG circuit in joeys thesis verse new circuit which performs all calculations in log
+% Discuss how calculations are performed at high-level (so without describing circuitry) for each test and which tests are available
+% Linearity, Frequency Response, Spur Search, SNR, NF
+
+\subsection{Summary}
+% Communication mechanism for BIST
+% High-level overview of the SPI
+% Summarize the tests possible etc.
+
+\section{Thesis Statement}
+While these descriptions of the BIST architecture are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of the next chapters will shift to the actual fault simulations using the techniques discussed in Section \ref{sct:faultsim} and away from the underlying architecture except where it relates to potential improvements in fault coverage and the coverage that is achieved.  The goal of the techniques and methods discussed next as well as the goal of this thesis is to prove the effectiveness and necessity of the digital loopback path for achieving a high-fault coverage when testing a mixed-signal built-in self-test approach by using the studied BIST approach both as a benchmark and for context.
+ 
+\section{BIST Architecture}
+ The TPG consists of three numerically controlled oscillators (NCOs)\nomenclature{NCO}{Numerically Controlled Oscillator} and utilizes the existing DAC in the mixed-signal system to generate the analog waveforms for testing\cite{testtime}.  Each NCO has a phase accumulator which is used to generate the output frequency\cite{basessa}.  By accumulating the phase word based on a given frequency word \textit{f} each NCO will generate a frequency according to Equation \ref{eq:frequencyword}\cite{testtime}.  The generated tones serve two purposes: one is to stimulate the analog DUT, and the second is to provide an in-phase and out-of-phase reference tone for the ORA\cite{testtime}
 \begin{equation}
 	f = \frac{f \times f_{clk}}{2^{n}}
 	\label{eq:frequencyword}
@@ -660,8 +675,6 @@ To read data out of the BIST the same SPI is used.  To read data, a write must f
 
 In addition to the SPI IO, there are a few other important outputs used in simulation.  First there is the DDS output which is the generated tone for the test being executed, there is also a 10-bit test result output which is updated to the final log value calculated when the test has completed.  Finally, there is a done flag used to denote that the BIST has finished performing the test requested and that the results have been calculated.  
 
-\subsection{Conclusion}
-While these descriptions of the BIST are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of the next chapters will shift to the actual fault simulations and away from the underlying architecture except where it relates to potential improvements in fault coverage and the coverage that is achieved.  Overall the goal of the techniques and methods discussed next are to show an effective method to testing mixed-signal built-in self-test systems using our BIST approach both as a benchmark and for context.
 
 \chapter{Fault Simulations}
 
@@ -806,6 +819,12 @@ Engineering, Auburn University, July 7, 2003.
 \bibitem{jie} J. Qin, ``Selective Spectrum Analysis (SSA) and Numerically Controlled Oscillator (NCO) in Mixed-Signal Built-In Self-Test,'' Doctoral Dissertation, Auburn University, 2010.
 
 \bibitem{joey} G. Starr, ``Built-in Self-Test for the Analysis of Mixed-Signal Systems,'' Master's Thesis, Auburn University, 2010.
+
+\bibitem{jie-journal} J. Qin, J. Cali, B. Dutton, G. Starr, F. Dai, C. Stroud, ``Selective Spectrum Analysis for Analog Measurements,'' \textit{IEEE Transactions on Industrial Electronics}, no.99, pp.1, 2011.
+
+\bibitem{stroud-phase} J. Qin, C. Stroud, and F. Dai, ``Phase Delay Measurement and Calibration in Built-In Analog Functional Testing,” Proc. \textit{IEEE Southeastern Symposium on System Theory}, pp. 145–149, 2007.
+
+\bibitem{qi} S. Qi, ``Analog Circuit Testing using Built-In Direct-Digital Synthesis,'' Master's Thesis, Auburn University, 2005.
 
 \label{Bibliography}
 \end{thebibliography}
