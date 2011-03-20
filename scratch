@@ -1,6 +1,6 @@
-# Sources
-
 # TODO
 - Fix the photo of the bist architecture, its not even right oO
+- Replace the clock cycle or-chain with a custom picture thats more detailed, probably labeled number of clock cycles on output and the oring of all frequency words on input.  If possible also show the clock cycle counter
+- Also don't forget the DDS picture
 
 # Fault Simulations

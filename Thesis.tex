@@ -544,9 +544,32 @@ It has been shown in \cite{jie}\cite{stroud-phase} and others that these calcula
   \Delta_\phi(\omega) = -\tan^{-1}\frac{DC_2}{DC_1}
   \label{eq:phase}
 \end{equation}
-To obtain these measurements a hardware method must be used to calculate arc-tangent as used in Equation \ref{eq:phase} and the square and square-root functions as used in Equation \ref{eq:magnitude}.  These calculations are performed using the on-chip calculation circuitry and will be discussed next.
-\todo{Pick a place in here to discuss IMP, briefly}
+To obtain these measurements a hardware method must be used to calculate arc-tangent as used in Equation \ref{eq:phase} and the square and square-root functions as used in Equation \ref{eq:magnitude}.  These calculations are performed using the on-chip calculation circuitry and will be discussed in the next section.
 
+Before discussing the calculation circuitry, it is important to understand how the amount of accumulation time required for a measurement is determined.  The accumulation time is exceptionally important to achieving an accurate measurement due to potential AC calculation errors which are accumulated\cite{jie}.  A large body of work was put into determining both the appropriate length of time to accumulate and a method for determining the length of time efficiently in hardware.  \cite{jie} and \cite{testtime} discuss in detail the complexity of stopping accumulation at the correct moment to reduce the error.  As it is only pertinent to this thesis due to its relation to fault simulation time, it will only be briefly discussed here.  More details can be found in \cite{jie}.
+
+As mentioned, there is the potential for errors to occurr in an SSA approach due to AC errors accumulating in the ORA\cite{jie}.  One method of minimizing or eliminating these AC errors requires that the BIST accumulate for a very long period of time (referred to as free-run accumulation).  Unfortunately the amount of time required for accumulation would be prohibitively high\cite{testtime}.  \cite{jie} discusses a method of reducing the required accumulation time while still retaining the accuracy of free-run accumulation.  This method requires that accumulation occur for an exact number of clock cycles, determined by the integer multiple period (IMP)\nomenclature{IMP}{Integer Multiple Period} of the frequency being measured.  Though there are many complications to determining the IMP in hardware, it will be discussed at a high-level so that the reader can understand how measurement time is affected.
+
+As explained in \cite{testtime}, if accumulation is stopped at an IMP the AC error will be greatly reduced resulting in a very accurate measurement.  
+% Explain the IMP here
+The length of the test will subsequently be determined by the effective number of bits used in the DDS ($M_{eff}$).  Equation \ref{eq:EffectiveBits} shows how the effective number of bits is calculated, where $M_{full}$ is the width of the phase accumulator and $m$ is the bit position of the least significant `1` in the frequency word used\cite{jie}.  The resulting number of accumulation clock cycles is determined by $2^{M_eff}$.
+\begin{equation}
+	M_{eff} = M_{full} - m
+	\label{eq:EffectiveBits}
+\end{equation}
+As an example, given a four-bit wide phase accumulator and the frequency word 1010 (or decimal 10), $M_{eff}$ would be equal to $4 - 1$ or 3.  This makes the number of clock cycles before a good IMP occures as $2^3$ or $8$.  For large phase accumulators the number of clock cycles to accumulate can vary greatly depending on the frequency word chosen.  In the studied BIST, 16-bit phase accumulators are used.  In this case the difference between the shortest accumulation time of 2 clock cycles and than the longest accumulation time of 65535 clock cycles is much greater.  Consequently frequency words should be carefully choosen so as to minimize test time\cite{jie}.  
+
+The previous example is represents a single-tone test where only a single tone is of interest.  For a multi-tone test (one where either two-tones are generated or where the measured tone is not the same as the generated tone) the IMP must be the common IMP of all frequency words\cite{jie}.  In this case logically OR'ing all frequency words together then calculating the resulting $M_eff$ number of bits will result in the number of clock cycles required for accumulation.  
+
+In hardware a similar method is used which directly calculates the number of clock cycles required for accumulation.  After first OR'ing all frequency words together, an or-chain is used to determine the number of clock cycles to accumulate.  Figure \ref{fig:or-chain} shows this or-chain.  As shown in the figure, if a logic `1' is in the LSB of any of the frequency words, it will result in the maximum number of clock cycles for the given phase accumulator width.  
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/or-chain}
+	\end{center}
+	\caption{The OR Chain which calculates the number of clock cycles from the logical OR of all frequency words}
+	\label{fig:or-chain}
+\end{figure}
+Using the resulting clock cycle count, the BIST uses a clock cycle counter to determine when to stop accumulation on an IMP and minimize the error.  Once accumulation has completed the calculation step is triggered and the results are handed off to the calculation circuit.
 
 \subsection{On-Chip Calculation Circuit}
 \label{sct:onchip}
@@ -557,6 +580,8 @@ To obtain these measurements a hardware method must be used to calculate arc-tan
 % Discuss how calculations are performed at high-level (so without describing circuitry) for each test and which tests are available
 % Linearity, Frequency Response, Spur Search, SNR, NF
 The ORA portion of the BIST accumulates the in-phase and out-of-phase components at the frequency of interest.  The resulting $DC_1$ and $DC_2$ values can then be used to calculate the amplitude and phase of the signal.  Traditionally this can be performed off-chip using a mathmatical tool such as MATLAB; however, the BIST architecture discussed in this thesis uses an on-chip calculation circuit to perform both of these calculations on-chip.  In addition the on-chip calculation circuitry allows for more advanced multi-measurement tests, an example of which is linearity, to be performed\cite{joey}.  These tests and how they are performed will be discussed after a brief introduction to the calculation circuitry.
+
+
 
 \subsection{Summary}
 % Communication mechanism for BIST
@@ -571,14 +596,6 @@ While these descriptions of the BIST architecture are not a comprehensive operat
 The ORA architecture consists of two MACs.  Each MAC receives the output from the DUT as well either the in-phase or out-of-phase signal from an NCO.  Using this method the ORA is able to measure the amplitude and phase response at a given frequency\cite{testtime}.  Each test the BIST performs relies on this method of measurement.  The tests and how they are run will be discussed in the next section.
 
 \subsection{Performing Tests}
-In a single measurement (where a measurement is defined as a single accumulation at a particular frequency) the BIST can measure the magnitude and phase of the DUT output at the measured frequency.  To calculate these values Equation \ref{eq:MagnitudePhase} is applied to the two resulting accumulation values one in-phase and one out-of-phase\cite{jie}.  In the equation DC$_1$ and DC$_2$ are the output of the two in-phase and out-of-phase accumulations.
-\begin{equation}
-  \begin{tabular}{lll}
-	$A(f)$ & $=$ & $\sqrt{DC_1^2+DC_2^2}, \nonumber$ \\
-	  $\Delta\phi(f)$ & $=$ & $-\tan^{-1}\frac{DC_2}{DC_1}.$
-  \end{tabular}
-  \label{eq:MagnitudePhase}
-\end{equation}
 
 To perform more complex tests such as frequency response and IP3 (also called linearity) these measurements are performed repeatedly at different frequencies of interest and the results of each tests are used to calculate the result.  As an example during a linearity measurement the DUT is driven by a two-tone signal which consists of two fundamental tones $f_1$ and $f_2$.  Due to the DUT's nonlinearity, its output will consist of not only $f_1$ and $f_2$ but also the third order inter-modulation points (IM3)\nomenclature{IM3}{Third Order Inter-Modulation Point}\cite{testtime}.  Figure \ref{fig:linearity-spectrum} demonstrates what the input and resulting spectrum will look like\cite{testtime}.  The linearity ($\Delta P$) of the DUT can be determined by the difference in dB between the fundamental frequency (either $f_1$ or $f_2$) and the IM3 tone\cite{basessa}.  To calculate this the BIST must take two measurements at either the two lower frequencies $f_1$ and $2*f_1-f_2$ or the two upper frequencies $f_2$ and $2*f_2-f_1$\cite{testtime}.  The result is the difference in the two measured magnitudes.
 \begin{figure}
@@ -588,23 +605,7 @@ To perform more complex tests such as frequency response and IP3 (also called li
 	\caption{Two-tone test for IP3 measurement\cite{testtime}}
 	\label{fig:linearity-spectrum}
 \end{figure}
-The linearity test is just one example of how a measurement is made using this BIST architecture, in the next section more details will be discussed about how calculations are made on-chip and how the test controller is used to control and execute different BIST sequences.  Before discussing the rest of the BIST architecture it is important to understand how the amount of time required for a measurement is determined.  The accumulation is exceptionally important to achieving an accurate measurement due to potential AC calculation errors\cite{jie}.  A large body of work was put into determining both the appropriate length of time to accumulate and a method for determining the length of time efficiently in hardware.  \cite{jie} and \cite{testtime} discuss in detail the complexity of stopping accumulation at the correct moment to reduce the error.  As it is only pertinent to this thesis as it relates to fault simulation time, it will only be briefly discussed here as in relation to test-time.
-
-According to \cite{jie}, there is a potential for calculations errors in an SSA approach.  In an effort to minimize or the errors the BIST approach must either accumulate for a long period of time (referred to as free-run accumulation) or the accumulation time must be stopped at an integer multiple period (IMP)\nomenclature{IMP}{Integer Multiple Period} of the frequency being measured.  As explained in \cite{jie} a good IMP occurs when using a $M_{full}$ width phase accumulator at $2^{M_{eff}}$ accumulation cycles where $M_{eff}$ is calculated in Equation \ref{eq:EffectiveBits}, when m is the bit position of the least significant `1' in a frequency word\cite{jie}.
-\begin{equation}
-	M_{eff} = M_{full} - m
-	\label{eq:EffectiveBits}
-\end{equation}
-As an example, given a four bit wide phase accumulator and the frequency word 1010 (or decimal 10), $M_{eff}$ would be equal to $4 - 1$ or 3.  This makes the number of clock cycles before a good IMP $2^3$ or $8$.  For large phase accumulators the number of clock cycles to accumulate can vary greatly depending on the frequency word chosen.  In our BIST architecture with 16-bit phase accumulators, the difference between the shortest accumulation time of 2 clock cycles and than the longest accumulation time of 65535 clock cycles (which occurs when using any odd frequency word) is much greater.  Another level of complexity occurs when doing a test which requires more than a single tone.  For a multi-tone test the IMP must be the common IMP of all frequency words.  In practice a simple method is used to determine the common IMP and subsequently the maximum number of clock cycles to accumulate.  By logically OR'ing the frequency words together, our BIST approach uses an OR chain to directly determine the number of clock cycles to accumulate.  Figure \ref{fig:or-chain} shows the or-chain which calculates the number of clock cycles.  The figure easily shows that a logic `1' in the LSB or 0th bit of the input produces a `1' on all the output bits (which corresponds to the maximum number of clock cycles for a given phase accumulator size).
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=1]{images/or-chain}
-	\end{center}
-	\caption{The OR Chain which calculates the number of clock cycles from the logical OR of all frequency words}
-	\label{fig:or-chain}
-\end{figure}
-Using this clock cycle count, the BIST uses a clock cycle counter to determine when to stop accumulation on an IMP and minimize the error.  Once accumulation has completed the calculation step is triggered and the results are handed off the calculation circuit.
-
+The linearity test is just one example of how a measurement is made using this BIST architecture, in the next section more details will be discussed about how calculations are made on-chip and how the test controller is used to control and execute different BIST sequences.
 \subsection{Calculation Circuitry}
 As discussed previously when the BIST is used to measure a frequency, the result is the in-phase and out-of-phase values measured at the given frequency ($DC_1$ and $DC_2$).  While these values contain the magnitude and phase information about the measured frequency, they are in a format which is not intuitive and requires post-processing to determine the result.  To calculate the magnitude and phase the previously discussed equations from Equation \ref{eq:MagnitudePhase} can be used.  While this provides a simple step to converting the $DC_1$ and $DC_2$ values to a more intuitive format, it requires manual post-processing to be completed.  The circuitry that will be discussed brings the processing of the $DC_1$ and $DC_2$ on-chip allowing the magnitude and phase to be determined and output directly.  In addition, with the help of a sophisticated test controller the BIST is capable of taking more complex measurements (such as IM3 and SNR) and produce the output of those higher-order measurements directly.
 
