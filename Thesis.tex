@@ -526,14 +526,37 @@ As shown in Figure \ref{fig:bist-ssa}, there are three NCOs.  The first two NCOs
 % DC1 and DC2 MAC
 % Discuss in-phase and out-of-phase accumulations
 % Probably will need to briefly mention cordic
+After generating the the analog frequencies required to stimulate the DUT the output of the DUT is analyzed by the BIST ORA.  The ORA consists of two multiplier-accumulators, $DC_1$ and $DC_2$\cite{bist-ora}.  By multiplying the response of the DUT by the cos wave output of $NCO_3$, $DC_1$ will accumulate the out-of-phase component of the DUT response at the frequency of interest, $\omega$.  Likewise by multiplying the response of the DUT by the sin wave output of $NCO_3$, $DC_2$ will accumulate the in-phase component of the DUT response at $\omega$.  The accumulator values of both $DC_1$ and $DC_2$ can be described in Equations \ref{eq:DC1} and \ref{eq:DC2}. In these equations $nT_{clk}$ represents the sampled output response of the DUT\cite{stroud-phase}.  
+\begin{equation}
+DC_1 = \sum_{n} f(nT_{clk})*cos(\omega nT_{clk})
+\label{eq:DC1}
+\end{equation}
+\begin{equation}
+DC_2 = \sum_{n} f(nT_{clk})*sin(\omega nT_{clk})
+\label{eq:DC2}
+\end{equation}
+It has been shown in \cite{jie}\cite{stroud-phase} and others that these calculations are similar to an FFT.  Unlike the FFT the entire frequency domain is not computed simultaenously; instead,  only a single frequency is measured for each accumulation\cite{stroud-phase}.  When more than one frequency $\omega$ is of interest, each must be obtained through successive accumulations (each accumulation which measures a single frequency will from here on be referred to as a single measurement).  The $DC_1$ and $DC_2$ results for a measurement can be used to obtain both the amplitude and phase of the signal at the measured frequency $\omega$.  The amplitude calculation is shown in Equation \ref{eq:magnitude} and the phase calculation is shown in Equation \ref{eq:phase}\cite{jie}.
+\begin{equation}
+  A(\omega) = \sqrt{DC_1^2+DC_2^2}
+  \label{eq:magnitude}
+\end{equation}
+\begin{equation}
+  \Delta_\phi(\omega) = -\tan^{-1}\frac{DC_2}{DC_1}
+  \label{eq:phase}
+\end{equation}
+To obtain these measurements a hardware method must be used to calculate arc-tangent as used in Equation \ref{eq:phase} and the square and square-root functions as used in Equation \ref{eq:magnitude}.  These calculations are performed using the on-chip calculation circuitry and will be discussed next.
+\todo{Pick a place in here to discuss IMP, briefly}
+
 
 \subsection{On-Chip Calculation Circuit}
 \label{sct:onchip}
 % Discuss importance of on-chip and how it differs from ORA
+% Discuss calculation cordic
 % Heavily reference original calculation circuit
 % Discuss LOG circuit in joeys thesis verse new circuit which performs all calculations in log
 % Discuss how calculations are performed at high-level (so without describing circuitry) for each test and which tests are available
 % Linearity, Frequency Response, Spur Search, SNR, NF
+The ORA portion of the BIST accumulates the in-phase and out-of-phase components at the frequency of interest.  The resulting $DC_1$ and $DC_2$ values can then be used to calculate the amplitude and phase of the signal.  Traditionally this can be performed off-chip using a mathmatical tool such as MATLAB; however, the BIST architecture discussed in this thesis uses an on-chip calculation circuit to perform both of these calculations on-chip.  In addition the on-chip calculation circuitry allows for more advanced multi-measurement tests, an example of which is linearity, to be performed\cite{joey}.  These tests and how they are performed will be discussed after a brief introduction to the calculation circuitry.
 
 \subsection{Summary}
 % Communication mechanism for BIST
@@ -543,16 +566,9 @@ As shown in Figure \ref{fig:bist-ssa}, there are three NCOs.  The first two NCOs
 \section{Thesis Statement}
 While these descriptions of the BIST architecture are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of the next chapters will shift to the actual fault simulations using the techniques discussed in Section \ref{sct:faultsim} and away from the underlying architecture except where it relates to potential improvements in fault coverage and the coverage that is achieved.  The goal of the techniques and methods discussed next as well as the goal of this thesis is to prove the effectiveness and necessity of the digital loopback path for achieving a high-fault coverage when testing a mixed-signal built-in self-test approach by using the studied BIST approach both as a benchmark and for context.
  
-\section{BIST Architecture}
- The TPG consists of three numerically controlled oscillators (NCOs)\nomenclature{NCO}{Numerically Controlled Oscillator} and utilizes the existing DAC in the mixed-signal system to generate the analog waveforms for testing\cite{testtime}.  Each NCO has a phase accumulator which is used to generate the output frequency\cite{basessa}.  By accumulating the phase word based on a given frequency word \textit{f} each NCO will generate a frequency according to Equation \ref{eq:frequencyword}\cite{testtime}.  The generated tones serve two purposes: one is to stimulate the analog DUT, and the second is to provide an in-phase and out-of-phase reference tone for the ORA\cite{testtime}
-\begin{equation}
-	f = \frac{f \times f_{clk}}{2^{n}}
-	\label{eq:frequencyword}
-\end{equation}
 
+% Old Crap
 The ORA architecture consists of two MACs.  Each MAC receives the output from the DUT as well either the in-phase or out-of-phase signal from an NCO.  Using this method the ORA is able to measure the amplitude and phase response at a given frequency\cite{testtime}.  Each test the BIST performs relies on this method of measurement.  The tests and how they are run will be discussed in the next section.
-
-In addition to the TPG and MAC-based ORA, there are a number of multiplexers in Figure \ref{fig:bist-ssa}.  These multiplexers define different paths for sending and receiving signal to or from the DUT.  As referenced in Section \ref{sct:MixedSignal} these multiplexed loopback paths can be essential to achieving a high fault coverage when testing.  In the architecture shown there are three loopback paths in the system.  The first path is a path which passes a signal out through MUX1, through the DAC, through the analog DUT and returns it back through the ADC and into MUX4.  This is the outermost path which stimulates the Analog DUT for testing.  A second path exists similar to the first; however, instead of the output of the analog DUT, MUX3 instead selects the bypass path around the DUT.  This bypass path be used to calibrate the BIST for any noise introduced by the DAC and ADC pair.  The final path is the digital loopback path.  In this path MUX4 selects the output from MUX3 directly.  This path bypasses all analog circuitry including the ADC and DAC.  As stated in Section \ref{sct:MixedSignal}, this is the path that is most important for our testing of the BIST.  The digital loopback path does not introduce any analog error into the signal so when performing a ``loopback test'' the test will always result in the same accumulated value, no range of acceptable values is required\cite{stroud-analog}.
 
 \subsection{Performing Tests}
 In a single measurement (where a measurement is defined as a single accumulation at a particular frequency) the BIST can measure the magnitude and phase of the DUT output at the measured frequency.  To calculate these values Equation \ref{eq:MagnitudePhase} is applied to the two resulting accumulation values one in-phase and one out-of-phase\cite{jie}.  In the equation DC$_1$ and DC$_2$ are the output of the two in-phase and out-of-phase accumulations.
