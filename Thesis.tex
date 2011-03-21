@@ -541,7 +541,7 @@ It has been shown in \cite{jie}\cite{stroud-phase} and others that these calcula
   \label{eq:magnitude}
 \end{equation}
 \begin{equation}
-  \Delta_\phi(\omega) = -\tan^{-1}\frac{DC_2}{DC_1}
+  \Delta_\phi(\omega) = \tan^{-1}\frac{DC_2}{DC_1}
   \label{eq:phase}
 \end{equation}
 To obtain these measurements a hardware method must be used to calculate arc-tangent as used in Equation \ref{eq:phase} and the square and square-root functions as used in Equation \ref{eq:magnitude}.  These calculations are performed using the on-chip calculation circuitry and will be discussed in the next section.
@@ -579,9 +579,28 @@ Using the resulting clock cycle count, the BIST uses a clock cycle counter to de
 % Discuss LOG circuit in joeys thesis verse new circuit which performs all calculations in log
 % Discuss how calculations are performed at high-level (so without describing circuitry) for each test and which tests are available
 % Linearity, Frequency Response, Spur Search, SNR, NF
-The ORA portion of the BIST accumulates the in-phase and out-of-phase components at the frequency of interest.  The resulting $DC_1$ and $DC_2$ values can then be used to calculate the amplitude and phase of the signal.  Traditionally this can be performed off-chip using a mathmatical tool such as MATLAB; however, the BIST architecture discussed in this thesis uses an on-chip calculation circuit to perform both of these calculations on-chip.  In addition the on-chip calculation circuitry allows for more advanced multi-measurement tests, an example of which is linearity, to be performed\cite{joey}.  These tests and how they are performed will be discussed after a brief introduction to the calculation circuitry.
+The ORA portion of the BIST accumulates the in-phase and out-of-phase components at the frequency of interest.  The resulting $DC_1$ and $DC_2$ values store the in-phase and out-of-phase components of the frequency of interest.  Using these values more advanced measurements of special analog characteristics such as linearity, SNR, and NF can be performed.  To do this, $DC_1$ and $DC_2$ must be transformed mathmatically into the relative magnitude and phase using Equations \ref{eq:magnitude} and \ref{eq:phase}\cite{joey}.  Traditionally this can be performed off-chip using a mathmatical tool such as MATLAB; however, the BIST architecture discussed in this thesis uses an on-chip calculation circuit to perform both of these calculations and to perform multi-measurement tests on-chip\cite{joey}.  First the calculation cordic, which converts the $DC_1$ and $DC_2$ values to the magnitude and phase values, will be discussed.
 
+\cite{joey} discusses the original implementation of the calculation circuitry for the BIST approach.  Shown in Figure \ref{fig:joeycalc} the original calculation circuit uses a custom CORDIC developed by \cite{joey} to perform the operations from Equation \ref{eq:MagnitudePhase} and determine the magnitude and phase from the $DC_1$ and $DC_2$ values.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=1]{images/joey-calculation}
+	\end{center}
+	\caption{Calculation Circuit presented in \cite{joey}}
+	\label{fig:joeycalc}
+\end{figure}
+The CORDIC algorithm, explained in depth in \cite{joey}, uses successive approximation to perform the magnitude and phase calculations for the supplied $DC_1$ and $DC_2$ values.  The CORDIC algorithm is a well known approach to calculating a number of linear, circular, and hyperbolic functions using inexpensive digital operations such as shift, add, and substraction\cite{joey}.  Since it requires successive approximation, the calculation cordic requires several clock cycles to complete.  At the end of the approximation the output of the CORDIC is the raw magnitude and phase values which can be read directly and used by the remaining calculation circuitry to perform high-order tests\cite{joey}.
 
+The remaining circuitry in the BIST is used for performing tests including measurements of the DUT linearity, frequency response, SNR, and noise figure (NF)\nomenclature{NF}{Noise Figure}. Before discussing each test in detail, it is important to understand that the output of the calculation will be a logrithmic result.  Decibels (dB)\nomenclature{dB}{Decibel} are a common unit used to represent signal strength.  To simplify the evaluation of test output, the calculation circuitry converts the output to decibels as described in Equation \ref{eq:decibel}\cite{joey}.  This operation is performed by the Logrithmic Translation Unit (LTU)\nomenclature{LTU}{Logarithmic Translation Unit} shown at the output in Figure \ref{fig:joeycalc}.  
+\begin{equation}
+dB = 20 * log_{10}(INPUT)
+\label{eq:decibel}
+\end{equation}
+Each test discussed will be represented in decibels by the calculation circuit.
+
+% Discuss Tests
+
+While the general prinicpals and methods employed by the calculation circuit described in \cite{joey} are still used, improvements to this circuit have been made to the circuitry used by the BIST studied in this thesis.  Like the previous calculation circuit it uses the same calculation CORDIC based on the design by \cite{joey} to convert the $DC_1$ and $DC_2$ values to their respective magnitude and phase representations.  Unlike the previous circuit, the LTU has been moved to the front of the circuit so that all operations are performed in the logrithmic domain.  The divider can then be replaced by a substractor as division is performed via substraction in the log domain.  The new circuit allows for faster operation and a large reduction in area and power (approximiately 33\%).
 
 \subsection{Summary}
 % Communication mechanism for BIST
@@ -593,7 +612,6 @@ While these descriptions of the BIST architecture are not a comprehensive operat
  
 
 % Old Crap
-The ORA architecture consists of two MACs.  Each MAC receives the output from the DUT as well either the in-phase or out-of-phase signal from an NCO.  Using this method the ORA is able to measure the amplitude and phase response at a given frequency\cite{testtime}.  Each test the BIST performs relies on this method of measurement.  The tests and how they are run will be discussed in the next section.
 
 \subsection{Performing Tests}
 
@@ -609,27 +627,9 @@ The linearity test is just one example of how a measurement is made using this B
 \subsection{Calculation Circuitry}
 As discussed previously when the BIST is used to measure a frequency, the result is the in-phase and out-of-phase values measured at the given frequency ($DC_1$ and $DC_2$).  While these values contain the magnitude and phase information about the measured frequency, they are in a format which is not intuitive and requires post-processing to determine the result.  To calculate the magnitude and phase the previously discussed equations from Equation \ref{eq:MagnitudePhase} can be used.  While this provides a simple step to converting the $DC_1$ and $DC_2$ values to a more intuitive format, it requires manual post-processing to be completed.  The circuitry that will be discussed brings the processing of the $DC_1$ and $DC_2$ on-chip allowing the magnitude and phase to be determined and output directly.  In addition, with the help of a sophisticated test controller the BIST is capable of taking more complex measurements (such as IM3 and SNR) and produce the output of those higher-order measurements directly.
 
-\cite{joey} discusses the original implementation of the calculation circuitry for our BIST approach.  Shown in Figure \ref{fig:joeycalc} the original calculation circuit uses a custom CORDIC developed by \cite{joey} to perform the operations from Equation \ref{eq:MagnitudePhase} and determine the magnitude and phase from the $DC_1$ and $DC_2$ values.
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=1]{images/joey-calculation}
-	\end{center}
-	\caption{Calculation Circuit presented in \cite{joey}}
-	\label{fig:joeycalc}
-\end{figure}
 Also in this circuit is some additional circuitry to perform many of the higher level tests available to the BIST such as the previously discussed IM3 or linearity test.  With the help of the test controller the calculation circuit presented by \cite{joey} can be used for IM3, spur search\footnote{A spur search consists of a measurement from a starting frequency to an ending frequency which returns the frequency and magnitude of the most powerful frequency measured in the given range}, signal-to-noise ratio, and noise figure (NF)\nomenclature{NF}{Noise Figure} tests.  To do this multiple frequency measurements must be made by the BIST and stored in the calculation circuit.  The final result from any such test is converted to decibels by the Logarithmic Translation Unit and made available to the system.  The main feature of the calculation circuit is the divider.  The divider performs several different functions depending on the test.  In a IM3 test the divider is used to divide a current magnitude measurement by a previous measurement; likewise, for the SNR measurement it is used to divide the measured signal magnitude by the summation of the noise in the system\cite{joey}.  The divider and accumulators are also used to find the average noise in the system which is used to calculate the SNR.  While this circuit functions correctly and was able to solve the issue of on-chip calculations there are a number of issues which could be improved.
 
 First the area of the calculation circuit was large, particularly the divider took up a large amount of chip area.  Second the calculation circuit could not run at the same speed as the BIST circuitry.  Our goal for our BIST implementation was to achieve a 1GHz operation frequency.  Unfortunately the calculation circuit could not achieve this speed which necessitated two clock domains one for the BIST which could operate at upto 1GHz and one for the calculation circuit which could operate at upto 500 MHz.  This made the interface circuitry between the BIST and the calculation circuit more complex and error prone.  A third issue which occurred was the potential for divide by zero errors.  Specifically when measuring the noise in the system, divide by zero errors could cause errors in the measurement if the magnitude measured by the BIST was small.
-
-To overcome these problems a new calculation circuit was developed.  Drawing upon the basic operation of the existing circuit the new circuit (Figure \ref{fig:newcalc}) removes the divider in favor of performing all operations in the logarithmic domain.
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=.8]{images/new-calculation}
-	\end{center}
-	\caption{New Calculation Circuit}
-	\label{fig:newcalc}
-\end{figure}
-Like the previous calculation circuit it uses a slightly modified calculation CORDIC based on the design by \cite{joey}.  Unlike the previous circuit, the Logarithmic Translation Unit has been moved to the front of the circuit so that all inputs are converted their log value.  This allows for the removal of the divider circuitry as the division required is performed by the subtraction of the two log values.  Consequently, there is no longer an opportunity to perform division by zero since no division operation is occurring.  The new circuit is also able to operate at the same clock frequency as the BIST, eliminating the need for two clock domains.  Finally due to the removal of the divider and other changes in the BIST, the calculation circuit was able to be shrunk to a much smaller size (approximately a 33\% reduction in area and power).
 
 \subsection{Interfacing with the BIST}
 Finally given an understanding of the calculation circuit, it is important to be familiar with how our BIST approach is controlled and observed (after all Section \ref{sct:whytest} clearly shows that controllability and observability directly influence the testability of a circuit).  Excluding some run flags, the majority of the BIST is controlled via a SPI interface.  When writing to the SPI interface there is a lower and upper 64-bit word that should be written with the data required for the test being run.  Of the total 128 bits written to the SPI, only 88 of them are actually used by the BIST.  Table \ref{tbl:SPIWrite} shows an overview of the SPI word.  In addition the test control word is broken down in Table \ref{tbl:TestControlWord}.
