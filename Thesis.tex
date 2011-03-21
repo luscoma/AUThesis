@@ -550,16 +550,14 @@ Before discussing the calculation circuitry, it is important to understand how t
 
 As mentioned, there is the potential for errors to occurr in an SSA approach due to AC errors accumulating in the ORA\cite{jie}.  One method of minimizing or eliminating these AC errors requires that the BIST accumulate for a very long period of time (referred to as free-run accumulation).  Unfortunately the amount of time required for accumulation would be prohibitively high\cite{testtime}.  \cite{jie} discusses a method of reducing the required accumulation time while still retaining the accuracy of free-run accumulation.  This method requires that accumulation occur for an exact number of clock cycles, determined by the integer multiple period (IMP)\nomenclature{IMP}{Integer Multiple Period} of the frequency being measured.  Though there are many complications to determining the IMP in hardware, it will be discussed at a high-level so that the reader can understand how measurement time is affected.
 
-As explained in \cite{testtime}, if accumulation is stopped at an IMP the AC error will be greatly reduced resulting in a very accurate measurement.  
-% Explain the IMP here
-The length of the test will subsequently be determined by the effective number of bits used in the DDS ($M_{eff}$).  Equation \ref{eq:EffectiveBits} shows how the effective number of bits is calculated, where $M_{full}$ is the width of the phase accumulator and $m$ is the bit position of the least significant `1` in the frequency word used\cite{jie}.  The resulting number of accumulation clock cycles is determined by $2^{M_eff}$.
+As explained in \cite{testtime}, if accumulation is stopped at a multiple of the interested frequency's period ($n*\frac{1}{f}$) the AC error will be greatly reduced resulting in a very accurate measurement.  This does not mean that frequencies with the shortest periods result in the shortest tests; instead, it is a function of both the frequency word choosen and the width of the phase accumulator which determines the length of the test.  More specifically the length of the test is determined by the effective number of bits used in the DDS by the frequency word ($M_{eff}$).  Equation \ref{eq:EffectiveBits} shows how the effective number of bits is calculated, where $M_{full}$ is the width of the phase accumulator and $m$ is the bit position of the least significant `1` in the frequency word used\cite{jie}.  The resulting number of accumulation clock cycles is determined by $2^{M_eff}$.
 \begin{equation}
 	M_{eff} = M_{full} - m
 	\label{eq:EffectiveBits}
 \end{equation}
-As an example, given a four-bit wide phase accumulator and the frequency word 1010 (or decimal 10), $M_{eff}$ would be equal to $4 - 1$ or 3.  This makes the number of clock cycles before a good IMP occures as $2^3$ or $8$.  For large phase accumulators the number of clock cycles to accumulate can vary greatly depending on the frequency word chosen.  In the studied BIST, 16-bit phase accumulators are used.  In this case the difference between the shortest accumulation time of 2 clock cycles and than the longest accumulation time of 65535 clock cycles is much greater.  Consequently frequency words should be carefully choosen so as to minimize test time\cite{jie}.  
+As an example, given a four-bit wide phase accumulator and the frequency word 1010 (or decimal 10), $M_{eff}$ would be equal to $4 - 1$ or 3.  This makes the number of clock cycles before a IMP occurs as $2^3$ or $8$.  In hardware this corresponds to the moment when all bits of the phase accumulator are logic `0' and the carry-out bit is a logic `1'\cite{jie}.  For large phase accumulators the number of clock cycles to accumulate can vary greatly depending on the frequency word chosen.  In the studied BIST, 16-bit phase accumulators are used.  In this case the difference between the shortest accumulation time of 2 clock cycles and than the longest accumulation time of 65535 clock cycles is much greater.  Consequently frequency words should be carefully choosen so as to minimize test time\cite{jie}.  
 
-The previous example is represents a single-tone test where only a single tone is of interest.  For a multi-tone test (one where either two-tones are generated or where the measured tone is not the same as the generated tone) the IMP must be the common IMP of all frequency words\cite{jie}.  In this case logically OR'ing all frequency words together then calculating the resulting $M_eff$ number of bits will result in the number of clock cycles required for accumulation\cite{jie}\cite{testtime}.
+The previous example is represents the simple case where only a single tone is of interest.  For a multi-tone test (one where either two-tones are generated or where the measured tone is not the same as the generated tone) the IMP must be the common IMP of all frequency words\cite{jie}.  In this case logically OR'ing all frequency words together then calculating the resulting $M_eff$ number of bits will result in the number of clock cycles required for accumulation\cite{jie}\cite{testtime}.
 
 In hardware a similar method is used which directly calculates the number of clock cycles required for accumulation.  After first OR'ing all frequency words together, an or-chain is used to determine the number of clock cycles to accumulate.  Figure \ref{fig:or-chain} shows this or-chain.  As shown in the figure, if a logic `1' is in the LSB of any of the frequency words, it will result in the maximum number of clock cycles for the given phase accumulator width.  
 \begin{figure}
@@ -648,14 +646,7 @@ In addition to the SPI IO, there are a few other important outputs used in simul
 While these descriptions of the BIST architecture are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of the next chapters will shift to the actual fault simulations using the techniques discussed in Section \ref{sct:faultsim} and away from the underlying architecture except where it relates to potential improvements in fault coverage and the coverage that is achieved.  The goal of the techniques and methods discussed next as well as the goal of this thesis is to prove the effectiveness and necessity of the digital loopback path for achieving a high-fault coverage when testing a mixed-signal built-in self-test approach by using the studied BIST approach both as a benchmark and for context.
  
 
-% Old Crap
-
-\subsection{Interfacing with the BIST}
-
-
-
-\chapter{Fault Simulations}
-
+\chapter{Model Conversion and Verification}
 \subsection{Converting to ASL}
 In many cases behavioral models are written in a high-level hardware description language such as VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow a behavioral model to be developed of a circuit at a much higher level than ASL's gate-level description.  This means that for large, complex circuits (such as our BIST approach) design in VHDL or Verilog is preferred.  To aid in the simulation of larger circuits a tool was developed to convert a Verilog net-list to an ASL net-list.  This allows a user to write a high-level behavioral description of the circuit, synthesis it down to a Verilog net-list using one of many different CAD tools, then convert it to ASL for fault simulation using the VerilogParser tool.
 
@@ -739,8 +730,11 @@ This is a very simple example, there are many more commands as shown in Appendix
 	\label{tbl:countsequence}
 \end{table}
 The generation in Table \ref{tbl:countsequence} is much more powerful than the previous example in Table \ref{tbl:Vecgen_example} and demonstrates some of the power that the Vecgen program provides.  All fault simulation tests for the BIST are designed in the Vecgen markup language for simplicity.
+\chapter{Fault Simulations}
 
 \chapter{Simulation Results}
+
+\chapter{BIST Improvements}
 
 \chapter{Conclusions and Summary}
 
