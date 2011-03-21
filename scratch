@@ -5,4 +5,8 @@
 - fix sin -> sine and cos -> cosine
 - Determine why spurs appear in circuits?
 
+# Stroud TODO
+- Figure 2.2, add bubble ot invertor and label fan-out stem
+- Also check this figure for positioning and make sure its at the bottom or top of a page
+
 # Fault Simulations
