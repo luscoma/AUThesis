@@ -581,7 +581,7 @@ Using the resulting clock cycle count, the BIST uses a clock cycle counter to de
 % Linearity, Frequency Response, Spur Search, SNR, NF
 The ORA portion of the BIST accumulates the in-phase and out-of-phase components at the frequency of interest.  The resulting $DC_1$ and $DC_2$ values store the in-phase and out-of-phase components of the frequency of interest.  Using these values more advanced measurements of special analog characteristics such as linearity, SNR, and NF can be performed.  To do this, $DC_1$ and $DC_2$ must be transformed mathmatically into the relative magnitude and phase using Equations \ref{eq:magnitude} and \ref{eq:phase}\cite{joey}.  Traditionally this can be performed off-chip using a mathmatical tool such as MATLAB; however, the BIST architecture discussed in this thesis uses an on-chip calculation circuit to perform both of these calculations and to perform multi-measurement tests on-chip\cite{joey}.  First the calculation cordic, which converts the $DC_1$ and $DC_2$ values to the magnitude and phase values, will be discussed.
 
-\cite{joey} discusses the original implementation of the calculation circuitry for the BIST approach.  Shown in Figure \ref{fig:joeycalc} the original calculation circuit uses a custom CORDIC developed by \cite{joey} to perform the operations from Equation \ref{eq:MagnitudePhase} and determine the magnitude and phase from the $DC_1$ and $DC_2$ values.
+\cite{joey} discusses the original implementation of the calculation circuitry for the BIST approach.  Shown in Figure \ref{fig:joeycalc} the original calculation circuit uses a custom CORDIC developed by \cite{joey} to perform the operations from Equations \ref{eq:magnitude} and \ref{eq:phase} and determine the magnitude and phase from the $DC_1$ and $DC_2$ values.
 \begin{figure}
 	\begin{center}
 		\includegraphics[scale=1]{images/joey-calculation}
@@ -591,14 +591,17 @@ The ORA portion of the BIST accumulates the in-phase and out-of-phase components
 \end{figure}
 The CORDIC algorithm, explained in depth in \cite{joey}, uses successive approximation to perform the magnitude and phase calculations for the supplied $DC_1$ and $DC_2$ values.  The CORDIC algorithm is a well known approach to calculating a number of linear, circular, and hyperbolic functions using inexpensive digital operations such as shift, add, and substraction\cite{joey}.  Since it requires successive approximation, the calculation cordic requires several clock cycles to complete.  At the end of the approximation the output of the CORDIC is the raw magnitude and phase values which can be read directly and used by the remaining calculation circuitry to perform high-order tests\cite{joey}.
 
-The remaining circuitry in the BIST is used for performing tests including measurements of the DUT linearity, frequency response, SNR, and noise figure (NF)\nomenclature{NF}{Noise Figure}. Before discussing each test in detail, it is important to understand that the output of the calculation will be a logrithmic result.  Decibels (dB)\nomenclature{dB}{Decibel} are a common unit used to represent signal strength.  To simplify the evaluation of test output, the calculation circuitry converts the output to decibels as described in Equation \ref{eq:decibel}\cite{joey}.  This operation is performed by the Logrithmic Translation Unit (LTU)\nomenclature{LTU}{Logarithmic Translation Unit} shown at the output in Figure \ref{fig:joeycalc}.  
+The remaining circuitry in the BIST is used for performing tests including measurements of the DUT linearity, spur search, SNR, and noise figure (NF)\nomenclature{NF}{Noise Figure}. Before discussing each test in detail, it is important to understand that the output of the calculation will be a logrithmic result.  Decibels (dB)\nomenclature{dB}{Decibel} are a common unit used to represent signal strength.  To simplify the evaluation of test output, the calculation circuitry converts the output to decibels as described in Equation \ref{eq:decibel}\cite{joey}.  This operation is performed by the Logrithmic Translation Unit (LTU)\nomenclature{LTU}{Logarithmic Translation Unit} shown at the output in Figure \ref{fig:joeycalc}.  
 \begin{equation}
 dB = 20 * log_{10}(INPUT)
 \label{eq:decibel}
 \end{equation}
 Each test discussed will be represented in decibels by the calculation circuit.
 
-% Discuss Tests
+With the help of the test controller the BIST can perform multi-measurement tests and consequently measure several different important analog characteristics. The first such test measures the linearity of the analog DUT.  The linearity of a system is usually measured by analysis of the third-order inter-modulation point (IP3)\nomenclature{IP3}{third-order inter-modulation ppoint} using a two-tone test\cite{stroud-automaticlinearity}.  When two tones $f_1$ and $f_2$ are generated and used to stimulate the DUT, the resulting output frequency will consist of not only $f_1$ and $f_2$ but also the IP3 terms caused by the non-linearity of the DUT.  The output spectrum is shown in Figure \ref{fig:linearityspectrum}.  The linearity of a system is the difference in magnitude between the fundamental tone and the IP3 tone; this is often referred to as $\Delta P$\cite{stroud-automaticlinearity}.  When performed in the BIST this requires two measurements.  In both measurements, two frequencies are generated by the DDS $f_1$ and $f_2$.  In the first test the measured frequency is set to $f_2$ and the ORA will accumulate the magnitude and phase of the fundamental frequency $f_2$.  This result is stored in the calculation circuit while a second measurement is performed.  The second measurement measures the IP3 tone at $2*f_2-f_1$\cite{testtime}\cite{jie}.  The resulting magnitude is divided by the magnitude of the previous calculation and the result is the $\Delta P$ or linearity of the system.
+
+The spur search test searches a given spectrum for the largest magnitude frequency.  Due to \todo{why do spurs appear again other than crappy circuit?}, it is beneficial to measure spurious tones in the output of the DUT.  To perform a spur search a fundamental frequency is generated by the DDS, and a starting frequency $f_s$ is used as the first frequency of interest.  To begin the test the frequency of interest $f$ is set to $f_s$ and the magnitude measured.  This magnitude is stored in the calculation circuitry while $f$ is incremented by a predetermined amount $f_{inc}$.  A new measurement will be made at the new frequency of interest $f$ and the magnitude compared to the previously recorded magnitude.  If the new magnitude is greater than the stored magnitude, the existing stored values are replaced with the new frequency word and magnitude.  This process will repeat for the number of samples specified.  In a special case, if $Samples = 0$ only a single frequency's magnitude is measured.  This allows for the frequency response of the DUT to be measured at the given frequency.  This measurement can be repeated accross the spectrum so that the frequency response of the DUT can be found\cite{stroud-automaticlinearity}.
+
 
 While the general prinicpals and methods employed by the calculation circuit described in \cite{joey} are still used, improvements to this circuit have been made to the circuitry used by the BIST studied in this thesis.  Like the previous calculation circuit it uses the same calculation CORDIC based on the design by \cite{joey} to convert the $DC_1$ and $DC_2$ values to their respective magnitude and phase representations.  Unlike the previous circuit, the LTU has been moved to the front of the circuit so that all operations are performed in the logrithmic domain.  The divider can then be replaced by a substractor as division is performed via substraction in the log domain.  The new circuit allows for faster operation and a large reduction in area and power (approximiately 33\%).
 
@@ -612,24 +615,6 @@ While these descriptions of the BIST architecture are not a comprehensive operat
  
 
 % Old Crap
-
-\subsection{Performing Tests}
-
-To perform more complex tests such as frequency response and IP3 (also called linearity) these measurements are performed repeatedly at different frequencies of interest and the results of each tests are used to calculate the result.  As an example during a linearity measurement the DUT is driven by a two-tone signal which consists of two fundamental tones $f_1$ and $f_2$.  Due to the DUT's nonlinearity, its output will consist of not only $f_1$ and $f_2$ but also the third order inter-modulation points (IM3)\nomenclature{IM3}{Third Order Inter-Modulation Point}\cite{testtime}.  Figure \ref{fig:linearity-spectrum} demonstrates what the input and resulting spectrum will look like\cite{testtime}.  The linearity ($\Delta P$) of the DUT can be determined by the difference in dB between the fundamental frequency (either $f_1$ or $f_2$) and the IM3 tone\cite{basessa}.  To calculate this the BIST must take two measurements at either the two lower frequencies $f_1$ and $2*f_1-f_2$ or the two upper frequencies $f_2$ and $2*f_2-f_1$\cite{testtime}.  The result is the difference in the two measured magnitudes.
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=.7]{images/linearity-spectrum}
-	\end{center}
-	\caption{Two-tone test for IP3 measurement\cite{testtime}}
-	\label{fig:linearity-spectrum}
-\end{figure}
-The linearity test is just one example of how a measurement is made using this BIST architecture, in the next section more details will be discussed about how calculations are made on-chip and how the test controller is used to control and execute different BIST sequences.
-\subsection{Calculation Circuitry}
-As discussed previously when the BIST is used to measure a frequency, the result is the in-phase and out-of-phase values measured at the given frequency ($DC_1$ and $DC_2$).  While these values contain the magnitude and phase information about the measured frequency, they are in a format which is not intuitive and requires post-processing to determine the result.  To calculate the magnitude and phase the previously discussed equations from Equation \ref{eq:MagnitudePhase} can be used.  While this provides a simple step to converting the $DC_1$ and $DC_2$ values to a more intuitive format, it requires manual post-processing to be completed.  The circuitry that will be discussed brings the processing of the $DC_1$ and $DC_2$ on-chip allowing the magnitude and phase to be determined and output directly.  In addition, with the help of a sophisticated test controller the BIST is capable of taking more complex measurements (such as IM3 and SNR) and produce the output of those higher-order measurements directly.
-
-Also in this circuit is some additional circuitry to perform many of the higher level tests available to the BIST such as the previously discussed IM3 or linearity test.  With the help of the test controller the calculation circuit presented by \cite{joey} can be used for IM3, spur search\footnote{A spur search consists of a measurement from a starting frequency to an ending frequency which returns the frequency and magnitude of the most powerful frequency measured in the given range}, signal-to-noise ratio, and noise figure (NF)\nomenclature{NF}{Noise Figure} tests.  To do this multiple frequency measurements must be made by the BIST and stored in the calculation circuit.  The final result from any such test is converted to decibels by the Logarithmic Translation Unit and made available to the system.  The main feature of the calculation circuit is the divider.  The divider performs several different functions depending on the test.  In a IM3 test the divider is used to divide a current magnitude measurement by a previous measurement; likewise, for the SNR measurement it is used to divide the measured signal magnitude by the summation of the noise in the system\cite{joey}.  The divider and accumulators are also used to find the average noise in the system which is used to calculate the SNR.  While this circuit functions correctly and was able to solve the issue of on-chip calculations there are a number of issues which could be improved.
-
-First the area of the calculation circuit was large, particularly the divider took up a large amount of chip area.  Second the calculation circuit could not run at the same speed as the BIST circuitry.  Our goal for our BIST implementation was to achieve a 1GHz operation frequency.  Unfortunately the calculation circuit could not achieve this speed which necessitated two clock domains one for the BIST which could operate at upto 1GHz and one for the calculation circuit which could operate at upto 500 MHz.  This made the interface circuitry between the BIST and the calculation circuit more complex and error prone.  A third issue which occurred was the potential for divide by zero errors.  Specifically when measuring the noise in the system, divide by zero errors could cause errors in the measurement if the magnitude measured by the BIST was small.
 
 \subsection{Interfacing with the BIST}
 Finally given an understanding of the calculation circuit, it is important to be familiar with how our BIST approach is controlled and observed (after all Section \ref{sct:whytest} clearly shows that controllability and observability directly influence the testability of a circuit).  Excluding some run flags, the majority of the BIST is controlled via a SPI interface.  When writing to the SPI interface there is a lower and upper 64-bit word that should be written with the data required for the test being run.  Of the total 128 bits written to the SPI, only 88 of them are actually used by the BIST.  Table \ref{tbl:SPIWrite} shows an overview of the SPI word.  In addition the test control word is broken down in Table \ref{tbl:TestControlWord}.
@@ -789,13 +774,13 @@ The generation in Table \ref{tbl:countsequence} is much more powerful than the p
 
 \bibitem{itrs} ITRS 2009 (I am not sure how to cite this I need to ask you about it)
 
-\bibitem{zorian} Y. Zorian, ``Testing the Monster Chip,'' \textit{IEEE Spectrum}, vol. 37, no. 7, pp. 54-60, July 1999.
+\bibitem{zorian} Y. Zorian, ``Testing the Monster Chip,'' \textit{IEEE Spectrum}, vol. 37, no. 7, pp. 54-60, 1999.
 
-\bibitem{ungar} L. Ungar and T. Ambler, ``Economics of Built-In Self-Test,'' Proc. \textit{IEEE Design \& Test of Computers}, vol. 18, no. 5, pp. 70-79, Sep-Oct 2001. 
+\bibitem{ungar} L. Ungar and T. Ambler, ``Economics of Built-In Self-Test,'' Proc. \textit{IEEE Design \& Test of Computers}, vol. 18, no. 5, pp. 70-79, 2001. 
 
 \bibitem{syschip} L. Wang, N. Touba, and C. Stroud, Eds., \textit{System On Chip Test Architectures}. Elsevier, 2008.
 
-\bibitem{milor} L. Milor and V. Visvanathan, ``Detection of Catastrophic Faults in Analog Integrated Circuits,'' Proc. \textit{IEEE Transactions on Computered-Aided Design of Integrated Circuits and Systems}, vol. 8, no. 2, pp. 114-130, Feburary 1989.
+\bibitem{milor} L. Milor and V. Visvanathan, ``Detection of Catastrophic Faults in Analog Integrated Circuits,'' Proc. \textit{IEEE Transactions on Computered-Aided Design of Integrated Circuits and Systems}, vol. 8, no. 2, pp. 114-130, 1989.
 
 \bibitem{stroud-analog} C. Stroud, P. Karunaratna, and E. Bardley, ``Digital Components for Built-In Self-Test of Analog Circuits,'' Proc. \textit{10th ASIC Conference and Exhibit}, pp. 47-51, 1997.
 
@@ -805,9 +790,9 @@ Computer Engineering, Auburn University, July 7, 2003.
 \bibitem{asl} C. Stroud, ``ASL: Auburn Simulation Language,'' Dept. of Electrical \& Computer
 Engineering, Auburn University, July 7, 2003.
 
-\bibitem{verilog} ``IEEE Standard Hardware Description Language Based on the Verilog(R) Hardware Description Language,'' IEEE Std 1364-1995, 1996 doi: 10.1109/IEEESTD.1996.81542.
+\bibitem{verilog} ``IEEE Standard Hardware Description Language Based on the Verilog(R) Hardware Description Language,'' IEEE Std 1364-1995, 1996.
 
-\bibitem{analogfaults} L. Milor, V. Visvanathan, ``Detection of Catastrophic Faults in Analog Integrated Circuits,'' \textit{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, vol.8, no.2, pp.114-130, Feb 1989 doi: 10.1109/43.21830.
+\bibitem{analogfaults} L. Milor, V. Visvanathan, ``Detection of Catastrophic Faults in Analog Integrated Circuits,'' \textit{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}, vol.8, no.2, pp.114-130, 1989.
 
 \bibitem{analogosc} K. Arabi and B. Kaminska, ``Oscillation-Test Strategy for Analog and Mixed-Signal Integrated Circuits,'' Proc. IEEE VLSI Test Symp.,  1996, pp. 476-482.
 
@@ -819,15 +804,15 @@ Engineering, Auburn University, July 7, 2003.
 
 \bibitem{stroud-bridging-physical} C. Stroud, J.Emmert, J. Bailey, D. Nickolic and K Chhor, ``Bridging Fault Extraction from Physical Design Data for Manufacturing Test Development'', Proc. \textit{IEEE International Test Conference}, 2000.
 
-\bibitem{stroud-bridging} J.M. Emmert, C. Stroud, J.R. Bailey, ``A New Bridging Fault Model For Accurate Fault Behavior,'' Proc. \textit{IEEE AUTOTESTCON}, pp 481-485, 2000 doi: 10.1109/AUTEST.2000.885628.
+\bibitem{stroud-bridging} J.M. Emmert, C. Stroud, J.R. Bailey, ``A New Bridging Fault Model For Accurate Fault Behavior,'' Proc. \textit{IEEE AUTOTESTCON}, pp 481-485, 2000.
 
-\bibitem{parallelflts} D.G. Saab, I.N. Hajj, J.T. Rahmeh, ``Parallel-Concurrent Fault Simulation,'' Proc. \textit{IEEE International Conference on Computer Design: VLSI in Computers and Processors}, pp.298-301,2-4 Oct 1989 doi: 10.1109/ICCD.1989.63376.
+\bibitem{parallelflts} D.G. Saab, I.N. Hajj, J.T. Rahmeh, ``Parallel-Concurrent Fault Simulation,'' Proc. \textit{IEEE International Conference on Computer Design: VLSI in Computers and Processors}, pp.298-301,2-4 1989.
 
 \bibitem{advancedverilog} C. Last, \textit{Advanced Digital Design The Verilog HDL}.  Prentice-Hall, 2004.
 
-\bibitem{testtime} J. Qin, C. Stroud, F. Dai, ``Test Time of Multiplier/Accumulator Based Output Response Analyzer in Built-In Analog Functional Testing,'' Proc. \textit{41st Southeastern Symposium on System Theory}, pp.363-367, 15-17 March 2009 doi: 10.1109/SSST.2009.4806795.
+\bibitem{testtime} J. Qin, C. Stroud, F. Dai, ``Test Time of Multiplier/Accumulator Based Output Response Analyzer in Built-In Analog Functional Testing,'' Proc. \textit{41st Southeastern Symposium on System Theory}, pp.363-367, 15-17 2009.
 
-\bibitem{noisefigure} J. Qin, C. Stroud, F. Dai, ``Noise Figure Measurement Using Mixed-Signal BIST,'' Proc. \textit{IEEE International Symposium on Circuits and Systems}, pp.2180-2183, 27-30 May 2007 doi: 10.1109/ISCAS.2007.378606.
+\bibitem{noisefigure} J. Qin, C. Stroud, F. Dai, ``Noise Figure Measurement Using Mixed-Signal BIST,'' Proc. \textit{IEEE International Symposium on Circuits and Systems}, pp.2180-2183, 27-30 2007.
 
 \bibitem{basessa} F. Dai, C. Stroud, and D. Yang, ``Automatic Linearity and Frequency Response Tests with Built-in Pattern Generator and Analyzer,''  \textit{IEEE Transactions on VLSI Systems}, vol. 14, no. 6, pp. 561-572, 2006.
 
@@ -842,6 +827,8 @@ Engineering, Auburn University, July 7, 2003.
 \bibitem{stroud-phase} J. Qin, C. Stroud, and F. Dai, ``Phase Delay Measurement and Calibration in Built-In Analog Functional Testing,” Proc. \textit{IEEE Southeastern Symposium on System Theory}, pp. 145–149, 2007.
 
 \bibitem{qi} S. Qi, ``Analog Circuit Testing using Built-In Direct-Digital Synthesis,'' Master's Thesis, Auburn University, 2005.
+
+\bibitem{stroud-automaticlinearity} F Dai, C. Stroud, Y. Dayu, ``Automatic linearity and frequency response tests with built-in pattern generator and analyzer,'' Proc. \textit{IEEE Transactions on Very Large Scale Integration (VLSI) Systems} vol.14, no.6, pp.561-572, 2006.
 
 \label{Bibliography}
 \end{thebibliography}
