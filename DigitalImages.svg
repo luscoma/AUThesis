@@ -36,11 +36,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="528.61086"
-     inkscape:cy="753.07075"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="435.21976"
+     inkscape:cy="845.9845"
      inkscape:document-units="px"
-     inkscape:current-layer="g4083"
+     inkscape:current-layer="layer13"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1031"
@@ -2451,7 +2451,8 @@
      inkscape:label="Fault Collapse"
      inkscape:groupmode="layer"
      id="g4083"
-     style="display:inline">
+     style="display:none"
+     sodipodi:insensitive="true">
     <flowRoot
        xml:space="preserve"
        id="flowRoot4085"
@@ -3516,4 +3517,1337 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
   </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer11"
+     inkscape:label="Or Chain"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 126.27119,63.43848 c -41.500004,0 -41.500004,0 -41.500004,0"
+       id="path3767"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99955106px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 135.84738,82.939762 -50.951194,0"
+       id="path3769"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.00094104px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 131.86149,121.94225 c -47.090304,0 -47.090304,0 -47.090304,0"
+       id="path3767-9"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 138.14619,102.44098 -53.250004,0"
+       id="path3769-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g3763"
+       transform="translate(-465.09947,46.845824)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2985-6"
+         d="M 681.34342,49.029473 C 674.25508,23.217873 636.76415,9.8955433 580.13504,3.9507933 m 0,0 c 51.42857,51.4285697 2.85714,87.1428597 2.85714,87.1428597"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path2985-5-6"
+         d="m 681.17187,48.749123 c -7.08834,25.8116 -41.54881,36.48228 -98.17792,42.42703"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3804"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-5.0632057,23.827164)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion3806"><rect
+           id="rect3808"
+           width="36"
+           height="19"
+           x="53.25"
+           y="28.612209" /></flowRegion><flowPara
+         id="flowPara3810"
+         style="font-size:16px">FW1</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3804-7"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(-5.0632057,43.326652)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion3806-7"><rect
+           id="rect3808-2"
+           width="36"
+           height="19"
+           x="53.25"
+           y="28.612209" /></flowRegion><flowPara
+         id="flowPara3810-6"
+         style="font-size:16px">FW2</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3804-8"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(-5.3132057,62.607272)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion3806-3"><rect
+           id="rect3808-7"
+           width="36"
+           height="19"
+           x="53.25"
+           y="28.612209" /></flowRegion><flowPara
+         id="flowPara3810-9"
+         style="font-size:16px">FW3</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3804-7-3"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(-5.3132057,82.009043)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion3806-7-7"><rect
+           id="rect3808-2-8"
+           width="36"
+           height="19"
+           x="53.25"
+           y="28.612209" /></flowRegion><flowPara
+         id="flowPara3810-6-7"
+         style="font-size:16px">FW4</flowPara></flowRoot>    <g
+       id="g3913"
+       transform="translate(0.72292697,27.577164)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3903"
+         d="m 105.25,32.237208 c -7.625002,7.625 -7.625002,7.625 -7.625002,7.625"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-2.3749999,0.49999999)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot3905"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3907"><rect
+             y="26.737209"
+             x="98"
+             height="14.5"
+             width="18.5"
+             id="rect3909" /></flowRegion><flowPara
+           id="flowPara3911">16</flowPara></flowRoot>    </g>
+    <g
+       transform="translate(0.72292697,47.119583)"
+       style="display:inline"
+       id="g3913-7"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3903-5"
+         d="m 105.25,32.237208 c -7.625002,7.625 -7.625002,7.625 -7.625002,7.625"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-2.3749999,0.49999999)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot3905-7"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3907-1"><rect
+             y="26.737209"
+             x="98"
+             height="14.5"
+             width="18.5"
+             id="rect3909-6" /></flowRegion><flowPara
+           id="flowPara3911-9">16</flowPara></flowRoot>    </g>
+    <g
+       style="display:inline"
+       id="g3913-9"
+       transform="translate(0.72292697,66.62372)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3903-8"
+         d="m 105.25,32.237208 c -7.625002,7.625 -7.625002,7.625 -7.625002,7.625"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-2.3749999,0.49999999)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot3905-6"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3907-7"><rect
+             y="26.737209"
+             x="98"
+             height="14.5"
+             width="18.5"
+             id="rect3909-0" /></flowRegion><flowPara
+           id="flowPara3911-4">16</flowPara></flowRoot>    </g>
+    <g
+       transform="translate(0.72292697,86.166139)"
+       style="display:inline"
+       id="g3913-7-8"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3903-5-4"
+         d="m 105.25,32.237208 c -7.625002,7.625 -7.625002,7.625 -7.625002,7.625"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-2.3749999,0.49999999)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot3905-7-8"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3907-1-1"><rect
+             y="26.737209"
+             x="98"
+             height="14.5"
+             width="18.5"
+             id="rect3909-6-6" /></flowRegion><flowPara
+           id="flowPara3911-9-8">16</flowPara></flowRoot>    </g>
+    <g
+       style="display:inline"
+       id="g3913-8"
+       transform="translate(124.56501,59.473373)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3903-9"
+         d="m 105.25,32.237208 c -7.625002,7.625 -7.625002,7.625 -7.625002,7.625"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-2.3749999,0.49999999)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot3905-3"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3907-14"><rect
+             y="26.737209"
+             x="98"
+             height="14.5"
+             width="18.5"
+             id="rect3909-8" /></flowRegion><flowPara
+           id="flowPara3911-96">16</flowPara></flowRoot>    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 1;stroke-dashoffset:0"
+       d="m 236.70711,113.18937 0,-17.785707 0,-18.406872"
+       id="path4090"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 216.10951,95.514149 20.85965,0"
+       id="path4893"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99944091px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.70683,77.594085 0,-24.935867 0,-12.468845 182.00027,0 8.625,0"
+       id="path4895"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.70711,112.37687 0,6.9375 0,18.05166"
+       id="path4897"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.70711,53.397103 43.66384,0"
+       id="path4899"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99869758px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.65827,66.243154 72.57612,0"
+       id="path4901"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.00094271px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.70711,112.00206 125.8167,0"
+       id="path4903"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99897617px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.86917,123.4044 150.08115,0"
+       id="path4905"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99905413px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 236.7071,136.91034 172.24592,0"
+       id="path4907"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 236.70711,79.189373 80.43339,0 19.30974,0"
+       id="path4901-6"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g5255"
+       transform="translate(-30.167892,29.202164)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
+         sodipodi:end="3.1415927"
+         sodipodi:start="0"
+         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         sodipodi:ry="5.8125"
+         sodipodi:rx="4.34375"
+         sodipodi:cy="23.174707"
+         sodipodi:cx="295.28125"
+         id="path5061"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker-start:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:nodetypes="csc"
+         inkscape:connector-curvature="0"
+         id="path5249"
+         d="m 307.68749,14.268458 c 0,0 15.71279,-0.03457 16.34375,6.9375 0.625,6.90625 -16.43658,7.151808 -16.43658,7.151808"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       style="display:inline"
+       id="g5255-2"
+       transform="translate(-1.239232,41.376262)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
+         sodipodi:end="3.1415927"
+         sodipodi:start="0"
+         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         sodipodi:ry="5.8125"
+         sodipodi:rx="4.34375"
+         sodipodi:cy="23.174707"
+         sodipodi:cx="295.28125"
+         id="path5061-0"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker-start:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:nodetypes="csc"
+         inkscape:connector-curvature="0"
+         id="path5249-6"
+         d="m 307.68749,14.268458 c 0,0 15.71279,-0.03457 16.34375,6.9375 0.625,6.90625 -16.43658,7.151808 -16.43658,7.151808"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       style="display:inline"
+       id="g5255-8"
+       transform="translate(25.885768,55.376262)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
+         sodipodi:end="3.1415927"
+         sodipodi:start="0"
+         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         sodipodi:ry="5.8125"
+         sodipodi:rx="4.34375"
+         sodipodi:cy="23.174707"
+         sodipodi:cx="295.28125"
+         id="path5061-9"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker-start:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:nodetypes="csc"
+         inkscape:connector-curvature="0"
+         id="path5249-5"
+         d="m 307.68749,14.268458 c 0,0 15.71279,-0.03457 16.34375,6.9375 0.625,6.90625 -16.43658,7.151808 -16.43658,7.151808"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       style="display:inline"
+       id="g5255-4"
+       transform="translate(98.260766,112.18876)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
+         sodipodi:end="3.1415927"
+         sodipodi:start="0"
+         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         sodipodi:ry="5.8125"
+         sodipodi:rx="4.34375"
+         sodipodi:cy="23.174707"
+         sodipodi:cx="295.28125"
+         id="path5061-7"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker-start:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:nodetypes="csc"
+         inkscape:connector-curvature="0"
+         id="path5249-3"
+         d="m 307.68749,14.268458 c 0,0 15.71279,-0.03457 16.34375,6.9375 0.625,6.90625 -16.43658,7.151808 -16.43658,7.151808"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       style="display:inline"
+       id="g5255-1"
+       transform="translate(76.510766,98.313761)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
+         sodipodi:end="3.1415927"
+         sodipodi:start="0"
+         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         sodipodi:ry="5.8125"
+         sodipodi:rx="4.34375"
+         sodipodi:cy="23.174707"
+         sodipodi:cx="295.28125"
+         id="path5061-94"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker-start:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:nodetypes="csc"
+         inkscape:connector-curvature="0"
+         id="path5249-7"
+         d="m 307.68749,14.268458 c 0,0 15.71279,-0.03457 16.34375,6.9375 0.625,6.90625 -16.43658,7.151808 -16.43658,7.151808"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       style="display:inline"
+       id="g5255-29"
+       transform="translate(51.760767,87.251261)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:open="true"
+         transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
+         sodipodi:end="3.1415927"
+         sodipodi:start="0"
+         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         sodipodi:ry="5.8125"
+         sodipodi:rx="4.34375"
+         sodipodi:cy="23.174707"
+         sodipodi:cx="295.28125"
+         id="path5061-2"
+         style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker-start:none"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:nodetypes="csc"
+         inkscape:connector-curvature="0"
+         id="path5249-78"
+         d="m 307.68749,14.268458 c 0,0 15.71279,-0.03457 16.34375,6.9375 0.625,6.90625 -16.43658,7.151808 -16.43658,7.151808"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 267.63991,39.962074 0,7.424621 13.16987,0"
+       id="path5327"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 293.62609,50.3919 6.58493,0 118.74974,0 8.46509,0"
+       id="path5331"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 309.66857,60.203005 -9.19239,0 0,-9.811107"
+       id="path5333"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 322.8321,62.814372 95.75,0 9.09375,0"
+       id="path5335"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 336.62702,73.28448 -8.17592,0 0,-10.650796"
+       id="path5337"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 349.8321,76.939372 68.25,0 9.5,0"
+       id="path5339"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.10711,76.908403 0,11.136932"
+       id="path5341"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2, 1;stroke-dashoffset:0"
+       d="m 352.10711,87.814371 0,9.875"
+       id="path5343"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 352.10711,97.251871 0,7.812499 10.4375,0"
+       id="path5345"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 375.7071,108.56437 42.125,0 9.61394,0"
+       id="path5347"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 379.9571,108.81437 0,8.125 7.44902,0"
+       id="path5349"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 400.57598,119.59997 26.87006,0"
+       id="path5351"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 402.87408,119.86514 0,11.04854 6.45235,0"
+       id="path5353"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.96148056px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 422.49629,134.00727 4.98432,0"
+       id="path5355"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5359"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(4.4913536,22.827164)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5361"><rect
+           id="rect5363"
+           width="22.450642"
+           height="16.617012"
+           x="428.68347"
+           y="103.95524"
+           style="font-size:14px" /></flowRegion><flowPara
+         id="flowPara5365"
+         style="font-size:12px">0</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5359-4"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(3.9640099,8.5027947)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5361-9"><rect
+           id="rect5363-1"
+           width="22.450642"
+           height="16.617012"
+           x="428.68347"
+           y="103.95524"
+           style="font-size:14px" /></flowRegion><flowPara
+         id="flowPara5365-2"
+         style="font-size:12px">1</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5359-8"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(4.403463,-3.6222053)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5361-4"><rect
+           id="rect5363-6"
+           width="22.450642"
+           height="16.617012"
+           x="428.68347"
+           y="103.95524"
+           style="font-size:14px" /></flowRegion><flowPara
+         id="flowPara5365-0"
+         style="font-size:12px">2</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5447"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-0.42229864,21.764664)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5449"><rect
+           id="rect5451"
+           width="25.875"
+           height="15.25"
+           x="427.875"
+           y="9.3622093" /></flowRegion><flowPara
+         id="flowPara5453"
+         style="font-size:12px">N-1</flowPara></flowRoot>    <flowRoot
+       transform="translate(-0.42229864,34.387588)"
+       xml:space="preserve"
+       id="flowRoot5447-8"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5449-2"><rect
+           id="rect5451-6"
+           width="25.625"
+           height="16.25"
+           x="427.875"
+           y="9.3622093" /></flowRegion><flowPara
+         id="flowPara5453-4"
+         style="font-size:12px">N-2</flowPara></flowRoot>    <flowRoot
+       transform="translate(-0.42229864,46.846267)"
+       xml:space="preserve"
+       id="flowRoot5447-87"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5449-4"><rect
+           id="rect5451-4"
+           width="22.375"
+           height="14.75"
+           x="427.875"
+           y="9.3622093" /></flowRegion><flowPara
+         id="flowPara5453-0"
+         style="font-size:12px">N-3</flowPara></flowRoot>    <flowRoot
+       transform="translate(-0.42229864,59.395889)"
+       xml:space="preserve"
+       id="flowRoot5447-3"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5449-0"><rect
+           id="rect5451-1"
+           width="24.125"
+           height="17.125"
+           x="427.875"
+           y="9.3622093" /></flowRegion><flowPara
+         id="flowPara5453-5"
+         style="font-size:12px">N-4</flowPara></flowRoot>    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.97364944;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect5508"
+       width="21.566845"
+       height="109.5"
+       x="427.20709"
+       y="31.700598"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 448.65924,84.686577 30.40559,0"
+       id="path5520"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       style="display:inline"
+       id="g3913-85"
+       transform="translate(367.80985,48.129351)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3903-83"
+         d="m 105.25,32.237208 c -7.625002,7.625 -7.625002,7.625 -7.625002,7.625"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-2.3749999,0.49999999)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot3905-1"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3907-3"><rect
+             y="26.737209"
+             x="98"
+             height="14.5"
+             width="18.5"
+             id="rect3909-1" /></flowRegion><flowPara
+           id="flowPara3911-3">16</flowPara></flowRoot>    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5555"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-25.809397,-30.847533)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5557"><rect
+           id="rect5559"
+           width="38.007008"
+           height="9.3691654"
+           x="481.27454"
+           y="99.359039" /></flowRegion><flowPara
+         id="flowPara5561">Clock Cycles</flowPara></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer12"
+     inkscape:label="LinearitySpectrum"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <g
+       id="g3974"
+       transform="matrix(2.3457894,0,0,2.3457894,220.24846,-111.84766)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3886"
+         d="m 99.524275,80.604711 0,65.257469"
+         style="fill:none;stroke:#000000;stroke-width:0.99961412px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3906"
+         d="m 97.956384,81.703469 c 0,0 0,0 1.568893,-1.568893 l 1.546793,1.546796"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       id="g3978"
+       transform="matrix(2.3457894,0,0,2.3457894,235.46155,-111.76182)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3886-4"
+         d="m 119.49509,80.663794 0,65.161376"
+         style="fill:none;stroke:#000000;stroke-width:1.00045478px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3906-5"
+         d="m 117.85481,81.802906 c 0,0 0,0 1.56889,-1.568893 l 1.5468,1.546796"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    </g>
+    <g
+       id="g4013"
+       transform="matrix(2.3457894,0,0,2.2990617,227.94648,-106.61588)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3926"
+         d="m 69.826793,107.97131 0,38.89087"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3906-2"
+         d="m 68.291047,109.13141 c 0,0 0,0 1.568893,-1.5689 l 1.546793,1.5468"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    </g>
+    <g
+       transform="matrix(2.3442585,0,0,2.2992604,413.72209,-105.53984)"
+       style="display:inline"
+       id="g3946-9"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3926-9"
+         d="m 69.826793,107.49077 0,38.89087"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3906-2-1"
+         d="m 68.291047,108.65087 c 0,0 0,0 1.568893,-1.5689 l 1.546793,1.5468"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    </g>
+    <g
+       id="g4043"
+       transform="matrix(2.3457894,0,0,2.3457894,227.94648,-112.31727)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3884"
+         d="m 45.499999,146.36221 126.330021,0"
+         style="fill:none;stroke:#000000;stroke-width:0.8394022px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3906-2-0"
+         d="m 46.537943,147.86218 c 0,0 0,0 -1.5689,-1.56889 l 1.5468,-1.54679"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3906-2-0-8"
+         d="m 170.86571,144.7465 c 0,0 0,0 1.5689,1.56889 l -1.5468,1.54679"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4035"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(300.26822,83.499135)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4037"><rect
+           id="rect4039"
+           width="62.932503"
+           height="17.854446"
+           x="63.63961"
+           y="148.32619" /></flowRegion><flowPara
+         id="flowPara4041"
+         style="font-size:14px">2*F1-F2</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4035-5"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(485.17764,83.499135)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4037-6"><rect
+           id="rect4039-4"
+           width="63.993168"
+           height="24.218399"
+           x="63.63961"
+           y="148.32619" /></flowRegion><flowPara
+         id="flowPara4041-6"
+         style="font-size:14px;font-weight:normal;-inkscape-font-specification:Sans">2*F2-F1</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4035-6"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(380.67049,83.367299)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4037-0"><rect
+           id="rect4039-8"
+           width="39.244427"
+           height="17.147335"
+           x="63.63961"
+           y="148.32619" /></flowRegion><flowPara
+         id="flowPara4041-5"
+         style="font-size:14px">F1</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4035-3"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(442.37988,83.499135)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4037-9"><rect
+           id="rect4039-41"
+           width="43.133514"
+           height="27.400383"
+           x="63.63961"
+           y="148.32619" /></flowRegion><flowPara
+         id="flowPara4041-54"
+         style="font-size:14px">F2</flowPara></flowRoot>    <g
+       id="g4338"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="matrix(2.3457894,0,0,2.3457894,-102.00332,-111.84766)"
+         id="g3974-6">
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.99961412px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 99.524275,80.604711 0,65.257469"
+           id="path3886-40"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 97.956384,81.703469 c 0,0 0,0 1.568893,-1.568893 l 1.546793,1.546796"
+           id="path3906-9"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         transform="matrix(2.3457894,0,0,2.3457894,-86.790231,-111.76182)"
+         id="g3978-4">
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.00045478px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="m 119.49509,80.663794 0,65.161376"
+           id="path3886-4-5"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="m 117.85481,81.802906 c 0,0 0,0 1.56889,-1.568893 l 1.5468,1.546796"
+           id="path3906-5-4"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         transform="matrix(2.3457894,0,0,2.3457894,-94.305305,-112.31727)"
+         id="g4043-2">
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.8394022px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 45.499999,146.36221 126.330021,0"
+           id="path3884-1"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="m 46.537943,147.86218 c 0,0 0,0 -1.5689,-1.56889 l 1.5468,-1.54679"
+           id="path3906-2-0-3"
+           inkscape:connector-curvature="0" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+           d="m 170.86571,144.7465 c 0,0 0,0 1.5689,1.56889 l -1.5468,1.54679"
+           id="path3906-2-0-8-0"
+           inkscape:connector-curvature="0" />
+      </g>
+      <flowRoot
+         transform="translate(58.418708,83.367299)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         id="flowRoot4035-6-3"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4037-0-3"><rect
+             y="148.32619"
+             x="63.63961"
+             height="17.147335"
+             width="39.244427"
+             id="rect4039-8-8" /></flowRegion><flowPara
+           style="font-size:14px"
+           id="flowPara4041-5-9">F1</flowPara></flowRoot>      <flowRoot
+         transform="translate(120.12809,83.499135)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         id="flowRoot4035-3-5"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4037-9-5"><rect
+             y="148.32619"
+             x="63.63961"
+             height="27.400383"
+             width="43.133514"
+             id="rect4039-41-3" /></flowRegion><flowPara
+           style="font-size:14px"
+           id="flowPara4041-54-8">F2</flowPara></flowRoot>    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4303"
+       style="font-size:6px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-7.0314861,14.142135)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4305"><rect
+           id="rect4307"
+           width="236.17366"
+           height="30.40559"
+           x="49.497475"
+           y="19.279202"
+           style="text-align:center;text-anchor:middle" /></flowRegion><flowPara
+         id="flowPara4309"
+         style="font-size:22px;text-align:center;text-anchor:middle">Input Spectrum</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4303-3"
+       style="font-size:6px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(315.68221,14.142135)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion4305-3"><rect
+           id="rect4307-9"
+           width="236.17366"
+           height="30.40559"
+           x="49.497475"
+           y="19.279202"
+           style="text-align:center;text-anchor:middle" /></flowRegion><flowPara
+         id="flowPara4309-2"
+         style="font-size:22px;text-align:center;text-anchor:middle">Output Spectrum</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1.40019608px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 514.89563,73.336206 c 63.57937,0 63.57937,0 63.57937,0"
+       id="path4390"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.40060031px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 544.49999,137.23281 33.97481,0"
+       id="path4392"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.9873206;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3.9492825, 0.98732063;stroke-dashoffset:0"
+       d="m 578.6751,74.079975 0,62.380665"
+       id="path4394"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5164"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-21.374999,-9.4999998)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         id="flowRegion5166"><rect
+           id="rect5168"
+           width="59.75"
+           height="48.625"
+           x="543.25"
+           y="92.112206" /></flowRegion><flowPara
+         id="flowPara5170"
+         style="font-size:12px;text-align:center;text-anchor:middle">Linearity</flowPara><flowPara
+         id="flowPara5172"
+         style="font-size:12px;text-align:center;text-anchor:middle">Of DUT</flowPara><flowPara
+         id="flowPara5174"
+         style="font-size:12px;text-align:center;text-anchor:middle">(  P)</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1.14089668px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 547.42822,117.00159 c -3.55846,8.02259 -3.55846,8.02259 -3.55846,8.02259 l 7.55846,0 z"
+       id="path5176"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer13"
+     inkscape:label="DDS"
+     style="display:inline">
+    <g
+       id="g5383">
+      <rect
+         y="130.4944"
+         x="131.62141"
+         height="51.219902"
+         width="137.56294"
+         id="rect5191"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2.45588326;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <flowRoot
+         transform="translate(50.349241,85.763453)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot5229"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5231"><rect
+             y="47.563473"
+             x="86.974129"
+             height="57.982754"
+             width="123.03658"
+             id="rect5233" /></flowRegion><flowPara
+           style="font-size:18px"
+           id="flowPara5235"><flowSpan
+   id="flowSpan5237"
+   style="text-align:center;text-anchor:middle">Phase </flowSpan>Accumulator</flowPara></flowRoot>    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.00098062px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 130.81475,154.58185 c -79.195956,0 -79.195956,0 -79.195956,0"
+       id="path5239"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5241"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-5.6568541,15.556349)"><flowRegion
+         id="flowRegion5243"><rect
+           id="rect5245"
+           width="87.681236"
+           height="65.760925"
+           x="19.091883"
+           y="125.34521" /></flowRegion><flowPara
+         id="flowPara5247"
+         style="font-size:20px">FW</flowPara></flowRoot>    <g
+       id="g5263">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5252"
+         d="m 85.749998,148.11221 c -7.083412,12.26882 -7.083412,12.26882 -7.083412,12.26882"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(8.4999998,-3.4999999)"
+         style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot5254"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5256"><rect
+             style="font-size:12px"
+             y="137.1122"
+             x="67.75"
+             height="25.5"
+             width="27.25"
+             id="rect5258" /></flowRegion><flowPara
+           style="font-size:12px"
+           id="flowPara5260">n</flowPara></flowRoot>    </g>
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5270"
+       sodipodi:cx="116.25"
+       sodipodi:cy="157.1122"
+       sodipodi:rx="7.25"
+       sodipodi:ry="7.25"
+       d="m 123.5,157.1122 a 7.25,7.25 0 1 1 -14.5,0 7.25,7.25 0 1 1 14.5,0 z"
+       transform="translate(-7.4999998,-2.4999999)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 101.4375,154.7372 15.875,0"
+       id="path5276"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99283546px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 108.68392,161.40868 0,-49.85563 185.03413,0 0,43.58231"
+       id="path5338"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.99976587px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 269.31929,154.6623 12.34021,0 c 15.52819,0 15.52819,0 15.52819,0"
+       id="path5340"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g5637">
+      <rect
+         y="129.78729"
+         x="298.03101"
+         height="51.219902"
+         width="117.46672"
+         id="rect5191-6"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2.26941752;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" />
+      <flowRoot
+         transform="translate(208.31515,85.056343)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         id="flowRoot5229-3"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5231-5"><rect
+             y="47.563473"
+             x="86.974129"
+             height="57.982754"
+             width="123.03658"
+             id="rect5233-9" /></flowRegion><flowPara
+           style="font-size:18px"
+           id="flowPara5235-4"><flowSpan
+             id="flowSpan5237-0"
+             style="text-align:center;text-anchor:middle">Phase Truncator</flowSpan></flowPara></flowRoot>    </g>
+    <g
+       id="g5537"
+       transform="translate(-20.152543,0)">
+      <rect
+         y="129.78729"
+         x="464.02347"
+         height="51.219902"
+         width="96.510674"
+         id="rect5191-6-9"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2.05704904;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" />
+      <flowRoot
+         transform="translate(364.36653,85.056343)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         id="flowRoot5229-3-5"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5231-5-7"><rect
+             y="47.563473"
+             x="86.974129"
+             height="57.982754"
+             width="123.03658"
+             id="rect5233-9-2" /></flowRegion><flowPara
+           style="font-size:18px;text-align:center;text-anchor:middle"
+           id="flowPara5235-4-1">sin/cos</flowPara><flowPara
+           style="font-size:18px;text-align:center;text-anchor:middle"
+           id="flowPara5443">LUT</flowPara></flowRoot>    </g>
+    <g
+       transform="translate(201.3554,0.08728093)"
+       style="display:inline"
+       id="g5263-5">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5252-4"
+         d="m 85.749998,148.11221 c -7.083412,12.26882 -7.083412,12.26882 -7.083412,12.26882"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(8.4999998,-3.4999999)"
+         style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot5254-6"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5256-2"><rect
+             style="font-size:12px"
+             y="137.1122"
+             x="67.75"
+             height="25.5"
+             width="27.25"
+             id="rect5258-9" /></flowRegion><flowPara
+           style="font-size:12px"
+           id="flowPara5260-9">n</flowPara></flowRoot>    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.00013041px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 415.42523,154.66212 12.97339,0 c 16.32497,0 16.32497,0 16.32497,0"
+       id="path5340-1"
+       inkscape:connector-curvature="0" />
+    <g
+       transform="translate(347.06534,1.2814543)"
+       style="display:inline"
+       id="g5263-5-8">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5252-4-0"
+         d="m 85.749998,148.11221 c -7.083412,12.26882 -7.083412,12.26882 -7.083412,12.26882"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(8.4999998,-3.4999999)"
+         style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot5254-6-4"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5256-2-1"><rect
+             style="font-size:12px"
+             y="137.1122"
+             x="67.75"
+             height="25.5"
+             width="27.25"
+             id="rect5258-9-4" /></flowRegion><flowPara
+           style="font-size:12px"
+           id="flowPara5260-9-7">p</flowPara></flowRoot>    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.99966121px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 540.82736,154.66235 22.45832,0"
+       id="path5529"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g5650">
+      <rect
+         y="130.84796"
+         x="563.53571"
+         height="51.219902"
+         width="76.91581"
+         id="rect5191-6-9-6"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.83638942;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" />
+      <flowRoot
+         transform="translate(453.12252,94.602295)"
+         style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         id="flowRoot5229-3-5-7"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5231-5-7-2"><rect
+             y="47.563473"
+             x="86.974129"
+             height="57.982754"
+             width="123.03658"
+             id="rect5233-9-2-6" /></flowRegion><flowPara
+           style="font-size:18px;text-align:center;text-anchor:middle"
+           id="flowPara5443-2">DAC</flowPara></flowRoot>    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 641.40024,154.66218 49.5,0"
+       id="path5529-0"
+       inkscape:connector-curvature="0" />
+    <g
+       transform="translate(469.3948,0.92790103)"
+       style="display:inline"
+       id="g5263-5-8-0">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5252-4-0-3"
+         d="m 85.749998,148.11221 c -7.083412,12.26882 -7.083412,12.26882 -7.083412,12.26882"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(8.4999998,-3.4999999)"
+         style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         id="flowRoot5254-6-4-0"
+         xml:space="preserve"><flowRegion
+           id="flowRegion5256-2-1-0"><rect
+             style="font-size:12px"
+             y="137.1122"
+             x="67.75"
+             height="25.5"
+             width="27.25"
+             id="rect5258-9-4-7" /></flowRegion><flowPara
+           style="font-size:12px"
+           id="flowPara5260-9-7-2">d</flowPara></flowRoot>    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5657"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-1.9999999,7.4999998)"><flowRegion
+         id="flowRegion5659"><rect
+           id="rect5661"
+           width="72"
+           height="26.5"
+           x="655.5"
+           y="126.86221" /></flowRegion><flowPara
+         id="flowPara5663"
+         style="font-size:18px">Fout</flowPara></flowRoot>  </g>
 </svg>
