@@ -366,66 +366,6 @@ Logic simulation is important during each step of this design process, so that t
 
 In contrast to logic simulation, fault simulation is not typically performed at any of the high-level steps in the design process\cite{stroud}.  Ideally the post-layout netlist should be used for all fault simulations, since the layout can have a significant impact on the faults in a circuit\cite{defectforcmos}.  This is especially true of bridging fault simulations as routing is not finalized until the layout stage and thus cannot be accurately performed earlier in the design process\cite{defectforcmos}; however, other fault models may be simulated earlier in the design verification process\cite{stroud}.  In this thesis all fault simulations of the BIST are performed using the post-layout design.  As discussed in the next chapter, this does present a challenge since the post-layout design produced by the CAD tools is a Verilog netlist which is not a format used by the fault simulator.  As such a tool was written to convert a Verilog netlist to the ASL netlist format recognized by our simulator AUSIM (ASL and the fault simulator AUSIM will be discussed in Section \ref{sct:ausim}).
 
-\subsection{Value Change Dump File}
-% Discuss a VCD file since it relates to simulation
-% Simplifies the storage and viewing of simulations results
-% A single paragraph should do
-The Value Change Dump or VCD\nomenclature{VCD}{Value Change Dump} format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is an industry standard format and is typically used to store logic simulation results in as small of a footprint as possible\cite{verilog}.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data. 
-
-The VCD format compresses simulation results into a smaller footprint by only storing the changes between vectors instead of every vector\cite{verilog}.  While this can make the output of the file less readable it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  An example of a VCD file is shown in Table \ref{tbl:half_adder_vcd}\footnote{It is important to note that while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector}.  On the right in Table \ref{tbl:half_adder_vcd} is a text description explaining each section of the VCD file.
-\begin{table}
-	\begin{center}
-    \caption{Example VCD File}
-		\begin{tabular}{l|l}
-			VCD File & Description \\ \hline
-			\textbf{\$date} & The date section defines the day\\
-			Tuesday, December 07, 2010 & which this file was created \\
-			\textbf{\$end} & \\
-			\textbf{\$version}
-			Generated For ASL2VCD 1.0 & A comment detailing the  \\
-			Alex Lusco & version of the application creating this file \\
-			\textbf{\$end}	\\
-			\textbf{\$comment}	\\
-			VCD File & An additional comment section detailing \\
-			\textbf{\$end} & information about the file \\
-			\textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale used in this file \\
-			\textbf{\$scope} module logic \textbf{\$end} & The simulation scope, particular to the simulation \\
-			\textbf{\$var} wire 1 ! A \textbf{\$end} & This section aliases each input with a single ASCII \\
-			\textbf{\$var} wire 1 " B \textbf{\$end} & character. For long IO names this shrinks them to a  \\
-			\textbf{\$var} wire 1 \# S \textbf{\$end} & single character allowing for the ability to condense \\
-			\textbf{\$var} wire 1 \$ C \textbf{\$end} & the dump for large simulations greatly \\
-			\textbf{\$upscope} \$end & \\
-			\textbf{\$enddefinitions} \$end & End of header \\
-			\textbf{\$dumpvars} & Sets the initial value for each input \\
-			0!	& Each IO must be set to an initial value here \\
-			0"	& The !,",\#, \& \$ characters represent the\\
-			0\# & nets aliased in the \$var section\\
-			0\$ & \\
-			\textbf{\$end} & \\
-			\textbf{\#1} & The \#N construct denotes a time step to apply the \\
-			1" & following value changes at, in this case at 10ns \\
-			1\# & Only nets whose value changed will appear in the time step\\
-			\textbf{\#2} & These changes occurred at 20ns \\ 
-			1! & \\
-			0" & \\
-			\textbf{\#3} & These changes occurred at 30ns\\
-			1" & \\
-			0\# & \\
-			1\$ & \\	
-			\textbf{\#4} & The end of the simulation, no changes occurred \\		
-		\end{tabular}
-	\end{center}
-	\label{tbl:half_adder_vcd}
-\end{table} 
-In addition to the file size reduction, the key benefit of conversion to the VCD format is the ability to visualize the output of a logic simulation in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used to visualize the VCD file in Table \ref{tbl:half_adder_vcd}.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform.  The displayed waveforms can be panned, zoomed and combined.  This functionality alone makes it much easier to verify the output of a complex logic simulation.  Conversion to the VCD file format and the GTKWave viewer are used in this thesis to simplify the verification of test vectors used in fault simulations.
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=.4]{images/half-adder-vcd}
-	\end{center}
-	\caption{VCD File Visualized in the GTKWave Viewer}
-	\label{fig:half-adder-gtkwave}
-\end{figure}
-
 \section{AUSIM Fault Simulator}
 \label{sct:ausim}
 % Some discussion on the general use of the simulation
@@ -673,7 +613,9 @@ In addition to the SPI inputs and outputs, there are a few other important outpu
 \section{Thesis Statement}
 While these descriptions of the BIST architecture are not a comprehensive operating manual, they are provided to give a background of the circuit so that a basic understanding can be developed by the reader.  The focus of subsequent chapters will shift away from the underlying BIST architecture except where it relates to improvements in fault coverage and the fault coverage that is achieved; instead, this thesis will focus on evaluating the effectiveness of developed test procedures for achieving a high fault coverage when testing a mixed-signal BIST approach by using the SSA BIST circuit as both a benchmark and for context.  The development and verification of these test procedures is discussed in Chapter 3.  Using the developed test procedures, fault simulations are performed using the digital loopback path\footnote{The digital loopback path is discussed in detail in Section \ref{sct:MixedSignal} and its effectiveness in testing the digital portion of mixed-signal circuitry is evaluated in more depth in \cite{stroud-analog}} and the resulting fault coverage obtained is evaluated in Chapter 4.  Analyzing the results from the simulations, potential improvements to the BIST architecture are proposed in Chapter 5 and simulated to determine their impact on the fault coverage achievable.  
 
-\chapter{Model Conversion and Verification}
+\chapter{Test Preparation, Development, and Verification}
+Before performing fault simulations, a set of test procedures must be developed and verified.  These test procedures will be applied during fault simulations and the fault coverage determined.  In the case of the SSA BIST, the test procedures will consist of a number of measurements (frequency sweep, SNR, NF, and linearity) that will exercise the BIST circuitry.  Each measurement must be simulated via logic simulation to verify that it is designed correctly.  In this chapter the required steps for verifying the test procedures are discussed.  First a method for converting a Verilog netlist to the ASL format is discussed followed the analysis of a test vector generation program (VECGEN) which simplifies test development.  The remaining sections of this chapter will discuss the analysis of the output of a logic simulation, including the Value Change Dump (VCD)\nomenclature{VCD} format which is used to store results and verification of the results using a VCD viewer such as GTKWave.
+
 \subsection{Converting to ASL}
 In many cases behavioral models are written in a high-level hardware description language such as VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow a behavioral model to be developed of a circuit at a much higher level than ASL's gate-level description.  This means that for large, complex circuits (such as our BIST approach) design in VHDL or Verilog is preferred.  To aid in the simulation of larger circuits a tool was developed to convert a Verilog net-list to an ASL net-list.  This allows a user to write a high-level behavioral description of the circuit, synthesis it down to a Verilog net-list using one of many different CAD tools, then convert it to ASL for fault simulation using the VerilogParser tool.
 
@@ -757,6 +699,67 @@ This is a very simple example, there are many more commands as shown in Appendix
 	\label{tbl:countsequence}
 \end{table}
 The generation in Table \ref{tbl:countsequence} is much more powerful than the previous example in Table \ref{tbl:Vecgen_example} and demonstrates some of the power that the Vecgen program provides.  All fault simulation tests for the BIST are designed in the Vecgen markup language for simplicity.
+
+\subsection{Value Change Dump File}
+% Discuss a VCD file since it relates to simulation
+% Simplifies the storage and viewing of simulations results
+% A single paragraph should do
+The Value Change Dump or VCD\nomenclature{VCD}{Value Change Dump} format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is an industry standard format and is typically used to store logic simulation results in as small of a footprint as possible\cite{verilog}.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data. 
+
+The VCD format compresses simulation results into a smaller footprint by only storing the changes between vectors instead of every vector\cite{verilog}.  While this can make the output of the file less readable it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  An example of a VCD file is shown in Table \ref{tbl:half_adder_vcd}\footnote{It is important to note that while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector}.  On the right in Table \ref{tbl:half_adder_vcd} is a text description explaining each section of the VCD file.
+\begin{table}
+	\begin{center}
+    \caption{Example VCD File}
+		\begin{tabular}{l|l}
+			VCD File & Description \\ \hline
+			\textbf{\$date} & The date section defines the day\\
+			Tuesday, December 07, 2010 & which this file was created \\
+			\textbf{\$end} & \\
+			\textbf{\$version}
+			Generated For ASL2VCD 1.0 & A comment detailing the  \\
+			Alex Lusco & version of the application creating this file \\
+			\textbf{\$end}	\\
+			\textbf{\$comment}	\\
+			VCD File & An additional comment section detailing \\
+			\textbf{\$end} & information about the file \\
+			\textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale used in this file \\
+			\textbf{\$scope} module logic \textbf{\$end} & The simulation scope, particular to the simulation \\
+			\textbf{\$var} wire 1 ! A \textbf{\$end} & This section aliases each input with a single ASCII \\
+			\textbf{\$var} wire 1 " B \textbf{\$end} & character. For long IO names this shrinks them to a  \\
+			\textbf{\$var} wire 1 \# S \textbf{\$end} & single character allowing for the ability to condense \\
+			\textbf{\$var} wire 1 \$ C \textbf{\$end} & the dump for large simulations greatly \\
+			\textbf{\$upscope} \$end & \\
+			\textbf{\$enddefinitions} \$end & End of header \\
+			\textbf{\$dumpvars} & Sets the initial value for each input \\
+			0!	& Each IO must be set to an initial value here \\
+			0"	& The !,",\#, \& \$ characters represent the\\
+			0\# & nets aliased in the \$var section\\
+			0\$ & \\
+			\textbf{\$end} & \\
+			\textbf{\#1} & The \#N construct denotes a time step to apply the \\
+			1" & following value changes at, in this case at 10ns \\
+			1\# & Only nets whose value changed will appear in the time step\\
+			\textbf{\#2} & These changes occurred at 20ns \\ 
+			1! & \\
+			0" & \\
+			\textbf{\#3} & These changes occurred at 30ns\\
+			1" & \\
+			0\# & \\
+			1\$ & \\	
+			\textbf{\#4} & The end of the simulation, no changes occurred \\		
+		\end{tabular}
+	\end{center}
+	\label{tbl:half_adder_vcd}
+\end{table} 
+In addition to the file size reduction, the key benefit of conversion to the VCD format is the ability to visualize the output of a logic simulation in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used to visualize the VCD file in Table \ref{tbl:half_adder_vcd}.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform.  The displayed waveforms can be panned, zoomed and combined.  This functionality alone makes it much easier to verify the output of a complex logic simulation.  Conversion to the VCD file format and the GTKWave viewer are used in this thesis to simplify the verification of test vectors used in fault simulations.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=.4]{images/half-adder-vcd}
+	\end{center}
+	\caption{VCD File Visualized in the GTKWave Viewer}
+	\label{fig:half-adder-gtkwave}
+\end{figure}
+
 \chapter{Fault Simulations}
 
 \chapter{Simulation Results}
@@ -767,6 +770,7 @@ The generation in Table \ref{tbl:countsequence} is much more powerful than the p
 
 % Bibliography
 \begin{thebibliography}{99}
+
 \bibitem{stroud} C. Stroud, \textit{A Designer's Guide to Built-In Self-Test}. Kluwer Academic Publishers, 2002.
 
 \bibitem{itrs} \textit{The International Technology Roadmap for Semiconductors: 2009 Edition - Test \& Test Equipment}, Semiconductor Industry Association, San Jose, CA.
