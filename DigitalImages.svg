@@ -36,11 +36,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="189.56715"
-     inkscape:cy="890.48042"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="951.11843"
+     inkscape:cy="695.97568"
      inkscape:document-units="px"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="layer11"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1031"
@@ -3233,7 +3233,7 @@
          sodipodi:open="true"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 306.00046,153.45268 a 41.454136,9.1923885 0 1 1 -82.90827,0"
+         d="m 306.00046,153.45268 c 0,5.07682 -18.55965,9.19239 -41.45413,9.19239 -22.89449,0 -41.45414,-4.11557 -41.45414,-9.19239 0,0 0,0 0,0"
          sodipodi:ry="9.1923885"
          sodipodi:rx="41.454136"
          sodipodi:cy="153.45268"
@@ -3521,14 +3521,13 @@
      inkscape:groupmode="layer"
      id="layer11"
      inkscape:label="Or Chain"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 126.27119,63.43848 c -41.500004,0 -41.500004,0 -41.500004,0"
        id="path3767"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3536,7 +3535,7 @@
        d="m 135.84738,82.939762 -50.951194,0"
        id="path3769"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3544,7 +3543,7 @@
        d="m 131.86149,121.94225 c -47.090304,0 -47.090304,0 -47.090304,0"
        id="path3767-9"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3552,13 +3551,13 @@
        d="m 138.14619,102.44098 -53.250004,0"
        id="path3769-0"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <g
        id="g3763"
        transform="translate(-465.09947,46.845824)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3579,7 +3578,7 @@
        id="flowRoot3804"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(-5.0632057,23.827164)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion3806"><rect
@@ -3594,7 +3593,7 @@
        id="flowRoot3804-7"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(-5.0632057,43.326652)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion3806-7"><rect
@@ -3609,7 +3608,7 @@
        id="flowRoot3804-8"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(-5.3132057,62.607272)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion3806-3"><rect
@@ -3624,7 +3623,7 @@
        id="flowRoot3804-7-3"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(-5.3132057,82.009043)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion3806-7-7"><rect
@@ -3637,7 +3636,7 @@
          style="font-size:16px">FW4</flowPara></flowRoot>    <g
        id="g3913"
        transform="translate(0.72292697,27.577164)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3663,7 +3662,7 @@
        d="m 236.70711,113.18937 0,-17.785707 0,-18.406872"
        id="path4090"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3671,7 +3670,7 @@
        d="m 216.10951,95.514149 20.85965,0"
        id="path4893"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3679,7 +3678,7 @@
        d="m 236.70683,77.594085 0,-24.935867 0,-12.468845 182.00027,0 8.625,0"
        id="path4895"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3687,7 +3686,7 @@
        d="m 236.70711,112.37687 0,6.9375 0,18.05166"
        id="path4897"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3695,7 +3694,7 @@
        d="m 236.70711,53.397103 43.66384,0"
        id="path4899"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3703,7 +3702,7 @@
        d="m 236.65827,66.243154 72.57612,0"
        id="path4901"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3711,7 +3710,7 @@
        d="m 236.70711,112.00206 125.8167,0"
        id="path4903"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3719,7 +3718,7 @@
        d="m 236.86917,123.4044 150.08115,0"
        id="path4905"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3727,7 +3726,7 @@
        d="m 236.7071,136.91034 172.24592,0"
        id="path4907"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3735,13 +3734,13 @@
        d="m 236.70711,79.189373 80.43339,0 19.30974,0"
        id="path4901-6"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <g
        id="g5255"
        transform="translate(-30.167892,29.202164)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3768,7 +3767,7 @@
        style="display:inline"
        id="g5255-2"
        transform="translate(-1.239232,41.376262)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3795,7 +3794,7 @@
        style="display:inline"
        id="g5255-8"
        transform="translate(25.885768,55.376262)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3822,7 +3821,7 @@
        style="display:inline"
        id="g5255-4"
        transform="translate(98.260766,112.18876)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3849,7 +3848,7 @@
        style="display:inline"
        id="g5255-1"
        transform="translate(76.510766,98.313761)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3876,7 +3875,7 @@
        style="display:inline"
        id="g5255-29"
        transform="translate(51.760767,87.251261)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -3904,7 +3903,7 @@
        d="m 267.63991,39.962074 0,7.424621 13.16987,0"
        id="path5327"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3913,7 +3912,7 @@
        id="path5331"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3921,7 +3920,7 @@
        d="m 309.66857,60.203005 -9.19239,0 0,-9.811107"
        id="path5333"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3929,7 +3928,7 @@
        d="m 322.8321,62.814372 95.75,0 9.09375,0"
        id="path5335"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3937,7 +3936,7 @@
        d="m 336.62702,73.28448 -8.17592,0 0,-10.650796"
        id="path5337"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3945,7 +3944,7 @@
        d="m 349.8321,76.939372 68.25,0 9.5,0"
        id="path5339"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3953,7 +3952,7 @@
        d="m 352.10711,76.908403 0,11.136932"
        id="path5341"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3961,7 +3960,7 @@
        d="m 352.10711,87.814371 0,9.875"
        id="path5343"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3969,7 +3968,7 @@
        d="m 352.10711,97.251871 0,7.812499 10.4375,0"
        id="path5345"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3977,7 +3976,7 @@
        d="m 375.7071,108.56437 42.125,0 9.61394,0"
        id="path5347"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3985,7 +3984,7 @@
        d="m 379.9571,108.81437 0,8.125 7.44902,0"
        id="path5349"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -3993,7 +3992,7 @@
        d="m 400.57598,119.59997 26.87006,0"
        id="path5351"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -4001,7 +4000,7 @@
        d="m 402.87408,119.86514 0,11.04854 6.45235,0"
        id="path5353"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -4009,15 +4008,15 @@
        d="m 422.49629,134.00727 4.98432,0"
        id="path5355"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot5359"
        style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(4.4913536,22.827164)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       transform="translate(5.4885616,22.827164)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5361"><rect
@@ -4032,8 +4031,8 @@
        xml:space="preserve"
        id="flowRoot5359-4"
        style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       transform="translate(3.9640099,8.5027947)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       transform="translate(5.3801632,8.5027947)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5361-9"><rect
@@ -4048,8 +4047,8 @@
        xml:space="preserve"
        id="flowRoot5359-8"
        style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       transform="translate(4.403463,-3.6222053)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       transform="translate(5.6467648,-3.6222053)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5361-4"><rect
@@ -4064,8 +4063,8 @@
        xml:space="preserve"
        id="flowRoot5447"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(-0.42229864,21.764664)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       transform="translate(2.1965694,21.764664)"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5449"><rect
@@ -4075,12 +4074,12 @@
            x="427.875"
            y="9.3622093" /></flowRegion><flowPara
          id="flowPara5453"
-         style="font-size:12px">N-1</flowPara></flowRoot>    <flowRoot
-       transform="translate(-0.42229864,34.387588)"
+         style="font-size:12px">16</flowPara></flowRoot>    <flowRoot
+       transform="translate(2.3430538,34.387588)"
        xml:space="preserve"
        id="flowRoot5447-8"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5449-2"><rect
@@ -4090,12 +4089,12 @@
            x="427.875"
            y="9.3622093" /></flowRegion><flowPara
          id="flowPara5453-4"
-         style="font-size:12px">N-2</flowPara></flowRoot>    <flowRoot
-       transform="translate(-0.42229864,46.846267)"
+         style="font-size:12px">15</flowPara></flowRoot>    <flowRoot
+       transform="translate(2.1555538,46.846267)"
        xml:space="preserve"
        id="flowRoot5447-87"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5449-4"><rect
@@ -4105,12 +4104,12 @@
            x="427.875"
            y="9.3622093" /></flowRegion><flowPara
          id="flowPara5453-0"
-         style="font-size:12px">N-3</flowPara></flowRoot>    <flowRoot
-       transform="translate(-0.42229864,59.395889)"
+         style="font-size:12px">14</flowPara></flowRoot>    <flowRoot
+       transform="translate(2.2991085,59.395889)"
        xml:space="preserve"
        id="flowRoot5447-3"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5449-0"><rect
@@ -4120,14 +4119,14 @@
            x="427.875"
            y="9.3622093" /></flowRegion><flowPara
          id="flowPara5453-5"
-         style="font-size:12px">N-4</flowPara></flowRoot>    <rect
+         style="font-size:12px">13</flowPara></flowRoot>    <rect
        style="fill:none;stroke:#000000;stroke-width:0.97364944;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect5508"
        width="21.566845"
        height="109.5"
        x="427.20709"
        y="31.700598"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <path
@@ -4135,7 +4134,7 @@
        d="m 448.65924,84.686577 30.40559,0"
        id="path5520"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904" />
     <flowRoot
@@ -4143,7 +4142,7 @@
        id="flowRoot5555"
        style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(-25.809397,-43.575455)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904"><flowRegion
          id="flowRegion5557"><rect
@@ -4157,7 +4156,7 @@
        style="display:inline"
        id="g3913-0"
        transform="translate(0.72309365,46.890823)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -4182,7 +4181,7 @@
        style="display:inline"
        id="g3913-7"
        transform="translate(0.72309365,66.204544)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -4207,7 +4206,7 @@
        style="display:inline"
        id="g3913-0-6"
        transform="translate(0.72325965,85.518202)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -4232,7 +4231,7 @@
        style="display:inline"
        id="g3913-2"
        transform="translate(125.12304,59.787857)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -4257,7 +4256,7 @@
        style="display:inline"
        id="g3913-5"
        transform="translate(368.08128,48.576693)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/or-chain.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/or-chain.png"
        inkscape:export-xdpi="269.66904"
        inkscape:export-ydpi="269.66904">
       <path
@@ -4601,11 +4600,11 @@
      inkscape:groupmode="layer"
      id="layer13"
      inkscape:label="DDS"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <g
        id="g5383"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <rect
@@ -4635,7 +4634,7 @@
        d="m 130.81475,154.58185 c -79.195956,0 -79.195956,0 -79.195956,0"
        id="path5239"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <flowRoot
@@ -4643,7 +4642,7 @@
        id="flowRoot5241"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(-5.6568541,15.556349)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459"><flowRegion
          id="flowRegion5243"><rect
@@ -4653,9 +4652,11 @@
            x="19.091883"
            y="125.34521" /></flowRegion><flowPara
          id="flowPara5247"
-         style="font-size:20px">FW</flowPara></flowRoot>    <g
+         style="font-size:20px">F<flowSpan
+   style="font-size:65.00091553%;baseline-shift:sub"
+   id="flowSpan4021">W</flowSpan></flowPara></flowRoot>    <g
        id="g5263"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <path
@@ -4687,7 +4688,7 @@
        sodipodi:ry="7.25"
        d="m 123.5,157.1122 a 7.25,7.25 0 1 1 -14.5,0 7.25,7.25 0 1 1 14.5,0 z"
        transform="translate(-7.4999998,-2.4999999)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <path
@@ -4695,7 +4696,7 @@
        d="m 101.4375,154.7372 15.875,0"
        id="path5276"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <path
@@ -4703,7 +4704,7 @@
        d="m 108.68392,161.40868 0,-49.85563 185.03413,0 0,43.58231"
        id="path5338"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <path
@@ -4711,12 +4712,12 @@
        d="m 269.31929,154.6623 12.34021,0 c 15.52819,0 15.52819,0 15.52819,0"
        id="path5340"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <g
        id="g5637"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <rect
@@ -4744,7 +4745,7 @@
     <g
        id="g5537"
        transform="translate(-20.152543,0)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <rect
@@ -4773,7 +4774,7 @@
        transform="translate(201.3554,0.08728093)"
        style="display:inline"
        id="g5263-5"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <path
@@ -4800,14 +4801,14 @@
        d="m 415.42523,154.66212 12.97339,0 c 16.32497,0 16.32497,0 16.32497,0"
        id="path5340-1"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <g
        transform="translate(347.06534,1.2814543)"
        style="display:inline"
        id="g5263-5-8"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <path
@@ -4834,12 +4835,12 @@
        d="m 540.82736,154.66235 22.45832,0"
        id="path5529"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <g
        id="g5650"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <rect
@@ -4867,14 +4868,14 @@
        d="m 641.40024,154.66218 49.5,0"
        id="path5529-0"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459" />
     <g
        transform="translate(469.3948,0.92790103)"
        style="display:inline"
        id="g5263-5-8-0"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459">
       <path
@@ -4901,7 +4902,7 @@
        id="flowRoot5657"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(-1.9999999,7.4999998)"
-       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/dds-steps.png"
+       inkscape:export-filename="/home/alex/Documents/thesis/images/dds-steps.png"
        inkscape:export-xdpi="270.23459"
        inkscape:export-ydpi="270.23459"><flowRegion
          id="flowRegion5659"><rect
