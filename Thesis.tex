@@ -373,6 +373,7 @@ In contrast to logic simulation, fault simulation is not typically performed at 
 For the fault simulations performed in this thesis the Auburn University SIMulator or AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} is used.  Developed by Dr. Charles Stroud\cite{ausim}\cite{asl}, AUSIM can perform both logic and fault simulations.  In addition it supports multiple fault models including the gate-level stuck-at and multiple bridging fault models\cite{ausim}.  It supports all of the previously discussed methods of improving simulation time including fault collapsing and parallel fault simulation of both bridging and stuck-at faults\cite{ausim}.  A detailed description of the operation and usage of AUSIM will not be given in this thesis; however, more information can be found in \cite{ausim}\cite{asl}; instead, the focus of this section is an overview of the Auburn Simulation Language or ASL\nomenclature{ASL}{Auburn Simulation Language} which is the netlist format used by AUSIM.
 
 \subsection{ASL Netlist Format}
+\label{sct:ASL}
 % Format used by AUSIM for simulations
 % Discussion of the specifics
 Before a circuit can be simulated by AUSIM it must be in a format that AUSIM can understand.  The Auburn Simulation Language (ASL)\nomenclature{ASL}{Auburn Simulation Language} is the circuit description used by AUSIM\cite{asl}.  ASL is used to provide a textual representation of a circuit at the gate-level to the simulator.  This gate-level net-list is used to describe each connection and gate used in a circuit design and allows the simulator to build a representation of the circuit under test.  ASL begins with a top-level circuit declaration.  This declaration defines the name of the circuit and uses the \textit{in} and \textit{out} keywords to define the inputs and outputs to the circuit\cite{asl}.  An example circuit is given in Figure \ref{fig:half_adder}.  Figure \ref{fig:half_adder} A is a half-adder which takes in two inputs and outputs a sum (S) and carry bit (C), the corresponding ASL description is given in Figure \ref{fig:half_adder} B.
@@ -617,25 +618,45 @@ While these descriptions of the BIST architecture are not a comprehensive operat
 Before performing fault simulations, a set of test procedures must be developed and verified.  These test procedures will be applied during fault simulations and the fault coverage determined.  In the case of the SSA BIST, the test procedures will consist of a number of measurements (frequency sweep, SNR, NF, and linearity) that will exercise the BIST circuitry.  Each measurement must be simulated via logic simulation to verify that it is designed correctly.  In this chapter the required steps for verifying the test procedures are discussed.  First a method for converting a Verilog netlist to the ASL format is discussed followed the analysis of a test vector generation program (VECGEN) which simplifies test development.  The remaining sections of this chapter will discuss the analysis of the output of a logic simulation, including the Value Change Dump (VCD)\nomenclature{VCD} format which is used to store results and verification of the results using a VCD viewer such as GTKWave.
 
 \subsection{Converting to ASL}
-In many cases behavioral models are written in a high-level hardware description language such as VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow a behavioral model to be developed of a circuit at a much higher level than ASL's gate-level description.  This means that for large, complex circuits (such as our BIST approach) design in VHDL or Verilog is preferred.  To aid in the simulation of larger circuits a tool was developed to convert a Verilog net-list to an ASL net-list.  This allows a user to write a high-level behavioral description of the circuit, synthesis it down to a Verilog net-list using one of many different CAD tools, then convert it to ASL for fault simulation using the VerilogParser tool.
+Behavioral models are commonly written in a high-level hardware description language such as the VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow for the behavior of a circuit to be modeled without specifically defining how the behavior is to be implemented.  \todo{cite, rewrite and reference the section on this}  As discussed in Section \ref{sct:designprocess}, synthesis tools are used to convert this behavioral description to an actual hardware implementation.  For AASIC design this implementation is usually a gate-level implementation of the circuit behavior using technology specific standard cells.  This synthesized netlist is then taken through the place-and-route tools where routing is finalized and a final Verilog netlist is generated.  Ideally simulation should be performed using this final implementation of the circuit; unfortunately, AUSIM requires a netlist in the ASL\footnote{See Section\ref{sct:ASL}} format.   To facilitate the rapid simulation of this netlist a tool, the VerilogParser tool, was developed which allows easy conversion from Verilog to the ASL format.  This allows a user to simulate a high-level behavior model of a circuit by synthesizing it then converting it to ASL for fault simulations.  By using the VerilogParser tool, fault simulations using AUSIM can be integrated into the design workflow easily and efficently.
 
-As a simple example the ISCAS '85 C17 benchmark circuit (Figure \ref{fig:c17_netlist}) was used to demonstrate the conversion process and the differences between a Verilog net-list and an ASL net-list.  In Figure \ref{fig:c17_netlist} A the behavioral model of the C17 circuit has been synthesized into a post-layout net-list in Verilog.  In B the Verilog model has been converted to ASL.
-\begin{figure}[t]
-	\begin{flushleft}
-		\includegraphics[scale=1]{images/c17-verilog-netlist}	
-	\end{flushleft}
-	\begin{flushleft}
-		(A) Verilog Net-list
-	\end{flushleft}
-	\begin{flushleft}
-		\includegraphics[scale=1]{images/c17-asl-netlist}
-	\end{flushleft}
-	\begin{flushleft}
-		(B) ASL Net-list
-	\end{flushleft}
-	\caption{C17 Benchmark Circuit Net-list}
-	\label{fig:c17_netlist}
-\end{figure}
+As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmark circuit is shown in Figure \ref{tbl:c17_verilog_netlist} and its ASL equivalent is shown in Figure \ref{tbl:c17_asl_netlist}.  C17 is a small circuit and works well for demonstrating the conversion process as well as the differences between a Verilog and ASL netlist. 
+\begin{table}
+  \begin{center}
+    \caption{C17 Verilog Netlist}
+    \begin{tabular}{|ll|}
+      \hline
+      \multicolumn{2}{|l|}{\textbf{module} c17(gat1, gat2, gat3, gat6, gat7, gat22, gat23)} \\
+      & \textbf{input} gat1, gat2, gat3, gat6, gat7; \\ 
+      & \textbf{output} gat22, gat23; \\ 
+      & \textbf{wire} gat1, gat2, gat3, gat6, gat7; \\ 
+      & \textbf{wire} gat22, gat23; \\ 
+      & \textbf{wire} n\_0, n\_1; \\ 
+      & AO21\_B g58(.A1 (gat1), .A2 (gat3), .B(n\_1), .Z (gat22)); \\
+      & AO21\_B g59(.A1 (n\_0), .A2 (gat7), .B(n\_1), .Z (gat23)); \\
+      & AND2\_B g60(.A (n\_0), .B (gat2), .Z (n\_1)); \\ 
+      & NAND2\_A g61(.A (gat3), .B (gat6), .Z (n\_0)); \\ 
+      \multicolumn{2}{|l|}{\textbf{endmodule}} \\ 
+      \hline
+    \end{tabular}
+  \end{center}
+	\label{tbl:c17_verilog_netlist}
+\end{table}
+\begin{table}
+  \begin{center}
+    \caption{C17 ASL Netlist}
+    \begin{tabular}{|lll|}
+      \hline
+      \textbf{CKT}: c17 & \textbf{IN}: gat1 gat2 gat3 gat6 gat7 & \textbf{OUT}: gat22 gat23 ; \\
+      \textbf{AO21}: g58 & \textbf{IN}: gat1 gat3 n-1 & \textbf{OUT}: gat22 ; \\  
+      \textbf{AO21}: g59 & \textbf{IN}: n-0 gat7 n-1 & \textbf{OUT}: gat23 ; \\  
+      \textbf{AND}: g60 & \textbf{IN}: n-0 gat2 & \textbf{OUT}: n-1 ; \\  
+      \textbf{NAND}; g61 & \textbf{IN}: gat3 gat6 & \textbf{OUT}: n-0 ; \\ 
+      \hline
+    \end{tabular}
+  \end{center}
+  \label{tbl:c17_asl_netlist}
+\end{table}
 The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates and circuits.  In \ref{fig:c17_netlist} A, line 7 the instantiation of the AO21 gate is seen.  The gate's inputs and outputs are not designated separately.  In addition the net names are attached to their respective gate IO names.  In contrast, in \ref{fig:c17_netlist} B, line 2\footnote{The AO21 gate is a custom sub-circuit previously declared} the same gate is instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position and not by name.  For the translation to be successful, the inputs and outputs to the gates must be ordered correctly.  Various techniques including lookup tables must be used to build the ASL correctly.
 
 The VerilogParser tool performs the translation to ASL.  It is written in Microsoft .NET C\# 3.5.  The language was chosen due to the author's familiarity with the language as well as the extensive standard library included in .NET which simplified the program considerably\cite{csharp}.  As a quick reference Figure \ref{fig:VerilogParserUse} demonstrates how to use the tool on a Verilog net-list.
