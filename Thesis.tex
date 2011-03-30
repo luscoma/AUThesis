@@ -617,8 +617,8 @@ While these descriptions of the BIST architecture are not a comprehensive operat
 \chapter{Test Preparation, Development, and Verification}
 Before performing fault simulations, a set of test procedures must be developed and verified.  These test procedures will be applied during fault simulations and the fault coverage determined.  In the case of the SSA BIST, the test procedures will consist of a number of measurements (frequency sweep, SNR, NF, and linearity) that will exercise the BIST circuitry.  Each measurement must be simulated via logic simulation to verify that it is designed correctly.  In this chapter the required steps for verifying the test procedures are discussed.  First a method for converting a Verilog netlist to the ASL format is discussed followed the analysis of a test vector generation program (VECGEN) which simplifies test development.  The remaining sections of this chapter will discuss the analysis of the output of a logic simulation, including the Value Change Dump (VCD)\nomenclature{VCD} format which is used to store results and verification of the results using a VCD viewer such as GTKWave.
 
-\subsection{Converting to ASL}
-Behavioral models are commonly written in a high-level hardware description language such as the VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow for the behavior of a circuit to be modeled without specifically defining how the behavior is to be implemented.  \todo{cite, rewrite and reference the section on this}  As discussed in Section \ref{sct:designprocess}, synthesis tools are used to convert this behavioral description to an actual hardware implementation.  For AASIC design this implementation is usually a gate-level implementation of the circuit behavior using technology specific standard cells.  This synthesized netlist is then taken through the place-and-route tools where routing is finalized and a final Verilog netlist is generated.  Ideally simulation should be performed using this final implementation of the circuit; unfortunately, AUSIM requires a netlist in the ASL\footnote{See Section\ref{sct:ASL}} format.   To facilitate the rapid simulation of this netlist a tool, the VerilogParser tool, was developed which allows easy conversion from Verilog to the ASL format.  This allows a user to simulate a high-level behavior model of a circuit by synthesizing it then converting it to ASL for fault simulations.  By using the VerilogParser tool, fault simulations using AUSIM can be integrated into the design workflow easily and efficently.
+\section{Converting to ASL}
+Behavioral models are commonly written in a high-level hardware description language such as the VESIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language} or Verilog.  These languages allow for the behavior of a circuit to be modeled without specifically defining how the behavior is to be implemented.  \todo{cite, rewrite and reference the section on this}  As discussed in Section \ref{sct:designprocess}, synthesis tools are used to convert this behavioral description to an actual hardware implementation.  For AASIC design this implementation is usually a gate-level implementation of the circuit behavior using technology specific standard cells.  This synthesized netlist is then taken through the place-and-route tools where routing is finalized and a final Verilog netlist is generated.  Ideally simulation should be performed using this final implementation of the circuit; unfortunately, AUSIM requires a netlist in the ASL\footnote{See Section\ref{sct:ASL}} format.   To facilitate the rapid simulation of this netlist a tool, the VerilogParser tool written in C\#\cite{csharp}, was developed which allows easy conversion from Verilog to the ASL format.  This allows a user to simulate a high-level behavior model of a circuit by synthesizing it then converting it to ASL for fault simulations.  By using the VerilogParser tool, fault simulations using AUSIM can be integrated into the design workflow easily and efficently.
 
 As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmark circuit is shown in Figure \ref{tbl:c17_verilog_netlist} and its ASL equivalent is shown in Figure \ref{tbl:c17_asl_netlist}.  C17 is a small circuit and works well for demonstrating the conversion process as well as the differences between a Verilog and ASL netlist. 
 \begin{table}
@@ -679,62 +679,10 @@ The tool works by scanning the Verilog file for module definitions subsequently 
 
 In addition to use in this thesis, this tool has been used to perform other simulations including bridging fault simulations in \cite{james}.  In \cite{james} the VerilogParser tool is used to convert the final post-layout Verilog netlist to the ASL format so that accurate bridging fault simulations can be performed.  The VerilogParser allowed \cite{james} to easily integrate multiple CAD tools which required different netlist formats (in this case a .bench format for automatic test pattern generation using Atalanta, .v for synthesis and place-and-route, and .asl for bridging fault simulations using AUSIM).  The ability to convert between netlist formats easily is clearly advantageous when working with multiple, specialized CAD tools is required.
 
-\subsection{Generating Test Vectors using Vecgen}
-Vecgen is a program written to generate AUSIM vector files.  It uses a straight forward command language to build a vector file of any length.  It is written in Microsoft's .NET C\#\cite{csharp} language. Vecgen addresses the issue of large circuits by using a concept called frames.  
-
-The first line of a Vecgen file must be the GENERATE command which tells the generator how many frames(vectors) to generate and the number of primary inputs of the circuit.  If all the user provides is the GENERATE command then Vecgen will create a vector file with the specified number of vectors, filled with all `0' characters as wide as the number of primary inputs in the circuit.  This is the idea behind Vecgen, the vector each time is the same as the vector before it unless changed by the user in a frame.  There are a number of commands which are available to manipulate the output using Vecgen (the full list is available in Appendix \ref{apdx:Vecgen}).  An example generation command file, which would create the vector file shown in Table \ref{tbl:half_adder_vector}, is given in Table \ref{tbl:Vecgen_example} showing the Vecgen format:
-\begin{table}
-	\label{tbl:Vecgen_example}
-	\begin{center}
-		\begin{tabular}{l}
-			GENERATE 4 2 \\		
-			\\
-			FRAME 1	\\
-			BIT 0 1	\\
-			\\
-			FRAME 2	\\
-			BIT 0 0	\\
-			BIT 1 1	\\
-			\\
-			FRAME 3	\\
-			BIT 0 1	\\
-		\end{tabular}
-	\end{center}
-	\caption{Command to generate the half-adder vector sequence}
-\end{table}
-In the case of the half-adder example, the generator is much more verbose and would not be preferred; however, for this example one can see how it would help in more complex generation.  In our example FRAME 0 is not modified since the first vector generated is always all logic 0's.  FRAME 1 changes bit 0 to a logic 1 so that the resulting vector is now \textit{01}.  FRAME 2 changes bit 0 back to a logic 0 and changes bit 1 to a logic 1, resulting in \textit{10}.  Finally FRAME 3 updates bit 0 back to a logic 1 to obtain the vector \textit{11}.  Only at the times the output vector is changing does a FRAME need to be declared: if we were to generate ten frames instead of the four specified in the example, then the remaining six vectors would be automatically filled in and be the same \textit{11} vector set by FRAME 3.
-
-This is a very simple example, there are many more commands as shown in Appendix \ref{apdx:Vecgen} that allow for much more powerful generation.  Some commands such as RANGE affect multiple bits at once, others such as SERIALIZE or CLOCK work over multiple frames.  One interesting command is the DECLARE command.  The DECLARE command creates a reusable group of commands which can be called from any frame.  This is especially useful if a certain sequence is required repeatedly during a test.  An example sequence and its output are shown in Table \ref{tbl:countsequence}.  The sequence creates a clock on its MSB, then calls a function which counts up then counts back down.  It then disables the clock and calls the counter function again.
-\begin{table}
-	\caption{Vecgen Example}
-	\begin{center}
-		\begin{tabular}{l|r|r}
-		Commands & 1-15 & 16-24 \\ \hline
-		GENERATE 24 3 & 100 & 001 \\
-		 & 000 & 000 \\
-		\textbf{DECLARE} counter & 101 & 000 \\
-		FRAME 0	& 001 & 001 \\
-		COUNT 0 2 U & 110 & 001 \\
-		FRAME 8 & 010 & 010 \\
-		COUNT 0 2 D & 111 & 010 \\
-		\textbf{ENDDECLARE} & 011 & 011 \\ 
-		 & 100 & 011 \\
- 		\textbf{FRAME 0} & 000 & \\
-		CLOCK 2 & 111 &  \\
-		CALL counter & 011 & \\
-		\textbf{FRAME 16} & 110 & \\
-		BIT 2 0 & 010 &  \\
-		CALL counter & 101 & \\
-		\end{tabular}
-	\end{center}
-	\label{tbl:countsequence}
-\end{table}
-The generation in Table \ref{tbl:countsequence} is much more powerful than the previous example in Table \ref{tbl:Vecgen_example} and demonstrates some of the power that the Vecgen program provides.  All fault simulation tests for the BIST are designed in the Vecgen markup language for simplicity.
+\section{Logic Simulation}
+Once the netlist is converted to ASL using the VerilogParser too, test vectors must be developed to perform a given measurement.  In the case of the SSA BIST these vectors can be complex and require verification to ensure that they produce the expected circuit output.  This verification can be difficult due to the output format of AUSIM simulations. For each test vector applied to the circuit by AUSIM an output vector is stored recording the output response.  The output from AUSIM will be very large for a large number of test vectors and consequently is difficult to verify manually.  Instead it would be beneficial to convert this format to a standard format for viewing in a graphical environment which will make test vector verification significantly simplier.
 
 \subsection{Value Change Dump File}
-% Discuss a VCD file since it relates to simulation
-% Simplifies the storage and viewing of simulations results
-% A single paragraph should do
 The Value Change Dump or VCD\nomenclature{VCD}{Value Change Dump} format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is an industry standard format and is typically used to store logic simulation results in as small of a footprint as possible\cite{verilog}.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data. 
 
 The VCD format compresses simulation results into a smaller footprint by only storing the changes between vectors instead of every vector\cite{verilog}.  While this can make the output of the file less readable it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  An example of a VCD file is shown in Table \ref{tbl:half_adder_vcd}\footnote{It is important to note that while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector}.  On the right in Table \ref{tbl:half_adder_vcd} is a text description explaining each section of the VCD file.
@@ -790,6 +738,9 @@ In addition to the file size reduction, the key benefit of conversion to the VCD
 	\caption{VCD File Visualized in the GTKWave Viewer}
 	\label{fig:half-adder-gtkwave}
 \end{figure}
+
+\subsection{OutToVCD Converter}
+The OutToVCD converter
 
 \chapter{Fault Simulations}
 
@@ -864,7 +815,7 @@ Engineering, Auburn University, July 7, 2003.
 
 \bibitem{stroud-nf} J. Qin, C. Stroud, F. Dai, ``Noise Figure Measurement Using Mixed-Signal BIST,'' Proc. \textit{IEEE International Symposium on Circuits and Systems}, pp.2180-2183, 2007.
 
-\bibitem{james} M. Lusco, J. Dailey* and C. Stroud, Built-In Self-Test for Multipliers in Altera Cyclone II Field Programmable Gate Arrays, Proc.  IEEE Southeast Symp. on System Theory, pp. 216-221, 2011
+\bibitem{james} J. Tacey, M. Lusco, J. Qin, N. Da Cunha, ``Weighted Bridging Fault Coverage Using Capacitance Extraction'', Proc.  \textit{IEEE Southeast Symposium on System Theory}, pp. 216-221, 2011.
 
 
 \label{Bibliography}
