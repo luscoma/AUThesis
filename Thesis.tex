@@ -624,19 +624,19 @@ As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmar
 \begin{table}
   \begin{center}
     \caption{C17 Verilog Netlist}
-    \begin{tabular}{|ll|}
+    \begin{tabular}{|l|ll|}
       \hline
-      \multicolumn{2}{|l|}{\textbf{module} c17(gat1, gat2, gat3, gat6, gat7, gat22, gat23)} \\
-      & \textbf{input} gat1, gat2, gat3, gat6, gat7; \\ 
-      & \textbf{output} gat22, gat23; \\ 
-      & \textbf{wire} gat1, gat2, gat3, gat6, gat7; \\ 
-      & \textbf{wire} gat22, gat23; \\ 
-      & \textbf{wire} n\_0, n\_1; \\ 
-      & AO21\_B g58(.A1 (gat1), .A2 (gat3), .B(n\_1), .Z (gat22)); \\
-      & AO21\_B g59(.A1 (n\_0), .A2 (gat7), .B(n\_1), .Z (gat23)); \\
-      & AND2\_B g60(.A (n\_0), .B (gat2), .Z (n\_1)); \\ 
-      & NAND2\_A g61(.A (gat3), .B (gat6), .Z (n\_0)); \\ 
-      \multicolumn{2}{|l|}{\textbf{endmodule}} \\ 
+      1 & \multicolumn{2}{l|}{\textbf{module} c17(gat1, gat2, gat3, gat6, gat7, gat22, gat23)} \\
+      2 & & \textbf{input} gat1, gat2, gat3, gat6, gat7; \\ 
+      3 & & \textbf{output} gat22, gat23; \\ 
+      4 & & \textbf{wire} gat1, gat2, gat3, gat6, gat7; \\ 
+      5 & & \textbf{wire} gat22, gat23; \\ 
+      6 & & \textbf{wire} n\_0, n\_1; \\ 
+      7 & & AO21\_B g58(.A1 (gat1), .A2 (gat3), .B(n\_1), .Z (gat22)); \\
+      8 & & AO21\_B g59(.A1 (n\_0), .A2 (gat7), .B(n\_1), .Z (gat23)); \\
+      9 & & AND2\_B g60(.A (n\_0), .B (gat2), .Z (n\_1)); \\ 
+      10 & & NAND2\_A g61(.A (gat3), .B (gat6), .Z (n\_0)); \\ 
+      11 & \multicolumn{2}{l|}{\textbf{endmodule}} \\ 
       \hline
     \end{tabular}
   \end{center}
@@ -645,29 +645,39 @@ As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmar
 \begin{table}
   \begin{center}
     \caption{C17 ASL Netlist}
-    \begin{tabular}{|lll|}
+    \begin{tabular}{|l|lll|}
       \hline
-      \textbf{CKT}: c17 & \textbf{IN}: gat1 gat2 gat3 gat6 gat7 & \textbf{OUT}: gat22 gat23 ; \\
-      \textbf{AO21}: g58 & \textbf{IN}: gat1 gat3 n-1 & \textbf{OUT}: gat22 ; \\  
-      \textbf{AO21}: g59 & \textbf{IN}: n-0 gat7 n-1 & \textbf{OUT}: gat23 ; \\  
-      \textbf{AND}: g60 & \textbf{IN}: n-0 gat2 & \textbf{OUT}: n-1 ; \\  
-      \textbf{NAND}; g61 & \textbf{IN}: gat3 gat6 & \textbf{OUT}: n-0 ; \\ 
+      1 & \textbf{CKT}: c17 & \textbf{IN}: gat1 gat2 gat3 gat6 gat7 & \textbf{OUT}: gat22 gat23 ; \\
+      2 & \textbf{AO21}: g58 & \textbf{IN}: gat1 gat3 n-1 & \textbf{OUT}: gat22 ; \\  
+      3 & \textbf{AO21}: g59 & \textbf{IN}: n-0 gat7 n-1 & \textbf{OUT}: gat23 ; \\  
+      4 & \textbf{AND}: g60 & \textbf{IN}: n-0 gat2 & \textbf{OUT}: n-1 ; \\  
+      5 & \textbf{NAND}; g61 & \textbf{IN}: gat3 gat6 & \textbf{OUT}: n-0 ; \\ 
       \hline
     \end{tabular}
   \end{center}
   \label{tbl:c17_asl_netlist}
 \end{table}
-The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates and circuits.  In \ref{fig:c17_netlist} A, line 7 the instantiation of the AO21 gate is seen.  The gate's inputs and outputs are not designated separately.  In addition the net names are attached to their respective gate IO names.  In contrast, in \ref{fig:c17_netlist} B, line 2\footnote{The AO21 gate is a custom sub-circuit previously declared} the same gate is instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position and not by name.  For the translation to be successful, the inputs and outputs to the gates must be ordered correctly.  Various techniques including lookup tables must be used to build the ASL correctly.
+The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates and circuits.  In Table \ref{tbl:c17_verilog_netlist}, line 7 the instantiation of the AO21 gate is shown.  In Verilog, the gate's inputs and outputs are not designated separately; instead, they use a type of keyword notation which assigns a net to an input or output name.  By using this notation the order of the inputs and outputs does not matter and as such no guarentee is made that the order will be consistent between synthesis tools.  In contrast to this method, Table \ref{tbl:c17_asl_netlist} line 2 shows the same gate instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position rather than by name.  For the translation from Verilog to ASL to be successful, the inputs and outputs of the instantiated gates must be ordered correctly, this includes custom gates defined in an ASL library (Library files are discussed in Section \ref{sct:ASL}).   To solve this problem, several assumptions are made by the VerilogParser tool.  First, it is assumed that in the Verilog netlist elementary logic gates will follow a standard net naming convention where `Z' is the output of the gate.  A similar assumption is made for a Data Flip-Flop (DFF)\nomenclature{DFF}{Data Flip-Flop} where the `Q' and/or `QBAR' net names are used for inputs and the `D' and `DBAR' are used for outputs.  Finally more complex logic gates, those which are not built-in to AUSIM and require a sub-circuit definition, are treated in a special manner.  With these gates the inputs and outputs are sorted from A-Z when converted.  This means that any ASL library definition of a circuit should have its input and output declarations sorted to be used appropriately.  Currently there is no method for defining custom translations of the inputs and outputs other than to make modifications to the source code and recompile the tool from scratch.
 
-The VerilogParser tool performs the translation to ASL.  It is written in Microsoft .NET C\# 3.5.  The language was chosen due to the author's familiarity with the language as well as the extensive standard library included in .NET which simplified the program considerably\cite{csharp}.  As a quick reference Figure \ref{fig:VerilogParserUse} demonstrates how to use the tool on a Verilog net-list.
-\begin{figure}
-	\begin{center}
-		\includegraphics[scale=.9]{images/verilog-asl-command}
-	\end{center}
-	\caption{Using the Verilog to ASL tool to convert a circuit to ASL}
-	\label{fig:VerilogParserUse}
-\end{figure}
-The tool works by scanning the Verilog file for module definitions and parses the modules into an intermediate representation of the circuit.  It then prompts the user to choose which module should be used as the top-level circuit before outputting the resulting ASL.  Some improvements can be made to the converter such as automatic top-level module detection as well as the ability to convert VHDL net-lists; however, these features were not implemented due to time constraints.  It is important to note that while the ASL generated will always be syntactically correct, the tool does not check for validity of the circuit.  It is assumed any necessary sub-circuits that are used in the net-list have already been created and verified in ASL.  For a more detailed analysis of the Verilog to ASL parser please refer to the Appendix \ref{apdx:VerilogToASL}.  
+As a reference Table \ref{tbl:VerilogParserUse} demonstrates how to use the tool on a Verilog netlist.
+\begin{table}
+  \begin{center}
+    \caption{Using the VerilogParser tool to convert a netlist to ASL}
+    \begin{tabular}{|l|}
+        \hline
+        C:$\backslash$Applications$\backslash$ausim\textgreater VerilogParser.exe -aio c17.v c17.asl \\
+        Please select the top level module from the list: \\
+        -----------------------------------------\\
+        0) c17 \\
+        Please input the number corresponding to the top level module: 0 \\
+        \hline
+    \end{tabular}
+  \end{center}
+  \label{tbl:VerilogParserUse}
+\end{table}
+The tool works by scanning the Verilog file for module definitions subsequently parsing those modules into an intermediate representation of the circuit.  It then prompts the user to choose which module should be used as the top-level circuit in the ASL netlist before outputting the resulting ASL.  Certain improvements could be made to the parser including automatic detection of the top-leve module.  This improvement would require static analysis of the netlist to determine which module is not dependent on any other and as such is reserved for a future version of the tool.  It is also important to note that while the ASL generated by the tool will always be syntactically correct, the tool does not check the validity of the netlist.  It is assumed that any necessary sub-circuits required have already been created and verified in ASL.  For a more detailed analysis of the usage of the Verilog to ASL parser please refer to the Appendix \ref{apdx:VerilogToASL}.  
+
+In addition to use in this thesis, this tool has been used to perform other simulations including bridging fault simulations in \cite{james}.  In \cite{james} the VerilogParser tool is used to convert the final post-layout Verilog netlist to the ASL format so that accurate bridging fault simulations can be performed.  The VerilogParser allowed \cite{james} to easily integrate multiple CAD tools which required different netlist formats (in this case a .bench format for automatic test pattern generation using Atalanta, .v for synthesis and place-and-route, and .asl for bridging fault simulations using AUSIM).  The ability to convert between netlist formats easily is clearly advantageous when working with multiple, specialized CAD tools is required.
 
 \subsection{Generating Test Vectors using Vecgen}
 Vecgen is a program written to generate AUSIM vector files.  It uses a straight forward command language to build a vector file of any length.  It is written in Microsoft's .NET C\#\cite{csharp} language. Vecgen addresses the issue of large circuits by using a concept called frames.  
@@ -853,6 +863,9 @@ Engineering, Auburn University, July 7, 2003.
 \bibitem{stroud-automaticlinearity} F. Dai, C. Stroud, Y. Dayu, ``Automatic linearity and frequency response tests with built-in pattern generator and analyzer,'' Proc. \textit{IEEE Transactions on Very Large Scale Integration (VLSI) Systems} vol.14, no.6, pp.561-572, 2006.
 
 \bibitem{stroud-nf} J. Qin, C. Stroud, F. Dai, ``Noise Figure Measurement Using Mixed-Signal BIST,'' Proc. \textit{IEEE International Symposium on Circuits and Systems}, pp.2180-2183, 2007.
+
+\bibitem{james} M. Lusco, J. Dailey* and C. Stroud, Built-In Self-Test for Multipliers in Altera Cyclone II Field Programmable Gate Arrays, Proc.  IEEE Southeast Symp. on System Theory, pp. 216-221, 2011
+
 
 \label{Bibliography}
 \end{thebibliography}
