@@ -620,10 +620,10 @@ Before performing fault simulations, a set of test procedures must be developed 
 \section{Converting to ASL}
 Behavioral models are commonly written in a high-level hardware description language such as the VHSIC Hardware Description Language (VHDL)\nomenclature{VHDL}{VESIC Hardware Description Language}\footnote{VHSIC is an acronym for Very-High-Speed Integrated Circuit\nomenclature{VHSIC}{Very-High-Speed Integrated Circuit}} or Verilog.  These languages allow for the behavior of a circuit to be modeled without specifically defining how the behavior is to be implemented in hardware.  For Application Specific Integrated Circuit (ASIC)\nomenclature{ASIC}{Application Specific Integrated Circuit} design this implementation is usually a gate-level implementation of the circuit behavior using technology specific standard cells.  This synthesized netlist is then taken through a place-and-route tool where routing is finalized and a final Verilog netlist is generated\cite{advancedverilog}.  As discussed in Section \ref{sct:designprocess} simulation should ideally be performed using this final implementation of the circuit; unfortunately, AUSIM requires a netlist in the ASL\footnote{See Section\ref{sct:ASL}} format.   To facilitate the rapid simulation of this netlist a tool was developed which allows easy conversion from Verilog to the ASL format.  The VerilogParser tool is written in C\#\cite{csharp} allows a user to perform fault simulations on any model of a circuit by synthesizing it to a Verilog netlist then converting it to ASL.  By using the VerilogParser tool, fault simulations using AUSIM can be integrated into the design workflow easily and efficiently.
 
-As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmark circuit is shown in Table \ref{tbl:c17_netlist} A and its ASL equivalent is shown in Table \ref{tbl:c17_netlist} B.  C17 is a small circuit and works well for demonstrating the conversion process as well as the differences between a Verilog and ASL netlist. 
+As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmark circuit is shown in Table \ref{tbl:c17_verilog_netlist} and its ASL equivalent is shown in Table \ref{tbl:c17_asl_netlist}.  C17 is a small circuit and works well for demonstrating the conversion process as well as the differences between a Verilog and ASL netlist. 
 \begin{table}
   \begin{center}
-    \caption{C17 Verilog Netlist (A)}
+    \caption{C17 Verilog Netlist}
     \begin{tabular}{|l|ll|}
       \hline
       1 & \multicolumn{2}{l|}{\textbf{module} c17(gat1, gat2, gat3, gat6, gat7, gat22, gat23)} \\
@@ -639,11 +639,13 @@ As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmar
       11 & \multicolumn{2}{l|}{\textbf{endmodule}} \\ 
       \hline
     \end{tabular}
+    \label{tbl:c17_verilog_netlist}
   \end{center}
 \end{table}
+
 \begin{table}
   \begin{center}
-    \caption{C17 ASL Netlist (B)}
+    \caption{C17 ASL Netlist}
     \begin{tabular}{|l|lll|}
       \hline
       1 & \textbf{CKT}: c17 & \textbf{IN}: gat1 gat2 gat3 gat6 gat7 & \textbf{OUT}: gat22 gat23 ; \\
@@ -653,10 +655,10 @@ As a simple example, a post-layout Verilog netlist of the ISCAS '85 C17 benchmar
       5 & \textbf{NAND}; g61 & \textbf{IN}: gat3 gat6 & \textbf{OUT}: n-0 ; \\ 
       \hline
     \end{tabular}
+    \label{tbl:c17_asl_netlist}
   \end{center}
-  \label{tbl:c17_netlist}
 \end{table}
-The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates.  In Table \ref{tbl:c17_netlist} A, line 7 the instantiation of the AO21 gate is shown.  In Verilog, the gate's inputs and outputs are not designated separately; instead, they use a type of keyword notation which assigns a net to an input or output name.  In this notation, the order of the inputs and outputs does not matter and as such no guarantee is made that the order will be consistent between synthesis tools.  In contrast to this method, Table \ref{tbl:c17_netlist} B line 2 shows the same gate instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position rather than by name and uses the keywords \textit{IN} and \textit{OUT} to clearly separate the input nets from the output nets.  For the translation from Verilog to ASL to be successful, the inputs and outputs of the instantiated gates must be ordered correctly; this includes the ordering of custom gates defined in an ASL library (library files are discussed in Section \ref{sct:ASL}).   To solve this problem, several assumptions are made by the VerilogParser tool.  First, it is assumed that in the Verilog netlist elementary logic gates will follow a standard net naming convention where `Z' is the output of the gate.  A similar assumption is made for a Data Flip-Flop (DFF) where the `Q' and/or `QBAR' net names are used for inputs and the `D' and `DBAR' are used for outputs.  Finally more complex logic gates, those gates which are not built-in to AUSIM and require a sub-circuit definition, are treated in a special manner.  With these gates the inputs and outputs are sorted from A-Z when converted.  This means that any ASL library definition of a circuit should have its input and output declarations sorted to be used appropriately.  To determine which nets are inputs and which are outputs, the tool first checks if the instantiated logic gate is defined as a Verilog module.  If a module definition is found, the tool extracts the inputs and outputs of the module to determine how to convert the instantiation to ASL.  Failing this method, the standard rules for elementary logic gates are used where nets prefixed with `Z' and `Q' are assumed to indicate an output while the remaining letters indicate an input\footnote{There are several other net names which are explicitly recognized as outputs such as Sum and Cout}.  Currently there is no method for defining custom translations of the inputs and outputs other than to make modifications to the source code and recompile the tool from scratch.
+The most significant challenge converting from Verilog to ASL is the difference in the treatment of inputs and outputs of gates.  In Table \ref{tbl:c17_verilog_netlist}, line 7, the instantiation of the AO21 gate is shown.  In Verilog, the gate's inputs and outputs are not designated separately; instead, they use a type of keyword notation which assigns a net to an input or output name.  In this notation, the order of the inputs and outputs does not matter and as such no guarantee is made that the order will be consistent between synthesis tools.  In contrast to this method, Table \ref{tbl:c17_asl_netlist}, line 2, shows the same gate instantiated in ASL.  ASL uses a syntax that declares the inputs and outputs to a gate by position rather than by name and uses the keywords \textit{IN} and \textit{OUT} to clearly separate the input nets from the output nets.  For the translation from Verilog to ASL to be successful, the inputs and outputs of the instantiated gates must be ordered correctly; this includes the ordering of custom gates defined in an ASL library (library files are discussed in Section \ref{sct:ASL}).   To solve this problem, several assumptions are made by the VerilogParser tool.  First, it is assumed that in the Verilog netlist elementary logic gates will follow a standard net naming convention where `Z' is the output of the gate.  A similar assumption is made for a Data Flip-Flop (DFF) where the `Q' and/or `QBAR' net names are used for outputs and the `D' and `DBAR' are used for inputs.  More complex logic gates, those gates which are not built-in to AUSIM and require a sub-circuit definition, are treated in a special manner.  With these gates the inputs and outputs are sorted from A-Z when converted.  This means that any ASL library definition of a circuit should have its input and output declarations sorted to be used appropriately.  To determine which nets are inputs and which are outputs, the tool first checks if the instantiated logic gate is defined as a Verilog module.  If a module definition is found, the tool extracts the inputs and outputs of the module to determine how to convert the instantiation to ASL.  Failing this method, the standard rules for elementary logic gates are used where nets prefixed with `Z' and `Q' are assumed to indicate an output while the remaining letters indicate an input\footnote{There are several other net names which are explicitly recognized as outputs such as Sum and Cout}.  Currently there is no method for defining custom translations of the inputs and outputs other than to make modifications to the source code and recompile the tool from scratch.
 
 As a reference Table \ref{tbl:VerilogParserUse} demonstrates how to use the tool on a Verilog netlist.
 \begin{table}
@@ -671,8 +673,8 @@ As a reference Table \ref{tbl:VerilogParserUse} demonstrates how to use the tool
         Please input the number corresponding to the top level module: 0 \\
         \hline
     \end{tabular}
+    \label{tbl:VerilogParserUse}
   \end{center}
-  \label{tbl:VerilogParserUse}
 \end{table}
 The tool works by scanning the Verilog file for module definitions subsequently parsing those modules into an intermediate representation of the circuit.  It then prompts the user to choose which module should be used as the top-level circuit in the ASL netlist before outputting the resulting ASL.  Certain improvements could be made to the parser including automatic detection of the top-level module.  This improvement would require static analysis of the netlist to determine which module is not dependent on any other and as such is reserved for a future version of the tool.  It is also important to note that while the ASL generated by the tool will always be syntactically correct, the tool does not check the validity of the netlist.  It is assumed that any required sub-circuits have already been created and verified in ASL.  
 
@@ -726,8 +728,8 @@ The VCD format compresses simulation results into a smaller footprint by only st
 			1\$ & \\	
 			\textbf{\#4} & The end of the simulation, no changes occurred \\		
 		\end{tabular}
+    \label{tbl:half_adder_vcd}
 	\end{center}
-	\label{tbl:half_adder_vcd}
 \end{table} 
 In addition to the file size reduction, the key benefit of conversion to the VCD format is the ability to visualize the output of a logic simulation in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used to visualize the VCD file in Table \ref{tbl:half_adder_vcd}.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform which changes over time.  The displayed waveforms can be panned, zoomed and combined.  This functionality alone makes it much easier to verify the output of a complex logic simulation.  Conversion to the VCD file format and the GTKWave viewer are used in this thesis to simplify the verification of test vectors used in fault simulations.
 \begin{figure}
@@ -748,13 +750,13 @@ The OutToVCD tool is used to convert an AUSIM output file to the VCD format.  It
         C:$\backslash$Applications$\backslash$ausim\textgreater ASLToVCD.exe -g groups.txt c17.out c17.vcd \\
       \hline
     \end{tabular}
+    \label{tbl:outtovcd_example}
   \end{center}
-  \label{tbl:outtovcd_example}
 \end{table}
-This command will convert the logic simulation output of c17 and to a VCD file which can be viewed in GTKWave.  The `-g' switch provides a list of outputs which should be concatenated and treated as a bit vector instead of individual bits.  This switch allows for easier verification of multi-bit values.  The tool performs all necessary conversions with no user interaction.
+This command will convert the logic simulation output of c17 to a VCD file which can be viewed in GTKWave.  The `-g' switch provides a list of outputs which should be concatenated and treated as a bit vector instead of individual bits.  This switch allows for easier verification of multi-bit values.  The tool performs all necessary conversions with no user interaction.
 
 \section{Summary}
-% Summary of stuff
+Using both of these tools, makes logic simulation in AUSIM and test vector verification much simpler.  Once logic simulation has been performed and the output recorded for the fault-free representation of the circuit, fault simulations may begin.  The next chapter will discuss the difficulties associated with performing fault simulation of the SSA BIST.  In addition, methods used to greatly speed up the fault simulation and to simplify the analysis of the results will be discussed.
 
 \chapter{Fault Simulations}
 
