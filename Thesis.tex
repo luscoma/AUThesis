@@ -828,10 +828,12 @@ This technique does not come without disadvantages.  Excluding the increased dev
 \section{Fault Coverage Results}
 % Start with challenges related to recombining data from parallel simulations
 % Once combined fault list needs to be analyzed to determine coverage
+Once a fault simulation has been completed using the HPCC, the fault coverage results are split amongst separate sub-folders.  In each folder (one for each CPU core which was used in the simulation) there are three files of interest, the detected fault list, the potentially detected fault list, and the undetected fault list.  The first step to determining the fault coverage is to recombine all of these separate lists into one big list for each of the types.  To do this a simple script is used which uses the linux \textit{cat} command to append each of the file types together and then removes any blank lines or comments from the output.  The result of this operation is three files (one for each type of fault, detected, undetected, or potentially detected).  Recalling Equation \ref{equ:faultcvg} the fault coverage can be calculated by taking the number of detected faults, adding half of the potentially detected faults, and then dividing by the total number of faults (less any faults which are undetectable).  Before using Equation \ref{equ:faultcvg}, we first analyze the potential faults to determine if the likelyhood of detecting the potential fault is high.
 
 \subsection{Potentially Detected Faults}
 % Discuss the filtering of potentially detected faults based on # of detections
 % In our case we choose 300 as the cut off
+In Equation \ref{equ:faultcvg}, the number of potential faults is multiplied by .5 to signify that approximiately half of the potentially detected faults are likely to be detected in a real world system.  This is an easy assumption to make but with some simple analysis of the potentially detected fault list we can do a better job approximately the likelyhood of a fault being detected.  The potentially detected fault list that AUSIM outputs includes both the fault and the number of times the fault was potentially detected.  By making the assumption that a high number of potential detections will result in a higher chance of detection of a potentially detected fault, 
 
 \subsection{Overall Fault Coverage}
 % Discuss fault coverage of each test
