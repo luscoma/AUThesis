@@ -812,10 +812,10 @@ Table \ref{tbl:faulttesttime} shows the total CPU time used by each test in hour
       Type & CPUs Used & CPU Time (Hr) & Wall Time (Hr) & Speed Up \\ \hline
       Combined & 128 & 6072 & 74 & x82 \\ \hline
       SNR & 127 & 2018 & 20 & x100 \\ \hline
-      FR & 25 & 12.5 & .6 & x21 \\ \hline
+      Long FR & 25 & 12.5 & .6 & x21 \\ \hline
       Sweep & 384 & 3450 & 28 & x123 \\ \hline
       IP3 & 25 & 8.5 & .5 & x17 \\ \hline
-      FR & 99 & 609 & 9 & x68 \\ \hline
+      Short FR & 99 & 609 & 9 & x68 \\ \hline
       NF & 256 & 2544 & 21.7 & x117 \\
       \hline
     \end{tabular}
@@ -838,7 +838,7 @@ In Equation \ref{equ:faultcvg}, the number of potential faults is multiplied by 
 \subsection{Overall Fault Coverage}
 % Discuss fault coverage of each test
 % Discuss techniques used to determine unique faults detected vs unique potential faults
-Each of the six measurements in Table \ref{tbl:faulttests} were simulated and the results recorded.  Each test was simulated against the entire list of 39497 faults.  The fault coverage of each test is shown in Table \ref{tbl:faultresults}.  The \textit{Raw Detected} and \textit{Raw Potentials} columns are the output directly from AUSIM; however, as discussed in the previous section any potential faults which were detected greater than 300 times were marked as detected.  This is shown in the \textit{Detected} and \textit{Potentials} column where the the number of detected faults plus the number of potential faults which were detected greater than 300 times is in the \textit{Detected} column and the remaining potential faults are in the \texit{Potentials} column.  The overall fault coverage is in the \textit{Coverage} column and is calculated using Equation \ref{equ:faultcvg}.
+Each of the six measurements in Table \ref{tbl:faulttests} were simulated and the results recorded.  Each test was simulated against the entire list of 39497 faults.  The individual fault coverage of each test is shown in Table \ref{tbl:faultresults}.  The \textit{Raw Detected} and \textit{Raw Potentials} columns are the output directly from AUSIM; however, as discussed in the previous section any potential faults which were detected greater than 300 times were marked as detected.  This is shown in the \textit{Detected} and \textit{Potentials} column where the the number of detected faults plus the number of potential faults which were detected greater than 300 times is in the \textit{Detected} column and the remaining potential faults are in the \texit{Potentials} column.  The overall fault coverage is in the \textit{Coverage} column and is calculated using Equation \ref{equ:faultcvg}.
 \begin{table}
   \begin{center}
     \caption{Individual Fault Coverage Results}
@@ -846,19 +846,28 @@ Each of the six measurements in Table \ref{tbl:faulttests} were simulated and th
       \hline
       Type & Raw Detected & Raw Potentials & Detected & Potentials & Coverage \\ \hline
       SNR & 27310 & 3387 & 30570 & 127 & 77.55\% \\ \hline
-      FR & 25526 & 3337 & 28313 & 551 & 72.38\% \\ \hline
+      Long FR & 25526 & 3337 & 28313 & 551 & 72.38\% \\ \hline
       Sweep & 25256 & 3406 & 28419 & 243 & 72.26\% \\ \hline 
       IP3 & 22122 & 3102 & 24994 & 230 & 63.57\% \\ \hline
-      FR & 20617 & 3456 & 23815 & 258 & 60.62\% \\ \hline 
+      Short FR & 20617 & 3456 & 23815 & 258 & 60.62\% \\ \hline 
       NF & 27883 & 3354 & 31007 & 230 & 78.80\% \\ 
       \hline
     \end{tabular}
     \label{tbl:faultresults}
   \end{center}
 \end{table}
+It is important to note that Table \ref{tbl:faulttests} is the individual fault coverage of each measurement and further processing must be done to obtain the cumulative fault coverage of all measurements.  To determine the cumulative fault coverage all measurements must be combined and the unique set of both detected and potential faults extracted.  Once extracted the unique potential fault list is analyzed and potential faults which are detected more than 300 times are removed and marked as detected.  The final lists are then used with Equation \ref{equ:faultcvg} and the final cumulative fault coverage is determined.  In the case of the SSA BIST the raw number of detected faults was 31639 and the raw number of potential faults was 3770.  After filtering out the potential faults which were detected greater than 300 times, the number of detected faults was 35013 and the number of potential faults was 396.  This results in a cumulative fault coverage of 89.14\%.  
 
-\subsection{Determining Optimum Test Ordering}
-% Discuss method for determining which order tests should be run in
+To obtain a better understanding of which tests are most effective, it is beneficial to determine the incremental fault coverage each test contributes to the cumulative fault coverage total of 89.14\%.  By determining the number of additional unique faults each measurement detects, the measurements can be ordered by the increment in coverage the obtain.  This has a number of practical implications.  First it can be used to determine which measurements are providing the most benefit to the cumulative fault coverage.  Measurements which provide only a minor increase in the cumulative fault coverage may need to be reworked or replaced.  Unfortunately as the cumulative fault coverage becomes higher, it becomes increasingly more difficult to obtain substantial improvements with each measurement.  Secondly if the measurements are ordered from the highest to least number of unique detected faults then the time required to perform fault simulations can be minimized.  This decrease in time occurs due to the decrease in the number of faults each subsequent measurement must simulate (recall Equation \ref{equ:fsimtime} directly relates the time required for fault simulations to the number of faults to be simulated).
+
+To determine the optimum test order a script was developed which analyzes the detected fault list from an arbitrary number of tests.  First the measurement with the highest number of detected faults is selected as the inital measurement to be run.  Starting with this initial list of detected faults, the measurement which probides the highest incremental improvement of fault coverage is then selected to be run next.  This is repeated until the optimum test order is determined.  Figure \ref{fig:cumulativefault} shows the cumulative fault coverage gain for each individual measurement.  Note this graph does include any potential faults and is only a function of the number of detected faults as reported by AUSIM, as such the reported cumulative fault coverage reported is only 80\% instead of the previously discussed 89.14\%.
+\begin{figure}
+  \begin{center}
+		\includegraphics[scale=.9]{images/faultcvg-graph}
+    \caption{Individual Fault Coverage vs Cumulative Fault Coverage Percentage}
+  \end{center}
+  \label{fig:cumulativefault}
+\end{figure}
 
 \chapter{Conclusions and Summary}
 % Mention possible improvements as well as some other crap
