@@ -791,7 +791,7 @@ Table \ref{tbl:faulttests} shows a list of each measurement that is simulated du
 \end{table}
 The last column correspond to the number of clock cycles each test requires.  The \textit{Clock Cycles} column is the number of clock cycles that the measurement requires including SPI writes, reads, and actual measurement accumulation time.  The accumulation time is directly related to the values of the frequency words used and is explained in Section \ref{sct:bist-ora}.
 
-Fault simulations were performed for each of the measurements shown in Table \ref{tbl:faulttests}.  For each separate simulation the entire fault list containing 39501 faults was used to determine the individual fault coverage of each test.  Using the entire fault list for each test causes a large increase in fault simulation time (recall that Equation \ref{equ:fsimtime} shows that fault simulation time increases as the number of faults to simulate increases); however, due to available computing power this was the preferred approach and will be discussed in more detail in the next section.
+Fault simulations were performed for each of the measurements shown in Table \ref{tbl:faulttests}.  For each separate simulation the entire fault list containing 39497 faults was used to determine the individual fault coverage of each test.  Using the entire fault list for each test causes a large increase in fault simulation time (recall that Equation \ref{equ:fsimtime} shows that fault simulation time increases as the number of faults to simulate increases); however, due to available computing power this was the preferred approach and will be discussed in more detail in the next section.
 
 \subsection{Test Time}
 % Discuss the test time taken for each test
@@ -838,13 +838,30 @@ In Equation \ref{equ:faultcvg}, the number of potential faults is multiplied by 
 \subsection{Overall Fault Coverage}
 % Discuss fault coverage of each test
 % Discuss techniques used to determine unique faults detected vs unique potential faults
+Each of the six measurements in Table \ref{tbl:faulttests} were simulated and the results recorded.  Each test was simulated against the entire list of 39497 faults.  The fault coverage of each test is shown in Table \ref{tbl:faultresults}.  The \textit{Raw Detected} and \textit{Raw Potentials} columns are the output directly from AUSIM; however, as discussed in the previous section any potential faults which were detected greater than 300 times were marked as detected.  This is shown in the \textit{Detected} and \textit{Potentials} column where the the number of detected faults plus the number of potential faults which were detected greater than 300 times is in the \textit{Detected} column and the remaining potential faults are in the \texit{Potentials} column.  The overall fault coverage is in the \textit{Coverage} column and is calculated using Equation \ref{equ:faultcvg}.
+\begin{table}
+  \begin{center}
+    \caption{Individual Fault Coverage Results}
+    \begin{tabular}{|l|l|l|l|l|l|}
+      \hline
+      Type & Raw Detected & Raw Potentials & Detected & Potentials & Coverage \\ \hline
+      SNR & 27310 & 3387 & 30570 & 127 & 77.55\% \\ \hline
+      FR & 25526 & 3337 & 28313 & 551 & 72.38\% \\ \hline
+      Sweep & 25256 & 3406 & 28419 & 243 & 72.26\% \\ \hline 
+      IP3 & 22122 & 3102 & 24994 & 230 & 63.57\% \\ \hline
+      FR & 20617 & 3456 & 23815 & 258 & 60.62\% \\ \hline 
+      NF & 27883 & 3354 & 31007 & 230 & 78.80\% \\ 
+      \hline
+    \end{tabular}
+    \label{tbl:faultresults}
+  \end{center}
+\end{table}
 
 \subsection{Determining Optimum Test Ordering}
 % Discuss method for determining which order tests should be run in
 
-\chapter{BIST Improvements}
-
 \chapter{Conclusions and Summary}
+% Mention possible improvements as well as some other crap
 
 % Bibliography
 \begin{thebibliography}{99}
