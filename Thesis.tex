@@ -914,10 +914,10 @@ Figure \ref{fig:cumulativefault} shows the optimum ordering of the six measureme
 \end{figure}
 As shown in the graph the cumulative fault coverage rises little after the first three measurements have been performed (NF, SNR, Long FR).  In fact these first three measurements detect a total of 34335 faults, a cumulative fault coverage of 86.93\%.  The remaining measurements only detect an additional 623 faults. 
 
-After determining the optimum order to perform the measurements, a fault simulation was performed where all measurements were executed sequentially in a single fault simulation and the fault coverage obtained verified.  This combined fault simulation required a total of 735,000 test vectors to be simulated requiring an estimated 673 hours of CPU time.  As shown in \ref{tbl:faulttesttime} this time was reduced down to approximately 74 hours using the parallel fault simulation techniques discussed previously.  As expected the fault coverage obtained in the combined test was 88.64\% matching the coverage calculated from the individual measurement simulations.
+After determining the optimum order to perform the measurements, a fault simulation was performed where all measurements were executed sequentially in a single fault simulation and the fault coverage obtained verified.  This combined fault simulation required a total of 1,011,900 test vectors to be simulated requiring approximately 673 hours of CPU time.  As shown in \ref{tbl:faulttesttime} this time was reduced down to approximately 74 hours using the parallel fault simulation techniques discussed previously.  As expected the fault coverage obtained in the combined test was 88.64\% matching the coverage calculated from the individual measurement simulations.
 
 \section{Experimental Results}
-The six measurements shown in Figure \ref{fig:cumulativefault} have successfully been used to verify the fault-free manufacturing of a hardware implementation of the SSA BIST approach discussed in this thesis.  Using the digital loopback path of the SSA BIST, each of the six measurements was executed on each chip and the results compared against the previously simulated results.  Using this procedure several chips were identified as containing faults after failing to return the correct values.  In addition in one of the cases the fault location was able to be diagnosed based on analysis of the invalid BIST results.  This proves that this method is a viable method for the fault-free verification of real-hardware and can also aid in fault diagnosis.
+The six measurements developed using this test procedure have successfully been used to verify a hardware implementation of the SSA BIST discussed in this thesis.  Using the digital loopback path of the SSA BIST, each of the six measurements was executed on each SSA BIST chip and the output compared to the previously performed logic simulations.  If a chip did not produce the expected results then it was considered faulty.  Using this procedure several chips were identified as faulty after failing to return the correct values.  In addition in one specific case the location of the fault was able to be diagnosed based on analysis of the invalid BIST results.  The successful use of this test procedure to verify actual hardware proves that this method is a viable method for the fault-free verification of mixed-signal systems and in some cases can aid in fault diagnosis.
 
 The next chapter will summarize these findings and address some of the implications of the fault coverage obtained as it relates to the observability and testability of the BIST approach.  Opportunities for improvements to the BIST approach will be briefly discussed including some simple modifications to the underlying BIST architecture which may result in an increase in fault coverage by improving the testability of the BIST.
 
@@ -929,15 +929,31 @@ The next chapter will summarize these findings and address some of the implicati
 While a cumulative fault coverage of almost 89\% is an excellent starting point it is not as high as might be desired.  To work towards a higher fault coverage it would be beneficial to identify the key areas not covered by the current test vector set and other sub-circuits of the BIST which are not easily testable or observable.  This section starts by analyzing the fault coverage obtained and looking at areas of the SSA BIST which are not easily testable or observable.  After identifying these weak areas, several design modifications to the BIST are explored which may allow an increase in the cumulative fault coverage that is obtainable.  Finally an overview of this thesis is provided and a summary is given of the work completed.
 
 \section{Fault Coverage Analysis}
-By analyzing the faults which were detected and undetected by the fault simulations performed in Chapter 4, a better understanding of the testability of the SSA BIST can be obtained.  Figure \ref{fig:blockdiagram} shows a block diagram of the basic architecture of the SSA BIST discussed in Chapter 2.  Each major sub-system of the SSA BIST is identified and the approximate fault coverage of the sub-system is given.  As shown in the figure, several areas of the BIST including the DDS, MACs, and reference CORDIC have greater than 95\% fault coverage.  
-\begin{figure}
+By analyzing the faults which were detected and undetected by the fault simulations performed in Chapter 4, a better understanding of the testability of the SSA BIST can be obtained.  Table \ref{tbl:faultsubsystems} shows the fault coverage of several of the BIST sub-systems obtained by running the six previously discussed measurements\footnote{The Fullswing Power and Spur Calibration sub-systems are circuitry which normalize the result of an accumulation when performing a single frequency response measurement}. Each major sub-system of the SSA BIST is identified and the approximate fault coverage of the sub-system is given.  As shown in the table, several areas of the BIST including the DDS, MACs, and reference CORDIC have greater than 95\% fault coverage.  
+\begin{table}
   \begin{center}
-		\includegraphics[scale=1]{images/placeholder}
+    \caption{Fault Coverage of BIST Sub-Systems}
+    \label{tbl:faultsubsystems}
+
+    \begin{tabular}{|l|r|r|}
+      \hline
+      Subsystem & Total Faults & Coverage \\ \hline
+      DDS & 4995 & 99.7\% \\ \hline
+      Fullswing Power & 438 & 70.09\% \\ \hline
+      LOG Calculation & 11621 & 81.06\% \\ \hline
+      ORA Accumualtors & 10608 & 98.37\% \\ \hline
+      Reference CORDIC & 3977 & 95.22\% \\ \hline
+      Spur Calibration & 660 & 71.06\% \\ \hline
+      Test Controller & 1829 & 85.27\% \\ \hline
+      SPI Interface & 4259 & 81.71\% \\
+      \hline
+    \end{tabular}
   \end{center}
-  \label{fig:blockdiagram}
-  \caption{Block Diagram and Fault Coverage of SSA BIST Sub-Systems}
-\end{figure}
-The high fault coverage of these sub-systems is not particularly suprising as each is extensively exercised by each measurement performed.  Unfortunately several of the other sub-systems are not as easily testable.  Particularly the calculation circuitry, some related normlization circuitry, portions of the test controller, and the external SPI interface have a relatively low fault coverage compared to other sub-systems. 
+\end{table}
+The high fault coverage of these sub-systems is not particularly suprising as each is extensively exercised by each measurement performed.  Unfortunately several of the other sub-systems are not as easily testable.  Particularly the calculation circuitry, some related normlization circuitry, portions of the test controller, and the external SPI interface have a relatively low fault coverage compared to other sub-systems.  To improve the overall fault coverage obtained, several improvements to the BIST are proposed and analyzed which improve the testability of the LOG Calculation, Test Controller, Spur Calibration, and Fullswing Power sub-systems.  Due to design restrictions it is not possible to make modifications to the SPI interface and it was excluded from consideration.
+
+\section{Fault Coverage Improvements}
+By analyzing the logic simulation results of the six measurements performed several weaknesses were identified in the testability of the SSA BIST.
 
 % Bibliography
 \begin{thebibliography}{99}
