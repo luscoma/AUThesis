@@ -65,7 +65,19 @@ Previous work has improved and analyzed the capabilities and effectiveness of us
 \end{abstract}
 
 \begin{acknowledgments}
-Put text of the acknowledgments here.
+I would like to express my thanks to Dr. Charles Stroud for his help, patience, and guidance in preparing this thesis and for affording me the opportunity to work on my Master degree.  His constant encouragement and insight has pushed me to develop my skills and to learn.  Without his help I may never have pursued my graduate degree or be publishing this thesis.
+
+I would also like to thank my co-adviser Dr. Fa Dai for his work in preparing this thesis and his assistance with my research and related projects.  I'd also like to extend my thanks to my committee members including Dr. Victor Nelson and Dr. Vishwani Agrawal for their input in finishing this thesis as well as the wisdom and knowledge I have learned from them in my studies.
+
+My thanks also goes out to all of the students who I have worked with at Auburn University: Brad Dutton, George Starr, Joseph Cali, Justin Dailey, and Neil Da Cunha.  I'd especially like to thank Jie Qin for his help with my research and testing especially during the Fall semester.  Also to Justin Dailey, I owe you the most -- one day soon I won't lose my a million.  To all of you as well as the students I didn't name, I couldn't have done it without all of your help.
+
+For my parents Rhonda and Michael Lusco, thank you so much for your support both morally and financially.  Your help and guidance has made this journey much easier and more fun.  Without your influence over my entire life, I am not sure I would have had the confidence necessary to pursue this goal.
+
+Finally I'd like to thank my beautiful (soon to be) wife, Leann Stokes.  Thank you for all of your patience, advice, and support with not only this thesis but for our entire time at Auburn.  You've made my life so exciting and fun and I can not wait to be married to you!
+
+
+
+The views, opinions, and/or findings contained in this article/presentation are those of the author/presenter and should not be interpreted as representing the official views or policies, either expressed or implied, of the Defense Advanced Research Projects Agency or the Department of Defense.
 \end{acknowledgments}
 
 \tableofcontents
@@ -959,7 +971,7 @@ A second major weakness identified is also rooted in the pure digital nature of 
 
 Finally the test controller has a fairly low test coverage though the reasoning behind this isn't quite as easily attributed to a single issue.  For one this is likely due to the measurement set developed in this thesis not exercising all of the measurement options available.  Unfortunately this is difficult as some measurement options cannot be performed when in loopback mode (such as usage of the bypass path or using the certain preset circuitry\footnote{The preset circuitry holds a number of predetermined BIST measurements hard-coded into the model and selectable via the SPI and external pins.  These measurements each include the test type and options not allowing for the digital loopback path to be used.  This effectively prevents this circuitry from being tested.}).    
 
-An additional measurement option that is difficult to observe is the samples register.  The samples register controls the number of samples that are taken when performing an SNR, Frequency Sweep, or Noise Figure measurement.  This register is a 10-bit register allowing upto 1024 samples to be taken in a single measurement.  To fully verify that this register is fault-free a measurement must be performed which takes a minimum of 513 samples and the results verified.  Performing a measurement that takes 513 samples requires a lengthy simulation time.  Currently a measurement that does exactly this is performed as part of the six measurements simulated in Chapter 4 to test this register and associated circuitry; however, if this register was easier to observe it would not require that such a long measurement be included in the test vector set potentially allowing for a more effective measurement or even multiple shorter measurements to be performed in its place.
+An additional measurement option that is difficult to observe is the samples register.  The samples register controls the number of samples that are taken when performing an SNR, Frequency Sweep, or Noise Figure measurement.  This register is a 10-bit register allowing up to 1024 samples to be taken in a single measurement.  To fully verify that this register is fault-free a measurement must be performed which takes a minimum of 513 samples and the results verified.  Performing a measurement that takes 513 samples requires a lengthy simulation time.  Currently a measurement that does exactly this is performed as part of the six measurements simulated in Chapter 4 to test this register and associated circuitry; however, if this register was easier to observe it would not require that such a long measurement be included in the test vector set potentially allowing for a more effective measurement or even multiple shorter measurements to be performed in its place.
 
 \section{SSA BIST Improvements}
 To address these issues, four main improvements to the SSA BIST were suggested and subsequently simulated to determine if any improvement in fault coverage was obtained.  These four improvements incurred little area penalty (\textless 2\%) and include:
