@@ -37,15 +37,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.3016643"
-     inkscape:cx="211.64283"
-     inkscape:cy="917.76617"
+     inkscape:cx="407.76605"
+     inkscape:cy="895.51094"
      inkscape:document-units="px"
-     inkscape:current-layer="layer14"
+     inkscape:current-layer="layer12"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1005"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-height="983"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true" />
@@ -3233,7 +3233,7 @@
          sodipodi:open="true"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 306.00046,153.45268 a 41.454136,9.1923885 0 1 1 -82.90827,0"
+         d="m 306.00046,153.45268 c 0,5.07682 -18.55965,9.19239 -41.45413,9.19239 -22.89449,0 -41.45414,-4.11557 -41.45414,-9.19239 0,0 0,0 0,0"
          sodipodi:ry="9.1923885"
          sodipodi:rx="41.454136"
          sodipodi:cy="153.45268"
@@ -3749,7 +3749,7 @@
          transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         d="m 299.625,23.174707 c 0,3.210156 -1.94476,5.8125 -4.34375,5.8125 -2.39899,0 -4.34375,-2.602344 -4.34375,-5.8125 0,0 0,0 0,0"
          sodipodi:ry="5.8125"
          sodipodi:rx="4.34375"
          sodipodi:cy="23.174707"
@@ -3776,7 +3776,7 @@
          transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         d="m 299.625,23.174707 c 0,3.210156 -1.94476,5.8125 -4.34375,5.8125 -2.39899,0 -4.34375,-2.602344 -4.34375,-5.8125 0,0 0,0 0,0"
          sodipodi:ry="5.8125"
          sodipodi:rx="4.34375"
          sodipodi:cy="23.174707"
@@ -3803,7 +3803,7 @@
          transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         d="m 299.625,23.174707 c 0,3.210156 -1.94476,5.8125 -4.34375,5.8125 -2.39899,0 -4.34375,-2.602344 -4.34375,-5.8125 0,0 0,0 0,0"
          sodipodi:ry="5.8125"
          sodipodi:rx="4.34375"
          sodipodi:cy="23.174707"
@@ -3830,7 +3830,7 @@
          transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         d="m 299.625,23.174707 c 0,3.210156 -1.94476,5.8125 -4.34375,5.8125 -2.39899,0 -4.34375,-2.602344 -4.34375,-5.8125 0,0 0,0 0,0"
          sodipodi:ry="5.8125"
          sodipodi:rx="4.34375"
          sodipodi:cy="23.174707"
@@ -3857,7 +3857,7 @@
          transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         d="m 299.625,23.174707 c 0,3.210156 -1.94476,5.8125 -4.34375,5.8125 -2.39899,0 -4.34375,-2.602344 -4.34375,-5.8125 0,0 0,0 0,0"
          sodipodi:ry="5.8125"
          sodipodi:rx="4.34375"
          sodipodi:cy="23.174707"
@@ -3884,7 +3884,7 @@
          transform="matrix(0,-1.6124429,0.61640639,0,293.40246,497.42792)"
          sodipodi:end="3.1415927"
          sodipodi:start="0"
-         d="m 299.625,23.174707 a 4.34375,5.8125 0 1 1 -8.6875,0"
+         d="m 299.625,23.174707 c 0,3.210156 -1.94476,5.8125 -4.34375,5.8125 -2.39899,0 -4.34375,-2.602344 -4.34375,-5.8125 0,0 0,0 0,0"
          sodipodi:ry="5.8125"
          sodipodi:rx="4.34375"
          sodipodi:cy="23.174707"
@@ -4283,7 +4283,8 @@
      inkscape:groupmode="layer"
      id="layer14"
      inkscape:label="HardLogic1"
-     style="display:inline">
+     style="display:none"
+     sodipodi:insensitive="true">
     <g
        style="display:inline"
        id="g4070-1"
@@ -4349,7 +4350,7 @@
            sodipodi:cy="110.38327"
            sodipodi:rx="5.3667364"
            sodipodi:ry="4.9000635"
-           d="m 167.53551,110.38327 c 0,2.70623 -2.40277,4.90006 -5.36673,4.90006 -2.96397,0 -5.36674,-2.19383 -5.36674,-4.90006 0,-2.70623 2.40277,-4.90006 5.36674,-4.90006 2.96396,0 5.36673,2.19383 5.36673,4.90006 z" />
+           d="m 167.53551,110.38327 a 5.3667364,4.9000635 0 1 1 -10.73347,0 5.3667364,4.9000635 0 1 1 10.73347,0 z" />
       </g>
       <g
          transform="translate(-132.06838,15.066403)"
@@ -4522,7 +4523,7 @@
            sodipodi:cy="110.38327"
            sodipodi:rx="5.3667364"
            sodipodi:ry="4.9000635"
-           d="m 167.53551,110.38327 c 0,2.70623 -2.40277,4.90006 -5.36673,4.90006 -2.96397,0 -5.36674,-2.19383 -5.36674,-4.90006 0,-2.70623 2.40277,-4.90006 5.36674,-4.90006 2.96396,0 5.36673,2.19383 5.36673,4.90006 z" />
+           d="m 167.53551,110.38327 a 5.3667364,4.9000635 0 1 1 -10.73347,0 5.3667364,4.9000635 0 1 1 10.73347,0 z" />
       </g>
       <flowRoot
          transform="translate(228.53154,0.66650263)"
@@ -4657,8 +4658,7 @@
      inkscape:groupmode="layer"
      id="layer12"
      inkscape:label="LinearitySpectrum"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <g
        id="g3974"
        transform="matrix(2.3457894,0,0,2.3457894,220.24846,-111.84766)"
@@ -4947,7 +4947,7 @@
        xml:space="preserve"
        id="flowRoot5164"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(-21.374999,-9.4999998)"
+       transform="translate(-1.8899769,-32.162596)"
        inkscape:export-filename="/home/alex/Documents/thesis/temp/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
@@ -4957,20 +4957,47 @@
            height="48.625"
            x="543.25"
            y="92.112206" /></flowRegion><flowPara
-         id="flowPara5170"
-         style="font-size:12px;text-align:center;text-anchor:middle">Linearity</flowPara><flowPara
-         id="flowPara5172"
-         style="font-size:12px;text-align:center;text-anchor:middle">Of DUT</flowPara><flowPara
          id="flowPara5174"
-         style="font-size:12px;text-align:center;text-anchor:middle">(  P)</flowPara></flowRoot>    <path
+         style="font-size:12px;text-align:center;text-anchor:middle">  P</flowPara></flowRoot>    <path
        style="fill:none;stroke:#000000;stroke-width:1.14089668px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 547.42822,117.00159 c -3.55846,8.02259 -3.55846,8.02259 -3.55846,8.02259 l 7.55846,0 z"
+       d="m 566.91324,63.617451 c -3.55846,8.02259 -3.55846,8.02259 -3.55846,8.02259 l 7.55846,0 z"
        id="path5176"
        inkscape:connector-curvature="0"
        inkscape:export-filename="/home/alex/Documents/thesis/temp/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
-  </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.24803162px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 582.19163,140.5488 c 50.51144,0 50.51144,0 50.51144,0"
+       id="path4390-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/linearity-spectrum.png"
+       inkscape:export-xdpi="269.90112"
+       inkscape:export-ydpi="269.90112" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.18870962;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4.75483861, 1.18870966;stroke-dashoffset:0;display:inline"
+       d="m 632.90317,141.29257 0,90.42429"
+       id="path4394-1"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/linearity-spectrum.png"
+       inkscape:export-xdpi="269.90112"
+       inkscape:export-ydpi="269.90112" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5164-3"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+       transform="translate(49.442694,34.978648)"
+       inkscape:export-filename="/home/alex/Documents/thesis/temp/images/linearity-spectrum.png"
+       inkscape:export-xdpi="269.90112"
+       inkscape:export-ydpi="269.90112"><flowRegion
+         id="flowRegion5166-1"><rect
+           id="rect5168-1"
+           width="59.75"
+           height="48.625"
+           x="543.25"
+           y="92.112206" /></flowRegion><flowPara
+         id="flowPara5174-4"
+         style="font-size:12px;text-align:center;text-anchor:middle">IM3 </flowPara></flowRoot>  </g>
   <g
      inkscape:groupmode="layer"
      id="layer13"
