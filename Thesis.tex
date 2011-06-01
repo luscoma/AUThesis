@@ -69,7 +69,7 @@ I would like to express my thanks to Dr. Charles Stroud for his help, patience, 
 
 I would also like to thank my co-adviser Dr. Fa Dai for his work in preparing this thesis and his assistance with my research and related projects.  I'd also like to extend my thanks to my committee members including Dr. Victor Nelson and Dr. Vishwani Agrawal for their input in finishing this thesis as well as the wisdom and knowledge I have learned from them in my studies.
 
-My thanks also goes out to all of the students who I have worked with at Auburn University: Brad Dutton, George Starr, Joseph Cali, Justin Dailey, and Neil Da Cunha.  I'd especially like to thank Jie Qin for his help with my research and testing especially during the Fall semester.  Also to Justin Dailey, I owe you the most -- one day soon I won't lose my a million.  To all of you as well as the students I didn't name, I couldn't have done it without all of your help.
+My thanks also goes out to all of the students who I have worked with at Auburn University: Brad Dutton, George Starr, Joseph Cali, Justin Dailey, and Neil Da Cunha.  I'd especially like to thank Jie Qin for his help with my research and testing especially during the Fall semester.  Also to Justin Dailey, I owe you the most -- one day soon I won't lose by a million.  To all of you as well as the students I didn't name, I couldn't have done it without all of your help.
 
 For my parents Rhonda and Michael Lusco, thank you so much for your support both morally and financially.  Your help and guidance has made this journey much easier and more fun.  Without your influence over my entire life, I am not sure I would have had the confidence necessary to pursue this goal.
 
@@ -225,7 +225,7 @@ Figure \ref{fig:mixedbist1} shows a basic version of this mixed-signal BIST appr
 	\label{fig:mixedbist_paths}
 \end{figure}
 
-In Figure \ref{fig:mixedbist_paths} the digital loopback path is of particular importance.  \cite{stroud-analog} has shown that a digital loopback path is highly advantageous when testing the digital portion of the BIST circuitry.  In a digital only environment the BIST produces exactly one output for a given set of inputs; however, without the digital loopback path the TPG outputs are not directly observable.  To observe the outputs of the TPG requires conversion via the DAC and reconversion via the ADC.  This will cause variations in the expected results due to the inherent variations which occur in analog signals and circuits.   To account for these variations, a range of acceptable values must be considered instead of an exact signature\cite{stroud-analog}.  Unfortunately allowing for a range of good signatures lowers the observability of the digital portion of the mixed-signal BIST and lowers the maximum fault coverage which can be achieved.
+In Figure \ref{fig:mixedbist_paths} the digital loopback path is of particular importance.  \cite{stroud-analog} has shown that a digital loopback path is highly advantageous when testing the digital portion of the BIST circuitry.  When testing in a digital only environment a circuit produces exactly one output signature for a given set of inputs.  Verification of this signature allows for a quick an efficient method of testing digital circuits.  In the case of the BIST without a digital loopback path, the digital TPG outputs are not directly observable and can only be observed after conversion via the DAC and reconversion via the ADC.  This will cause variations in the output signature due to the inherent variations and noise which occur in analog signals and circuits.   To account for these variations, a range of acceptable output signatures must be considered instead of an exact signature\cite{stroud-analog}.  Unfortunately allowing for a range of good signatures lowers the observability of the digital portion of the mixed-signal BIST and lowers the maximum fault coverage which can be achieved.
 
 Figure \ref{fig:analog-faultcvg}
 \begin{figure}
@@ -243,7 +243,7 @@ Though this technique still requires the separate testing of the analog and digi
 In this chapter a high-level look at both digital and analog systems has been given as well as the challenges of testing these systems for faults.  The concept of BIST has been presented along with its advantages and a simple BIST architecture.  In addition the challenges of testing mixed-signal systems have been discussed and a basic mixed-signal BIST model has been given along with an overview of the difficulties of testing the BIST without a digital loopback path.  In the next chapter a more detailed explanation of fault simulation and of the specific mixed-signal BIST approach studied in this thesis is given.  This approach builds upon the simple architecture discussed in the previous section and addresses the challenges discussed in Section \ref{sct:AnalogFaults}.  Building upon this explanation, Chapter III explores the preparation necessary for simulating the mixed-signal BIST including necessary conversions and verification.  Chapter IV explores the main topic of this thesis: testing the actual mixed-signal testing circuitry to determine its effectiveness and the level of fault coverage achievable.  Methods for improving the BIST and the maximum achievable fault coverage are explored before a summary and conclusions are given in Chapter V.
 
 \chapter{Background}
-Before discussing the fault simulations performed in this thesis, it is important to have a more thorough understanding of fault simulation techniques.  In this chapter, an overview of several fault simulation techniques will be given as well as an overview of the bridging fault model which models faults between nets.  Following this discussion a more detailed outline of the simulation and design process will be given.  Next the fault simulator AUSIM\nomenclature{AUSIM}{Auburn University SIMulator} is detailed which is used to evaluate the fault coverage of the mixed-signal BIST approach studied in the rest of this thesis.  This chapter concludes with a detailed discussion of the architecture of the mixed-signal BIST and its capabilities.
+Before discussing the fault simulations performed in this thesis, it is important to have a more thorough understanding of fault simulation techniques.  In this chapter, an overview of several fault simulation techniques will be given as well as an overview of the bridging fault model which models faults between nets.  Following this discussion a more detailed outline of the simulation and design process will be given.  Next the fault simulator AUSSIE\nomenclature{AIM}{Auburn University SIMulator} is detailed which is used to evaluate the fault coverage of the mixed-signal BIST approach studied in the rest of this thesis.  This chapter concludes with a detailed discussion of the architecture of the mixed-signal BIST and its capabilities.
 
 \section{Fault Simulations}
 \label{sct:faultsim}
@@ -477,7 +477,7 @@ The resulting frequency generated by the NCO is determined by Equation \ref{eq:f
 	\label{eq:frequencyword}
 \end{equation}
 \begin{equation}
-	f_{gen} = \frac{f_{clk}}{2^{n}}
+	f_{res} = \frac{f_{clk}}{2^{n}}
 	\label{eq:frequencyresolution}
 \end{equation}
 
@@ -549,7 +549,7 @@ The ORA portion of the BIST accumulates the in-phase and out-of-phase components
 	\begin{center}
 		\includegraphics[scale=1]{images/joey-calculation}
 	\end{center}
-	\caption{Calculation Circuit presented in \cite{joey}}
+	\caption{Calculation Circuit Presented in \cite{joey}}
 	\label{fig:joeycalc}
 \end{figure}
 The CORDIC algorithm, explained in depth in \cite{joey}, is a well-known, low-overhead approach to approximating a number of linear, circular, and hyperbolic functions using successive approximation and inexpensive digital operations such as shift, add, and subtract.  Due to its low area-overhead and convenience, an implementation of this algorithm is used to calculate the magnitude and phase from the $DC_1$ and $DC_2$ values\cite{joey}.  Since it requires successive approximation, the calculation CORDIC requires several clock cycles to complete.  At the end of the approximation the output of the calculation CORDIC is the raw magnitude and phase values which can be read directly and used by the remaining calculation circuitry to perform higher-order analysis\cite{joey}.
@@ -1000,7 +1000,7 @@ The resulting fault coverage of all ten measurements is broken down in Table \re
 Unfortunately the overall fault coverage of the measurement set (bottom of the table) using the new BIST model proved to be only 89.5\%; an increase in coverage of almost 1\%.  While this does not invalidate the improvements made to the BIST loopback (some fault coverage increase was obtained), it does show that the fault coverage is not explicitly limited by the factors discussed.  This likely means that future improvements to fault coverage will come via iterative improvements to the measurement set.  This also likely indicates that it will be difficult to achieve major increases in fault coverage in future iterations and any progress made will require adding additional measurements to the measurement set with only small increases in the number of detected faults (on the order of a few hundred faults).
 \begin{table}
   \begin{center}
-    \caption{Fault Coverage of BIST Sub-Systems}
+    \caption{Fault Coverage of BIST Sub-Systems w/ Improvements}
     \label{tbl:newfaultcvg}
 
     \begin{tabular}{|l|r|r|r|}
