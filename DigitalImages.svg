@@ -14,12 +14,19 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
+   inkscape:version="0.47 r22583"
    sodipodi:docname="DigitalImages.svg">
   <title
      id="title3879">Digital Images</title>
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3952" />
     <linearGradient
        id="linearGradient4303"
        osb:paint="solid">
@@ -28,6 +35,20 @@
          offset="0"
          id="stop4305" />
     </linearGradient>
+    <inkscape:perspective
+       id="perspective4737"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4759"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -37,15 +58,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.1508322"
-     inkscape:cx="236.74088"
+     inkscape:cx="370.27629"
      inkscape:cy="861.82196"
      inkscape:document-units="px"
      inkscape:current-layer="layer12"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="983"
+     inkscape:window-width="1440"
+     inkscape:window-height="849"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true" />
@@ -4350,7 +4371,7 @@
            sodipodi:cy="110.38327"
            sodipodi:rx="5.3667364"
            sodipodi:ry="4.9000635"
-           d="m 167.53551,110.38327 a 5.3667364,4.9000635 0 1 1 -10.73347,0 5.3667364,4.9000635 0 1 1 10.73347,0 z" />
+           d="m 167.53551,110.38327 c 0,2.70623 -2.40277,4.90006 -5.36673,4.90006 -2.96397,0 -5.36674,-2.19383 -5.36674,-4.90006 0,-2.70623 2.40277,-4.90006 5.36674,-4.90006 2.96396,0 5.36673,2.19383 5.36673,4.90006 z" />
       </g>
       <g
          transform="translate(-132.06838,15.066403)"
@@ -4523,7 +4544,7 @@
            sodipodi:cy="110.38327"
            sodipodi:rx="5.3667364"
            sodipodi:ry="4.9000635"
-           d="m 167.53551,110.38327 a 5.3667364,4.9000635 0 1 1 -10.73347,0 5.3667364,4.9000635 0 1 1 10.73347,0 z" />
+           d="m 167.53551,110.38327 c 0,2.70623 -2.40277,4.90006 -5.36673,4.90006 -2.96397,0 -5.36674,-2.19383 -5.36674,-4.90006 0,-2.70623 2.40277,-4.90006 5.36674,-4.90006 2.96396,0 5.36673,2.19383 5.36673,4.90006 z" />
       </g>
       <flowRoot
          transform="translate(228.53154,0.66650263)"
@@ -4662,7 +4683,7 @@
     <g
        id="g3974"
        transform="matrix(2.3457894,0,0,2.3457894,220.24846,-111.84766)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112">
       <path
@@ -4679,7 +4700,7 @@
     <g
        id="g3978"
        transform="matrix(2.3457894,0,0,2.3457894,235.46155,-111.76182)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112">
       <path
@@ -4696,7 +4717,7 @@
     <g
        id="g4013"
        transform="matrix(2.3457894,0,0,2.2990617,227.94648,-106.61588)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112">
       <path
@@ -4714,7 +4735,7 @@
        transform="matrix(2.3442585,0,0,2.2992604,413.72209,-105.53984)"
        style="display:inline"
        id="g3946-9"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112">
       <path
@@ -4731,7 +4752,7 @@
     <g
        id="g4043"
        transform="matrix(2.3457894,0,0,2.3457894,227.94648,-112.31727)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112">
       <path
@@ -4755,7 +4776,7 @@
        id="flowRoot4035"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(300.26822,83.499135)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion4037"><rect
@@ -4770,7 +4791,7 @@
        id="flowRoot4035-5"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(485.17764,83.499135)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion4037-6"><rect
@@ -4785,7 +4806,7 @@
        id="flowRoot4035-6"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(380.67049,83.367299)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion4037-0"><rect
@@ -4800,7 +4821,7 @@
        id="flowRoot4035-3"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(442.37988,83.499135)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion4037-9"><rect
@@ -4812,7 +4833,7 @@
          id="flowPara4041-54"
          style="font-size:14px">F2</flowPara></flowRoot>    <g
        id="g4338"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112">
       <g
@@ -4892,7 +4913,7 @@
        id="flowRoot4303"
        style="font-size:6px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(-7.0314861,14.142135)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion4305"><rect
@@ -4908,7 +4929,7 @@
        id="flowRoot4303-3"
        style="font-size:6px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        transform="translate(315.68221,14.142135)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion4305-3"><rect
@@ -4924,7 +4945,7 @@
        d="m 514.89563,73.336206 c 63.57937,0 63.57937,0 63.57937,0"
        id="path4390"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
     <path
@@ -4932,23 +4953,23 @@
        d="m 544.49999,137.23281 33.97481,0"
        id="path4392"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.9873206;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3.9492825, 0.98732063;stroke-dashoffset:0"
-       d="m 578.6751,74.079975 0,62.380665"
+       style="fill:none;stroke:#000000;stroke-width:0.65326434;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.61305738, 0.65326435;stroke-dashoffset:0"
+       d="m 560.6751,109.42882 0,27.30936"
        id="path4394"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot5164"
-       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(-1.8899769,-32.162596)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;stroke-opacity:1"
+       transform="translate(-11.889977,-0.162596)"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion5166"><rect
@@ -4956,14 +4977,15 @@
            width="59.75"
            height="48.625"
            x="543.25"
-           y="92.112206" /></flowRegion><flowPara
+           y="92.112206"
+           style="fill:#000000;fill-opacity:1;stroke:none;stroke-opacity:1" /></flowRegion><flowPara
          id="flowPara5174"
-         style="font-size:12px;text-align:center;text-anchor:middle">  P</flowPara></flowRoot>    <path
-       style="fill:none;stroke:#000000;stroke-width:1.14089668px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 566.91324,63.617451 c -3.55846,8.02259 -3.55846,8.02259 -3.55846,8.02259 l 7.55846,0 z"
+         style="font-size:12px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-opacity:1">  P</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1.14089668000000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="m 556.91324,95.617451 c -3.55846,8.022589 -3.55846,8.022589 -3.55846,8.022589 l 7.55846,0 z"
        id="path5176"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
     <path
@@ -4971,23 +4993,23 @@
        d="m 582.19163,140.5488 c 50.51144,0 50.51144,0 50.51144,0"
        id="path4390-0"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.18870962;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4.75483861, 1.18870966;stroke-dashoffset:0;display:inline"
-       d="m 632.90317,141.29257 0,90.42429"
+       style="fill:none;stroke:#000000;stroke-width:0.83024162;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3.32096664, 0.83024166;stroke-dashoffset:0;display:inline"
+       d="m 610.90317,187.91072 0,44.11056"
        id="path4394-1"
        inkscape:connector-curvature="0"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot5164-3"
        style="font-size:6px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
-       transform="translate(49.442694,34.978648)"
-       inkscape:export-filename="/home/alex/Documents/thesis/images/linearity-spectrum.png"
+       transform="translate(40.31163,80.163341)"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
        inkscape:export-xdpi="269.90112"
        inkscape:export-ydpi="269.90112"><flowRegion
          id="flowRegion5166-1"><rect
@@ -4997,7 +5019,23 @@
            x="543.25"
            y="92.112206" /></flowRegion><flowPara
          id="flowPara5174-4"
-         style="font-size:12px;text-align:center;text-anchor:middle">IM3 </flowPara></flowRoot>  </g>
+         style="font-size:12px;text-align:center;text-anchor:middle">IM3 </flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:0.48673072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.94692281, 0.48673071;stroke-dashoffset:0;display:inline"
+       d="m 559.77462,74.180003 0,15.160416"
+       id="path4394-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="269.90112"
+       inkscape:export-ydpi="269.90112" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.68737775;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.74951117, 0.6873778;stroke-dashoffset:0;display:inline"
+       d="m 611.73123,141.37074 0,30.23601"
+       id="path4394-1-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/alusco/Documents/AUThesis/images/linearity-spectrum.png"
+       inkscape:export-xdpi="269.90112"
+       inkscape:export-ydpi="269.90112" />
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer13"
