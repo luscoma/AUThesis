@@ -44,7 +44,7 @@
 
 % Put the committee here (including the adviser), one \professor for each. 
 % The advisor must be first, and the dean of the graduate school must be last.
-\professor{Charles Stroud, Chair, Professor of Electrical and Computer Engineering}
+\professor{Charles Stroud, Co-Chair, Professor of Electrical and Computer Engineering}
 
 \professor{Foster Dai, Co-Chair, Professor of Electrical and Computer Engineering}
 
@@ -57,7 +57,7 @@
 \TitlePage 
 
 \begin{abstract}
-This thesis focuses on a digital Built-in Self-Test (BIST)\nomenclature{BIST}{Built-in Self-Test} approach to perform specification-oriented testing of the analog portion of a mixed-signal system.  The BIST utilizes a direct digital synthesizer (DDS) based test pattern generator (TPG)\nomenclature{TPG}{Test Pattern Generator} and a multiplier-accumulator (MAC) based output response analyzer (ORA)\nomenclature{ORA}{Output Response Analyzer} to stimulate and analyze the analog devices under test, respectively.  This approach uses the digital-to-analog converter (DAC)\nomenclature{DAC}{Digital-to-Analog Converter} and the analog-to-digital converter (ADC)\nomenclature{ADC}{Analog-to-Digital Converter}, which typically already exist in a mixed signal circuits, to connect the digital BIST circuitry to the analog device(s) under test (DUT)\nomenclature{DUT}{Device Under Test}.
+This thesis focuses on a digital Built-in Self-Test (BIST)\nomenclature{BIST}{Built-in Self-Test} approach to perform specification oriented testing of the analog portion of a mixed-signal system.  The BIST utilizes a direct digital synthesizer (DDS) based test pattern generator (TPG)\nomenclature{TPG}{Test Pattern Generator} and a multiplier-accumulator (MAC) based output response analyzer (ORA)\nomenclature{ORA}{Output Response Analyzer} to stimulate and analyze the analog devices under test, respectively.  This approach uses the digital-to-analog converter (DAC)\nomenclature{DAC}{Digital-to-Analog Converter} and the analog-to-digital converter (ADC)\nomenclature{ADC}{Analog-to-Digital Converter}, which typically already exist in a mixed signal circuits, to connect the digital BIST circuitry to the analog device(s) under test (DUT)\nomenclature{DUT}{Device Under Test}.
 
 Previous work has improved and analyzed the capabilities and effectiveness of using this BIST approach to test analog circuitry; however, little work has been done to determine the fault coverage of the digital BIST circuitry itself.  Traditionally additional test circuitry dedicated to testing would be added to the BIST circuitry to provide adequate fault coverage of digital circuitry.  While ensuring that the digital circuitry is thoroughly tested and functioning properly, this circuitry incurs a potentially high area overhead and performance penalty.  This thesis focuses on using the existing BIST circuitry to test itself by utilizing a dedicated digital loopback path.  A set of test procedures is developed and analyzed which can be used to provide a set of functional tests which provide a high effective fault coverage of the digital portion of the BIST.  To determine the effectiveness of these test procedures, the mixed-signal BIST circuit is simulated and single stuck-at gate-level fault coverage results are determined and presented.  Finally several improvements to the dedicated loopback path are proposed and simulated to analyze possible ways to improve the fault coverage of the BIST with minimal area and performance impact.
 \end{abstract}
@@ -296,7 +296,7 @@ When performing fault simulations certain optimizations can be made to improve t
 \cite{stroud} states that the number of collapsed faults for any elementary logic gate with greater than one input is $K+2$ where $K$ is the number of inputs to the gate.  This is certainly apparent with the NOR gate in Figure \ref{fig:faultcollapse}, where $K+2=4$.  Additionally when the output of a gate is connected to exactly one input of another gate, a fault occurring at the output of the source gate is indistinguishable from the same fault occurring at the input of the connected gate\cite{stroud}.  These faults can be structurally collapsed together which leads to a large chain of faults being collapsed such as the example in Figure \ref{fig:collapsechain}\cite{stroud}.  In the figure groups of equivalent faults are shown with a line drawn between them.  Unfortunately due to the limitation of the single stuck-at fault model, which does not allow multiple faults to appear in the circuit simultaneously (as opposed to a multiple fault model which allows this), the fan-out stem in Figure \ref{fig:collapsechain} cannot be collapsed\cite{defectforcmos}.  Since the output of the inverter fans-out to the input of two different gates, collapsing these faults would make a fault appear to be on both the input of the AND gate and the OR gate simultaneously which violates the single stuck-at fault model and is not allowed\cite{defectforcmos}.  Counting the faults in the figure, there are a total of 22 uncollapsed faults and a total of 12 collapsed faults, a significant reduction.
 \begin{figure}
 	\begin{center}
-		\includegraphics[scale=1]{images/faultchain-collapse}
+		\includegraphics[scale=.8]{images/faultchain-collapse}
 	\end{center}
   \caption{Structural Fault Collapsing Performed on a Group of Logic Gates}
   \label{fig:collapsechain}
@@ -525,7 +525,7 @@ The previous example represents the simple case where only a single tone is of i
 In hardware a similar method is used which directly calculates the number of clock cycles required for accumulation.  After first OR'ing all frequency words together, an or-chain is used to determine the number of clock cycles to accumulate.  Figure \ref{fig:or-chain} shows this or-chain.  As shown in the figure, if a logic `1' is in the LSB of any of the frequency words, it will result in the maximum number of clock cycles for the given phase accumulator width.  
 \begin{figure}
 	\begin{center}
-		\includegraphics[scale=1.3]{images/or-chain}
+		\includegraphics[scale=1.2]{images/or-chain}
 	\end{center}
 	\caption{The OR Chain Which Calculates the Number of Clock Cycles from the Logical OR of All Frequency Words}
 	\label{fig:or-chain}
@@ -561,7 +561,7 @@ dB = 20 * log_{10}(MAGNITUDE)
 With the help of the test controller the BIST can perform multi-measurement tests and consequently measure several different important analog characteristics. The first such test measures the linearity of the analog DUT.  The linearity of a system is usually measured by analysis of the third-order inter-modulation point (IP3) using a two-tone test\cite{basessa}.  When two tones $f_1$ and $f_2$ are generated and are used to stimulate the DUT, the resulting output frequency will consist of not only $f_1$ and $f_2$ but also the third-order inter-modulation terms (IM3)\nomenclature{IM3}{third-order inter-modulation term} caused by the non-linearity of the DUT.  The resulting output spectrum due to non-linearity of a DUT is shown in Figure \ref{fig:linearityspectrum}.  
 \begin{figure}
   \begin{center}
-    \includegraphics[scale=1]{images/linearity-spectrum}
+    \includegraphics[scale=.8]{images/linearity-spectrum}
   \end{center}
   \caption{Input Spectrum v. DUT Output Response for two-tone test}
   \label{fig:linearityspectrum}
@@ -1097,9 +1097,6 @@ Engineering, Auburn University, July 7, 2003.
 
 \label{Bibliography}
 \end{thebibliography}
-
-\appendix
-\addcontentsline{toc}{chapter}{Appendices}
 
 \end{document}
 
