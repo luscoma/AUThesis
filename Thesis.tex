@@ -17,6 +17,8 @@
 %%%%%Format rules: Normal margins are 1 in. If you need to print with 1.5in margins, uncomment the line below
 %\oddsidemargin0.5in \textwidth6in
 
+\usepackage{multirow}
+
 %% If you do not need a List of Abbreviations, then comment out the lines below and the \printnomenclature line.
 %%for List of Abbreviations information:  (see http://www.mackichan.com/TECHTALK/509.htm  )
 \usepackage[intoc]{nomencl}
@@ -716,50 +718,50 @@ Once the netlist has been converted to ASL using the VerilogParser tool, it must
 The Value Change Dump or VCD format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is an industry standard format and is typically used to store logic simulation results in as small of a footprint as possible\cite{verilog}.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data. 
 
 The VCD format compresses simulation results into a smaller footprint by only storing the changes between vectors instead of every vector\cite{verilog}.  While this can make the output of the file less readable it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  An example of a VCD file is shown in Table \ref{tbl:half_adder_vcd}\footnote{It is important to note that while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector.}.  On the right in Table \ref{tbl:half_adder_vcd} is a text description explaining each section of the VCD file.
+
 \begin{table}
-	\begin{center}
-    \caption{Example VCD File}
-		\begin{tabular}{l|l}
-			VCD File & Description \\ \hline
-			\textbf{\$date} & The date section defines the day\\
-			Tuesday, December 07, 2010 & which this file was created \\
-			\textbf{\$end} & \\
-			\textbf{\$version}
-			Generated For ASL2VCD 1.0 & A comment detailing the  \\
-			Alex Lusco & version of the application creating this file \\
-			\textbf{\$end}	\\
-			\textbf{\$comment}	\\
-			VCD File & An additional comment section detailing \\
-			\textbf{\$end} & information about the file \\
-			\textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale used in this file \\
-			\textbf{\$scope} module logic \textbf{\$end} & The simulation scope, particular to the simulation \\
-			\textbf{\$var} wire 1 ! A \textbf{\$end} & This section aliases each input with a single ASCII \\
-			\textbf{\$var} wire 1 " B \textbf{\$end} & character. For long IO names this shrinks them to a  \\
-			\textbf{\$var} wire 1 \# S \textbf{\$end} & single character allowing for the ability to condense \\
-			\textbf{\$var} wire 1 \$ C \textbf{\$end} & the dump for large simulations greatly \\
-			\textbf{\$upscope} \$end & \\
-			\textbf{\$enddefinitions} \$end & End of header \\
-			\textbf{\$dumpvars} & Sets the initial value for each input \\
-			0!	& Each IO must be set to an initial value here \\
-			0"	& The !,",\#, \& \$ characters represent the\\
-			0\# & nets aliased in the \$var section\\
-			0\$ & \\
-			\textbf{\$end} & \\
-			\textbf{\#1} & The \#N construct denotes a time step to apply the \\
-			1" & following value changes at, in this case at 10ns \\
-			1\# & Only nets whose value changed will appear in the time step\\
-			\textbf{\#2} & These changes occurred at 20ns \\ 
-			1! & \\
-			0" & \\
-			\textbf{\#3} & These changes occurred at 30ns\\
-			1" & \\
-			0\# & \\
-			1\$ & \\	
-			\textbf{\#4} & The end of the simulation, no changes occurred \\		
-		\end{tabular}
-    \label{tbl:half_adder_vcd}
-	\end{center}
+  \caption{Example VCD File}
+  \begin{tabular}[t]{p{2.5in}|p{3.5in}}
+    VCD File & Description \\ \hline
+    \textbf{\$date} & \multirow{2}{3.5in}{The date section defines the day which this file was created} \\
+    Tuesday, December 07, 2010 & \\
+    \textbf{\$end} & \\
+    \textbf{\$version} & \multirow{2}{3.5in}{A comment detailing the version of the application creating this file} \\
+    Generated For Alex, ASLVCD 1.0 & \\
+    \textbf{\$end} & \\
+    \textbf{\$comment} &	\multirow{2}{3.5in}{An additional comment section detailing information about the file.} \\
+    VCD File & \\ 
+    \textbf{\$end} & \\
+    \textbf{\$timescale} 10ns \textbf{\$end} & Defines the time scale used in this file \\
+    \textbf{\$scope} module logic \textbf{\$end} & The simulation scope, particular to the simulation \\
+    \textbf{\$var} wire 1 ! A \textbf{\$end} & \multirow{4}{3.5in}{This section aliases each input with a single ASCII character. For long IO names this shrinks them to a single character allowing for the ability to condense the dump for large simulations greater} \\
+    \textbf{\$var} wire 1 " B \textbf{\$end} & \\
+    \textbf{\$var} wire 1 \# S \textbf{\$end} & \\
+    \textbf{\$var} wire 1 \$ C \textbf{\$end} & \\
+    \textbf{\$upscope} \$end & \\
+    \textbf{\$enddefinitions} \$end & End of header \\
+    \textbf{\$dumpvars} & Sets the initial value for each input \\
+    0!	& Each IO must be set to an initial value here \\
+    0"	& The !,",\#, \& \$ characters represent the\\
+    0\# & nets aliased in the \$var section\\
+    0\$ & \\
+    \textbf{\$end} & \\
+    \textbf{\#1} & \multirow{3}{3.5in}{The \#N construct denotes a time step to apply the following value changes, in this case at 10ns. Only nets whose value changed appear in the time step} \\
+    1" & \\
+    1\# & \\
+    &\\
+    \textbf{\#2} & These changes occurred at 20ns \\ 
+    1! & \\
+    0" & \\
+    \textbf{\#3} & These changes occurred at 30ns\\
+    1" & \\
+    0\# & \\
+    1\$ & \\	
+    \textbf{\#4} & The end of the simulation, no changes occurred \\		
+  \end{tabular}
+  \label{tbl:half_adder_vcd}
 \end{table} 
+
 In addition to the file size reduction, the key benefit of conversion to the VCD format is the ability to visualize the output of a logic simulation in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used to visualize the VCD file in Table \ref{tbl:half_adder_vcd}.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform which changes over time.  The displayed waveforms can be panned, zoomed and combined.  This functionality alone makes it much easier to verify the output of a complex logic simulation.  
 \begin{figure}
 	\begin{center}
