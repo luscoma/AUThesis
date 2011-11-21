@@ -718,10 +718,13 @@ Once the netlist has been converted to ASL using the VerilogParser tool, it must
 The Value Change Dump or VCD format is defined in section 15 of the IEEE 1364-1995 standard for Verilog\cite{verilog}.  Originally created as a light-weight format to dump simulation results for post-processing\cite{verilog}, the VCD format is an industry standard format and is typically used to store logic simulation results in as small of a footprint as possible\cite{verilog}.  In addition as an IEEE standard it is supported in a number of free and commercial viewers which can easily visualize and navigate the underlying simulation data. 
 
 The VCD format compresses simulation results into a smaller footprint by only storing the changes between vectors instead of every vector\cite{verilog}.  While this can make the output of the file less readable it makes it very easy to store large amounts of simulation data and for a viewer to parse and display the file.  An example of a VCD file is shown in Table \ref{tbl:half_adder_vcd}\footnote{It is important to note that while all IO in this example are a single bit, values in a VCD file can be any arbitrary width and in that case operate as a bit-vector.}.  On the right in Table \ref{tbl:half_adder_vcd} is a text description explaining each section of the VCD file.
-
+% Used to align this table at the top, this is a global change but there are no other single floats on a page below this, so meh.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
 \begin{table}
   \caption{Example VCD File}
-  \begin{tabular}[t]{p{2.5in}|p{3.5in}}
+  \begin{tabular}{p{2.5in}|p{3.5in}}
     VCD File & Description \\ \hline
     \textbf{\$date} & \multirow{2}{3.5in}{The date section defines the day which this file was created} \\
     Tuesday, December 07, 2010 & \\
@@ -761,7 +764,6 @@ The VCD format compresses simulation results into a smaller footprint by only st
   \end{tabular}
   \label{tbl:half_adder_vcd}
 \end{table} 
-
 In addition to the file size reduction, the key benefit of conversion to the VCD format is the ability to visualize the output of a logic simulation in one of a number of commercial viewer applications.  For the example in Figure \ref{fig:half-adder-gtkwave} GTKWave was used to visualize the VCD file in Table \ref{tbl:half_adder_vcd}.  GTKWave is a free, open source VCD file viewer for Linux available on-line at \url{http://gtkwave.sourceforge.net}.  In GTKWave each IO is displayed as a waveform which changes over time.  The displayed waveforms can be panned, zoomed and combined.  This functionality alone makes it much easier to verify the output of a complex logic simulation.  
 \begin{figure}
 	\begin{center}
